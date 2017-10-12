@@ -1,0 +1,404 @@
+RELEASE SCHEDULE
+
+As a participant, I want for each habit type, a visual and statistical habit
+status indicator to show how closely I am following its plan. ? how to implement this?
+
+As a participant, I want to add, edit, or delete a habit event while offline,
+and have any of these changes synchronized once I get connectivity. ? how to implement this? 
+--------------------------------------------------------------------------------
+OCTOBER 15th 2017 (A)   **MIDTERM WEEK CONSIDERED
+
+It goes that online functionalities, specifically database integration, must be
+done as soon as it can. This allows for a certain degree of freedom when it comes
+to testing in the future. Furthermore almost if not all functionalities involve
+the integration of the database.
+
+  Objectives
+
+  -Set up/Create Database (Elastic search) This database could hold the following
+
+      1. Users Info
+
+        Should include the following
+        -User name -string (This will be the user id as Acc name must be unique by default)
+        -User password - string
+        -User creation date - date
+        -User photo - image
+        -User Followers -string list(as a list of account names. Empty list upon creation)
+        -User Followed - string list(as a list of account names. Empty list upon creation)
+        -User Habit ids -list of strings (as a list of habit ids. Empty list upon creation)
+
+      2. HABIT EVENT (HABIT EVENT)
+
+        Should include the following
+        -habit event id - String, username followed by an integer
+        -habit event title - string (CONSTRAINT no more than 20 chars) (UNIQUE TO USER)
+        -habit event comment - string (CONSTRAINT 20 characters)
+        -habit event photo - image file (CONSTRAINT 65536 bytes)
+        -habit event creation date - date (note that creation date is NOT the same as start date)
+        -habit event likes (this is our WOW factor) - String list
+        -habit type id - String
+        -location - LONGITDUE, LATITUDE?
+
+      3. HABIT TYPE
+
+        -Habit type ID - integer
+        -habit type owner - String (Username)
+        -Habit type title - String (CONSTRAINT 20 characters)
+        -Habit type reason (CONSTRAINT 30 characters)
+        -habit type start date - date
+        -Habit type completion score - unsigned integer
+        -habit type frequency - string list (as list of days in the week)
+
+
+      4. Requests
+
+        -User Requested - string, User name of the user that is requested to follow
+        -User Requesting - string, User name of the user who sent the request
+        -State  - Integer 1 if requested accepted,
+                           0 if request declined,
+                           2 if initial state
+
+        *Row is created when user requests to follow someone. Initial State is null
+        *when requested accepts, requesting is automatically added as a follower. If
+        rejected, nothing happens.
+        *Requesting is constantly pulling from dataset to see if state is true.
+        If state is found true, row is deleted. If it cannot find the appropriate row,
+        Request is denied and dropped
+
+--------------------------------------------------------------------------------
+NOVEMBER 2ND 2017 (B)
+
+The next step must be user creation. As it is a social networking app, the next
+important thing is the users. With the creation of users it allows us to begin testing
+functionalities such as habit creation, habit following, geolocation....
+
+Without users..there are no habits
+
+Objectives
+
+  1. CREATE NEW USER ACCOUNT PAGE
+
+      -Create new user account should be similar to the UI in github. Specifically,
+      it must be able to do AND OR contain the following
+
+      Requires
+
+      1. a EditText for user chosen username
+      2. a EditText for user chosen password
+      3. a EditText for user confirmation of chosen password
+      4. a "Create my account" button to confirm account creation
+
+      Idea?
+
+      The create account page should be functional. Ie,
+        If username exist:
+            return a TOAST notifying the user of existing user
+        If username does not exist and passwords do not match:
+            return a TOAST notifying the user that passwords do not match
+        If username does not exist and passwords match
+            Insert user into database according to the specification of A(1).
+            Specifically, database now should contain a new row containing
+            Username, password, date creation,
+
+            The following should be empty in DB: Followers, Followed, Habit ids, photo
+
+  2. LOGIN PAGE
+
+      -Login page should be similar to the UI in github. Specifically, it must
+      be able to do AND OR contain the following
+
+      Requires
+
+      1. a Textview for username log in
+      2. a Textview for username password
+      3. a "Log in" button to confirm log in
+      4. a "Create new account" button in the event that user wants to create a new account
+
+      The Login page should be functional. Ie, If the username/password combination
+      does NOT exist in the database user info in A(1), return a TOAST
+      notifying the user of Wrong password
+
+  3. MAIN MENU
+
+      -Unlike the other menus outlined above, it goes that MAIN MENU screen does not have to
+      be functional. At this point we just want to provide the interface such that
+      it can be integrated at a later date. The interface should include the following
+
+      Requires
+
+      1. a "Habit Type" Button for viewing a list of ones habits
+      2. a "Todays Habit" Button for viewing habits that are due today
+      3. a "Habit event" Button for viewing Habit event ??
+      4. a "My follower" Button for viewing a list of your followers
+      5. a "Log out" Button for logging out
+
+      *note that a habit event is an instance of habit type
+
+--------------------------------------------------------------------------------
+NOVEMBER 8th 2017 (C) - implementation of HABIT TYPES (MAIN MENU)
+
+At this point, we can begin writing our habit type creation. It is important that this step
+is implemented correctly as it is the meat of our project. Everything implemented
+at this stage will be NOT involve the connection with other users, but they should be stored
+appropriately in the database defined in A(2).
+
+Objectives
+
+The following labels are BUTTONS for main menu
+
+  1. HABIT TYPE LIST PAGE (main menu button)
+        *Shows a list pulled from HABIT TYPE Database. This should be implemented
+        first before anything else
+        *it is important that every time we go back, the list is being updated so it
+        shows the updated changes
+
+        1. A "New habit type" button for user to define a new HABIT TYPE. The button
+          should transition to NEW  HABIT TYPE  PAGE.
+
+                ----NEW HABIT TYPE PAGE----
+
+                    Requires
+
+                    1. A Textview for setting HABIT TYPE.
+                    2. A Textview for setting HABIT TPYPE REASON.
+                    3. A Textview for setting HABIT TYPE START DATE
+                    4. A set of 7 buttons corresponding to days of the week
+                    6. A "Confirm" button that transitions to ADD HABIT EVENT PAGE
+
+                    *When Confirm button is implemented, a new row should be added
+                    in HABIT TYPE database. A Habit ID can be defined as Username + INTEGER
+                    although that is up to debate
+
+        2. A list view containing habit types NAME. Each element in the list must be
+        clickable - When clicked, transition intoHABIT TYPE DETAILS activity
+
+                ----HABIT TYPE DETAILS PAGE-----
+                  *Shows the details of the HABIT TYPE. It should contain the following
+
+                  Requires
+
+                  1. A EditText for changing HABIT TYPE name
+                      -default title must be already set in the EditText
+                  2. A EditText for changing HABIT TYPE REASON
+                      -default reason must be already set in the EditText
+                  4. A set of 7 buttons corresponding to days of the week
+                      -Each button should have some sort of indicator that it is
+                      selected when pressed (either change of color or marked by TextViews)
+
+                  5. A "Update" button that confirms the changes made
+                        -Find corresponding habit type ID in database. Edit Name and Reason
+                        attribute.
+                        -Replace string list of schedule with the buttons depressed
+                        *make sure HABIT TYPE name and reason is changed once we go back
+                        to HABIT TYPE LIST PAGE
+
+                  6. A "Add HABIT EVENT" button that jumps to add habit even activity
+                        -when clicked, jump to HABIT EVENT creation activity
+                        -NOTE that this should be implemented before 7 so 7's delete
+                        option can be tested
+
+                          ----HABIT EVENT CREATION----
+                                  *this activity should create a HABIT EVENT. It will
+                                  be related to its parent HABIT TYPE through habit type id
+                                  *its implementation for (C) should be last as HABIT EVENT
+                                  will can only exist in the presence of a habit type
+
+                                  Requires
+
+                                  1. A EditText for Habit Title
+                                  2. A EditText for Habit comment
+                                  3. A EditText for Habit Date
+                                  4. A imageView for habit photo
+                                  5. A "upload photo" button for uploading photo
+                                  6. A "Create" button to create HABIT EVENT
+
+                                  *This should be fully implemented. Upon hitting
+                                  the confirm button, all neccessary changes should
+                                  be added to database
+
+
+                  7. A "Delete" button that deletes the habit type
+                        -must select all HABIT EVENT of who have the same HABIT TYPE ID
+                        as the HABIT TYPE selected and delete them from database.
+                        -Then delete HABIT TYPE from database
+                        *make sure HABIT TYPE does not appear when we go back to
+                        HABIT TYPE LIST PAGE
+
+--------------------------------------------------------------------------------
+NOVEMBER 14th 2017 (D) - implementation of mostly HABIT EVENTS (MAIN MENU STILL)
+
+At this point HABIT events are already implemented in the sense that they can be
+created and added to database. This time period will focus mostly on creating the
+interface for it
+
+Objectives
+
+The following labels are still BUTTONS for main menu
+
+  2. TODAYS HABIT PAGE (main menu button)
+      *Displays a list of HABIT TYPES that need to be due ONLY TODAY (set by the schedule)
+
+      Requires
+
+      1. A "Listview" containing todays habits - List view displays NAME of the HABIT TYPE.
+      It is retrieved by looking at the current DAY and pulling all data from HABIT TYPE
+      database where DAY in HABIT TYPE schedule matches with TODAY.
+
+      *NOTE That When a list item is clicked, it must transition to the HABIT EVENT CREATION
+      defined in section (C)
+      *List should automatically update and retrieve latest results
+
+  3. HABIT EVENT LIST (main menu button)
+        *Displays a list of all habit events.
+
+        Requires
+
+        1. A ListView. Each item in the list should contain the following
+            -HABIT TYPE PARENT
+            -HABIT EVENT NAME
+            -HABIT EVENT DATE
+            *the list must be clickable such that when clicked, it will jump to HABIT EVENT DETAILS PAGE
+            *List should automatically update and retrieve latest results
+
+                  ----HABIT EVENT DETAILS----
+                    *view the details of selected HABIT EVENT. This activity should
+                    implement the following.
+
+                    1. A Textview of HABIT EVENT Title
+                    2. A EditText of HABIT EVENT comment
+                    3. A photo of HABIT EVENT photo
+                    4. A "edit pic" button for HABIT EVENT Photo
+                    5. A "update location" button for updating user location
+                    6. A "removing location" button for removing user location
+                    7. A "update" button to commit changes
+                    8. A "Delete" button o remove HABIT EVENT
+
+                    *When update is pressed, all relevant changes such as habit
+                    Title, Habit comment, habit photo, and habit location should be
+                    updated in database
+
+                    *Likewise if delete is pressed, the current Habit EVENT should
+                    be removed from HABIT EVENT database
+
+        2. A textview that filters by HABIT TYPE - NULL is defined as ALL
+            -query by HABIT EVENT database and select rows of same HABIT NAME where
+            user = username
+
+        3. A textview that filters by Comment - NULL is defined as ALL
+            -query by HABIT EVENT database with HABIT EVENT COMMENT
+
+        4. A "Filter"  Button to commit filter request
+          -List should refresh so that the results of the query display in the list
+          after button is depressed
+
+        5. A "View Map" button that jumps to VIEW MAP HABIT HISTORY activity
+
+
+--------------------------------------------------------------------------------
+NOVEMBER 20th 2017 (E) - online functionality
+
+At this point the only real things left to do is online functionality. Also
+this section also involves getting MAPS done
+
+Objectives
+
+            VIEW MAP HABIT HISTORY
+
+                *Display map on screen with personal habits. If selected, personal
+                *habits within 5km have to be highlighted (inidicated in some sort
+                of reasonable way)
+
+                Requirements
+
+                1. A MAP centered at current location
+                2. A "Highlight close habits" button to highlight all habits that are
+                  within a 5km radius
+
+
+  4. ONLINE (main menu button)
+    *Show a list of HABIT EVENTS from the people who you are FOLLOWING. The list
+    must be sorted user name, and user title.
+    *This activity must also manage requests
+    (add request to follow, add/delete request to be followed)
+
+    Requirements
+
+          1. A ListView where each item contains the username and their HABIT EVENT
+            title sorted sorted by name and title - When clicked, the activity should
+            jump to VIEW FOLLOWER HABIT EVENT
+
+                  ----VIEW FOLLOWER HABIT EVENT----
+                      *Display the persons HABIT EVENT
+
+                      Requirements
+
+                      1. A Textview of FOLLOWED USER HABIT EVENT Title
+                      2. A Textview of FOLLOWED USER HABIT EVENT comment
+                      3. A photo of FOLLOWED USER HABIT EVENT photo
+
+                      *only pulling from database. Not updating it or anything
+
+          2. A EditText for entering desired user to follow
+
+          3. A "Send request button" to confirm the request - when clicked it should create
+            new request row in the request database as accoriding to table (A) 4?
+            *notify user with a TOAST
+
+          4. A "View request" button to see follow requests - when clicked it should jump to
+                                                              VIEW PERMISSION REQUESTS
+
+                  ----VIEW PERMISSION REQUEST----
+
+                      *contains a list view of users who requested to follow.
+                      This is where the request is confirmed in the database
+
+                      Requirements
+
+                      1. A ListView of Requesters. Each item in the list contains the
+                      name of the person who sent the request. Each item in the list
+                      is clickable - When clicked a POPUP should appear asking whether to
+                                    ACCEPT or DENY the request
+
+                          POPUP REQUEST
+
+                              *A popup window appears containing the name of the user,
+                              the photo of the user, and the buttons accept and rejects
+
+                              Requirements
+
+                              1. Textview of NAME of user
+                              2. imageview of PHOTO of user
+                              3. An "accept" button to accept request
+                              4. A "decline" button to reject the request
+
+                              *user can tap outside of the popup to make it dissapear,
+                              in which the list remains unchanged. If either accept
+                              or decline is pressed, ListView in PERMISSION REQUESTS
+                              should be updated.
+
+                              *When accept button is pressed, request state in (A)
+                              should be turned to 1, where request user will automatically
+                              be added in the list of follows. If decline button is pressed
+                              request state should be 2.
+
+                              as someone who sent the request, you are checking for matching
+                              data in the request database. If one finds a row where state is 1,
+                              delete the row in request, and append value to follow list. if
+                              one finds request state to be 0, just delete row. If one finds
+                              row where state is 2, do nothing and take a look later.
+
+
+            5. A "View Map" button to see the HABIT EVENTS near you - when clicked FOLLOWING
+                                                                      MAP activity should start
+
+                    FOLLOWING MAP
+
+                        *Display map on screen with followers habits.
+                        *habits within 5mk have to be highlighted
+
+                        Requirements
+
+                        1. A MAP centered at current location
+                        2. A "Highlight close habits" button to highlight all habits that are
+                          within a 5km radius
