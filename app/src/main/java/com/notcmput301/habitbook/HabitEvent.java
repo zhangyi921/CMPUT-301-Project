@@ -13,7 +13,6 @@ import java.util.Date;
 public class HabitEvent {
 
     private HabitType habitType;
-    private String title;
     private String comment;
     private Image image;
     private Date date;
@@ -21,20 +20,52 @@ public class HabitEvent {
     private int dislikes;
     private Location location;
 
+    public HabitEvent(HabitType habit, String comment){
+        this.habitType = habit;
+        this.comment = comment;
+        this.image = null;
+        this.date = new Date();
+        this.likes = 0;
+        this.dislikes = 0;
+        this.location = null;
+    }
+
+    public HabitEvent(HabitType habit, String comment, Location location){
+        this.habitType = habit;
+        this.comment = comment;
+        this.image = null;
+        this.date = new Date();
+        this.likes = 0;
+        this.dislikes = 0;
+        this.location = location;
+    }
+
+    public HabitEvent(HabitType habit, String comment, Image image){
+        this.habitType = habit;
+        this.comment = comment;
+        this.image = image;
+        this.date = new Date();
+        this.likes = 0;
+        this.dislikes = 0;
+        this.location = null;
+    }
+
+    public HabitEvent(HabitType habit, String comment, Image image, Location location){
+        this.habitType = habit;
+        this.comment = comment;
+        this.image = image;
+        this.date = new Date();
+        this.likes = 0;
+        this.dislikes = 0;
+        this.location = location;
+    }
+
     public HabitType getHabitType() {
         return habitType;
     }
 
     public void setHabitType(HabitType habitType) {
         this.habitType = habitType;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     public String getComment() {
@@ -99,6 +130,6 @@ public class HabitEvent {
 
     @Override
     public String toString(){
-        return this.title;
+        return this.comment;
     }
 }
