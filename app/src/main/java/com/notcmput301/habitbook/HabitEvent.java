@@ -1,10 +1,15 @@
 package com.notcmput301.habitbook;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.media.Image;
 
+import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import static android.R.attr.bitmap;
 
 /**
  * Created by Cole on 2017-10-20.
@@ -14,6 +19,10 @@ public class HabitEvent {
 
     private HabitType habitType;
     private String comment;
+    private Bitmap bm;
+    private byte[] imageByteArray;
+    private String imagePath;
+    private String locationString;
     private Image image;
     private Date date;
     private int likes;
@@ -40,24 +49,24 @@ public class HabitEvent {
         this.location = location;
     }
 
-    public HabitEvent(HabitType habit, String comment, Image image){
+    public HabitEvent(HabitType habit, String comment, String image){
         this.habitType = habit;
         this.comment = comment;
-        this.image = image;
+        this.imagePath = image;
         this.date = new Date();
         this.likes = 0;
         this.dislikes = 0;
         this.location = null;
     }
 
-    public HabitEvent(HabitType habit, String comment, Image image, Location location){
+    public HabitEvent(HabitType habit, String comment, String image, String location){
         this.habitType = habit;
         this.comment = comment;
-        this.image = image;
+        this.imagePath = image;
         this.date = new Date();
         this.likes = 0;
         this.dislikes = 0;
-        this.location = location;
+        this.locationString = location;
     }
 
     public HabitType getHabitType() {
@@ -78,11 +87,26 @@ public class HabitEvent {
 
     public Image getImage() {
         return image;
+        //return bm;
     }
 
-    public void setImage(Image image) {
+    public void setImage(String imagePath){
         this.image = image;
     }
+/*
+mignt use this in future.
+    public void setImage(String imagePath) {
+        bm= BitmapFactory.decodeFile(imagePath);
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bm.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+        imageByteArray = stream.toByteArray();
+        int imageByteCount = imageByteArray.length;
+        while (imageByteCount >= 65536) {
+            bm.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+        }
+        this.image = image;
+    }
+*/
 
     public Date getDate() {
         return date;
