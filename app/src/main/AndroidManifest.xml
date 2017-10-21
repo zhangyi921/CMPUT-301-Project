@@ -26,7 +26,7 @@
         <activity android:name=".HabitEventDetailsActivity" />
         <activity android:name=".HabitMapActivity" />
         <activity android:name=".OnlineMenuActivity" />
-        <activity android:name=".FollowedUsersMap" />
+        <activity android:name=".FollowedHabitsMapActivity" />
         <activity android:name=".FollowerRequestsActivity"></activity>
     </application>
 

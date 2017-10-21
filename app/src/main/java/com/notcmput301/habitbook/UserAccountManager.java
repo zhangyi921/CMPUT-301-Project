@@ -1,5 +1,7 @@
 package com.notcmput301.habitbook;
 
+import java.util.ArrayList;
+
 /**
  * Created by Cole on 2017-10-20.
  */
@@ -26,6 +28,22 @@ public final class UserAccountManager {
 
     static void logoutUser(User user){
         return;
+    }
+
+    static User getLoggedInUser() {
+        return null;
+    }
+
+    static ArrayList<HabitType> getOwnedHabits() {
+        return new ArrayList<HabitType>();
+    }
+
+    static ArrayList<User> getFollowers() {
+        return new ArrayList<User>();
+    }
+
+    static ArrayList<User> getFollowedUsers() {
+        return new ArrayList<User>();
     }
 
 }

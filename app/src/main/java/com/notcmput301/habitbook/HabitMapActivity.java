@@ -26,5 +26,12 @@ public class HabitMapActivity extends AppCompatActivity {
         setContentView(R.layout.activity_habit_map);
     }
 
+    public void markLocation(Location location, Shape marker){
+        return;
+    }
+
+    public void highlightHabits() {
+        return;
+    }
 
 }
