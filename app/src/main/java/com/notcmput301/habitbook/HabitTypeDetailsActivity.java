@@ -10,8 +10,8 @@ import android.widget.ToggleButton;
 public class HabitTypeDetailsActivity extends AppCompatActivity {
     private User LoggedInUser;
     private HabitType habit;
-    private TextView titleView;
-    private TextView reasonView;
+    private TextView title;
+    private TextView reason;
     private EditText titleText;
     private EditText reasonText;
     private TextView habitSchedule;
@@ -23,7 +23,7 @@ public class HabitTypeDetailsActivity extends AppCompatActivity {
     private ToggleButton fridayButton;
     private ToggleButton saturdayButton;
     private ToggleButton sundayButton;
-    private TextView completionStatus;
+    private TextView completionStatusView;
     private Button back;
     private Button update;
     private Button delete;

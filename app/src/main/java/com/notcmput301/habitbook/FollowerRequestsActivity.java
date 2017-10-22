@@ -10,7 +10,8 @@ import java.util.ArrayList;
 
 public class FollowerRequestsActivity extends AppCompatActivity {
     private TextView viewPermissionRequests;
-    private ArrayList<User> followerRequests;
+    private ArrayList<User> followers;
+    private ArrayList<FollowerRequest> followerRequests;
     private ListView followerRequestList;
     private Button back;
 

@@ -6,7 +6,6 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import android.media.Image;
 import android.test.ActivityInstrumentationTestCase2;
 
 import java.util.ArrayList;
@@ -14,6 +13,7 @@ import java.util.Date;
 
 public class HabitEventTest {
     @Test
+<<<<<<< HEAD
     public void addition_isCorrect() throws Exception {
         assertEquals(4, 2 + 2);
     }
@@ -22,12 +22,16 @@ public class HabitEventTest {
         super(com.notcmput301.habitbook.HabitEvent.class);
     }*/
     public void createEvent1(){
+=======
+    public void createEvent(){
+>>>>>>> afd945012f4bf239f69396dbba8b08cfcc8a7ee5
         Date date = new Date();
         ArrayList<String> weekday = new ArrayList<>();
         weekday.add("Monday");
         User user = new User("user", "password");
         HabitType habit = new HabitType(user, "habit1", "test", date, weekday);
         HabitEvent event = new HabitEvent(habit, "comment");
+<<<<<<< HEAD
         assertTrue("comment" == event.getComment());
         assertTrue(habit == event.getHabitType());
         assertTrue(date == event.getDate());
@@ -55,5 +59,7 @@ public class HabitEventTest {
         HabitEvent event = new HabitEvent(habit, "comment", "image",null);
         assertTrue(event.getImage() == null);
 
+=======
+>>>>>>> afd945012f4bf239f69396dbba8b08cfcc8a7ee5
     }
 }
