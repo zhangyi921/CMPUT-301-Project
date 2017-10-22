@@ -28,18 +28,30 @@ public class HabitEventTest {
         HabitType habit = new HabitType(user, "habit1", "test", date, weekday);
         HabitEvent event = new HabitEvent(habit, "comment");
         assertTrue("comment" == event.getComment());
-        assertTrue(habit == event.getHabitType());
+        //assertTrue(habit == event.getHabitType());
         assertTrue(date == event.getDate());
 
     }
     @Test
-    public void createEvent2(){
+    public void createEvent3(){
         Date date = new Date();
         ArrayList<String> weekday = new ArrayList<>();
         weekday.add("Monday");
         User user = new User("user", "password");
         HabitType habit = new HabitType(user, "habit1", "test", date, weekday);
-        HabitEvent event = new HabitEvent(habit, "comment", null, null);
+        HabitEvent event = new HabitEvent(habit, "comment", "image", null);
+        assertTrue("comment" == event.getComment());
+        assertTrue(habit == event.getHabitType());
+        assertTrue(date == event.getDate());
+    }
+    @Test
+    public void createEvent4(){
+        Date date = new Date();
+        ArrayList<String> weekday = new ArrayList<>();
+        weekday.add("Monday");
+        User user = new User("user", "password");
+        HabitType habit = new HabitType(user, "habit1", "test", date, weekday);
+        HabitEvent event = new HabitEvent(habit, "comment", null, "location");
         assertTrue("comment" == event.getComment());
         assertTrue(habit == event.getHabitType());
         assertTrue(date == event.getDate());

@@ -24,7 +24,7 @@ public class FollowedHabitsMapActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_followed_users_map);
+        //setContentView(R.layout.activity_followed_users_map);
     }
 
     public void markLocation(Location location, Shape marker){
