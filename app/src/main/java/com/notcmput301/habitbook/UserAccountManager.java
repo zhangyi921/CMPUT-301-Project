@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public final class UserAccountManager {
 
-    private UserAccountManager(){};
+    private UserAccountManager(){}
 
     static User createAccount(String username, String password) {
         return new User(username, password);
@@ -45,5 +45,6 @@ public final class UserAccountManager {
     static ArrayList<User> getFollowedUsers() {
         return new ArrayList<User>();
     }
+    
 
 }
