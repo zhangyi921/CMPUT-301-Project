@@ -120,12 +120,13 @@ public class HabitEvent {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
-        HabitEvent that = (HabitEvent) o;
-
-        if (!getHabitType().equals(that.getHabitType())) return false;
-        SimpleDateFormat fmt = new SimpleDateFormat("yyyyMMdd");
-        return fmt.format(this).equals(fmt.format(that));
+        if (o instanceof  HabitEvent){
+            HabitEvent test = (HabitEvent) o;
+            if (this.habitType.equals(test.getHabitType()) && this.comment.equals(test.getComment())
+                    && this.image.equals(test.getImage()) &&  this.date.equals(test.getDate()) &&
+                    this.likes == test.getLikes() && this.dislikes == test.getDislikes() &&
+                    this.location.equals(test.getLocation())) return true; }
+        return false;
     }
 
     @Override

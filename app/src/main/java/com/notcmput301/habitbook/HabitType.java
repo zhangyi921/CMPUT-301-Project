@@ -95,11 +95,11 @@ public class HabitType {
     }
 
     public void addHabitEvent(HabitEvent event) {
-
+        this.events.add(event);
     }
 
     public void removeHabitEvent(HabitEvent event) {
-
+        this.events.remove(event);
     }
 
     public double calculateCompletion() {
