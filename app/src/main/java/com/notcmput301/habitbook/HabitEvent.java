@@ -39,14 +39,14 @@ public class HabitEvent {
         this.location = null;
     }
 
-    public HabitEvent(HabitType habit, String comment, Location location){
+/*    public HabitEvent(HabitType habit, String comment, String location){
         this.habitType = habit;
         this.comment = comment;
         this.image = null;
         this.date = new Date();
         this.likes = 0;
         this.dislikes = 0;
-        this.location = location;
+        this.locationString = location;
     }
 
     public HabitEvent(HabitType habit, String comment, String image){
@@ -57,16 +57,26 @@ public class HabitEvent {
         this.likes = 0;
         this.dislikes = 0;
         this.location = null;
-    }
+    }*/
 
     public HabitEvent(HabitType habit, String comment, String image, String location){
         this.habitType = habit;
         this.comment = comment;
-        this.imagePath = image;
+        if (image != null) {
+            this.imagePath = image;
+        }
+        else{
+            this.imagePath = null;
+        }
         this.date = new Date();
         this.likes = 0;
         this.dislikes = 0;
-        this.locationString = location;
+        if (location != null){
+            this.locationString = location;
+        }
+        else{
+            this.locationString = null;
+        }
     }
 
     public HabitType getHabitType() {
@@ -85,9 +95,9 @@ public class HabitEvent {
         this.comment = comment;
     }
 
-    public Image getImage() {
-        return image;
-        //return bm;
+    public Bitmap getImage() {
+        //return image;
+        return bm;
     }
 
     public void setImage(String imagePath){
