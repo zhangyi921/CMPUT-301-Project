@@ -73,30 +73,30 @@ public class User {
     }
 
     public void addHabitType(HabitType habit){
-
+        this.habitTypes.add(habit);
     }
 
     public void removeHabitType(HabitType habit){
-
+        this.habitTypes.remove(habit);
     }
 
     public void addFollower(User follower){
-
+        this.followers.add(follower);
     }
 
     public void removeFollower(User follower){
-
+        this.followers.remove(follower);
     }
 
     public void addFollowedUser(User followedUser){
-
+        this.followedUsers.add(followedUser);
     }
 
     public void removeFollowedUser(User followedUser) {
-
+        this.followedUsers.remove(followedUser);
     }
 
-    public boolean isActiveUser(){
+    public boolean isActiveUser(){                                                                  //?
         return false;
     }
 
@@ -104,13 +104,24 @@ public class User {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
-        User user = (User) o;
-
-        return getUsername().equals(user.getUsername());
-
+        if (o instanceof User){
+            User test = (User) o;
+            if (this.username.equals(test.getUsername()) && this.password.equals(test.getPassword())
+                    && this.creationDate.equals(test.getCreationDate()) && this.followers.equals(test.getFollowers())
+                    && this.followedUsers.equals(test.getFollowedUsers()) && this.habitTypes.equals(test.getHabitTypes())) return true;
+        }
+        return false;
     }
 
+    /**
+     * if (obj instanceof SwEngineer){ //see if is an isntance of it
+     SwEngineer test = (SwEngineer) obj;
+     if (test.projName.equals(this.projName) && test.getName().equals(this.getName())
+     && test.getBaseSalary() == this.getBaseSalary()) return true;
+     }
+     return false;
+     * @return
+     */
     @Override
     public String toString(){
         return this.username;

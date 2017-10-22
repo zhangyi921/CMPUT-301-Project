@@ -7,12 +7,12 @@ package com.notcmput301.habitbook;
 public class FollowerRequest {
     private User requester;
     private User requestedUser;
-    private boolean requestAccepted;
+    private int requestAccepted;
 
     public FollowerRequest(User requester, User requestedUser) {
         this.requester = requester;
         this.requestedUser = requestedUser;
-        this.requestAccepted = false;
+        this.requestAccepted = 0;
     }
 
     public User getRequester() {
@@ -24,23 +24,25 @@ public class FollowerRequest {
     }
 
     public void acceptRequest() {
-        this.requestAccepted = true;
+        this.requestAccepted = 1; // 1 denotes success
     }
 
     public void revokePrivilege() {
-        this.requestAccepted = false;
-    }
+        this.requestAccepted = 2;
+    } // 2 denotes fail
+
+    public int viewStatus(){return this.requestAccepted;}
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
-        FollowerRequest that = (FollowerRequest) o;
-
-        if (!getRequester().equals(that.getRequester())) return false;
-        return getRequestedUser().equals(that.getRequestedUser());
-
+        if (o instanceof FollowerRequest){
+            FollowerRequest test = (FollowerRequest) o;
+            if (this.requester.equals(test.getRequester()) && this.requestedUser.equals(test.getRequestedUser())
+                    && this.requestAccepted==test.viewStatus()) return true;
+        }
+        return false;
     }
 
 }

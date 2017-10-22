@@ -1,12 +1,12 @@
 <component name="libraryTable">
   <library name="recyclerview-v7-25.3.1">
     <CLASSES>
-      <root url="file://$USER_HOME$/.android/build-cache/b75953d3de5e639ae4e7b2362bc0c4e3ab4c6919/output/res" />
-      <root url="jar://$USER_HOME$/.android/build-cache/b75953d3de5e639ae4e7b2362bc0c4e3ab4c6919/output/jars/classes.jar!/" />
+      <root url="jar://$USER_HOME$/.android/build-cache/42a899f30bd979e73e0338d688434ca744b4d7dc/output/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.android/build-cache/42a899f30bd979e73e0338d688434ca744b4d7dc/output/res" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
-      <root url="jar://E:/SDKFOLDER/extras/android/m2repository/com/android/support/recyclerview-v7/25.3.1/recyclerview-v7-25.3.1-sources.jar!/" />
+      <root url="jar://$USER_HOME$/AppData/Local/Android/sdk/extras/android/m2repository/com/android/support/recyclerview-v7/25.3.1/recyclerview-v7-25.3.1-sources.jar!/" />
     </SOURCES>
   </library>
 </component>
