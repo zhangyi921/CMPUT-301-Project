@@ -22,6 +22,5 @@ public class HabitEventTest {
         HabitEvent event = new HabitEvent(habit, "comment");
         assertTrue("comment" == event.getComment());
         assertTrue(habit == event.getHabitType());
-        assertTrue(date == event.getDate());
     }
 }
