@@ -20,5 +20,8 @@ public class HabitEventTest {
         User user = new User("user", "password");
         HabitType habit = new HabitType(user, "habit1", "test", date, weekday);
         HabitEvent event = new HabitEvent(habit, "comment");
+        assertTrue("comment" == event.getComment());
+        assertTrue(habit == event.getHabitType());
+        assertTrue(date == event.getDate());
     }
 }
