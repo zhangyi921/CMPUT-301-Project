@@ -13,10 +13,6 @@ import java.util.Date;
 
 public class HabitEventTest {
     @Test
-    public void addition_isCorrect() throws Exception {
-        assertEquals(4, 2 + 2);
-    }
-    @Test
     public void createEvent(){
         Date date = new Date();
         ArrayList<String> weekday = new ArrayList<>();
