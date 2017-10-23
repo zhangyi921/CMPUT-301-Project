@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">HabitBook</string>
+    <string name="title_activity_habit_event_details">HabitEventDetailsActivity</string>
+</resources>
