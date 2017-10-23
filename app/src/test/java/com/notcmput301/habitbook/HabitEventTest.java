@@ -6,6 +6,7 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import android.graphics.Bitmap;
 import android.test.ActivityInstrumentationTestCase2;
 
 import java.util.ArrayList;
@@ -28,7 +29,7 @@ public class HabitEventTest {
         HabitType habit = new HabitType(user, "habit1", "test", date, weekday);
         HabitEvent event = new HabitEvent(habit, "comment");
         assertTrue("comment" == event.getComment());
-        //assertTrue(habit == event.getHabitType());
+        assertTrue(habit == event.getHabitType());
         assertTrue(date == event.getDate());
 
     }
@@ -64,7 +65,33 @@ public class HabitEventTest {
         User user = new User("user", "password");
         HabitType habit = new HabitType(user, "habit1", "test", date, weekday);
         HabitEvent event = new HabitEvent(habit, "comment", "image",null);
-        assertTrue(event.getImage() == null);
+        assertTrue(event.getImage() != null);
+
+
+
+    }
+    @Test
+    public void setImagteTest(){
+        Date date = new Date();
+        ArrayList<String> weekday = new ArrayList<>();
+        weekday.add("Monday");
+        User user = new User("user", "password");
+        HabitType habit = new HabitType(user, "habit1", "test", date, weekday);
+        HabitEvent event = new HabitEvent(habit, "comment", "image",null);
+        Bitmap image = event.getImage();
+        assertTrue(image != null);
+        event.setImage("image path");
+        assertTrue(event.getImage() != image);
+    }
+    @Test
+    public void getDateTest(){
+        Date date = new Date();
+        ArrayList<String> weekday = new ArrayList<>();
+        weekday.add("Monday");
+        User user = new User("user", "password");
+        HabitType habit = new HabitType(user, "habit1", "test", date, weekday);
+        HabitEvent event = new HabitEvent(habit, "comment");
+        assertTrue(date == event.getDate());
 
 
     }
