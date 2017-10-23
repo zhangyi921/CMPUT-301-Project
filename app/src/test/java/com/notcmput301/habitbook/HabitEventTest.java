@@ -7,6 +7,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import android.graphics.Bitmap;
+import android.location.Location;
 import android.test.ActivityInstrumentationTestCase2;
 
 import java.util.ArrayList;
@@ -67,6 +68,16 @@ public class HabitEventTest {
         HabitEvent event = new HabitEvent(habit, "comment", "image",null);
         assertTrue(event.getImage() != null);
 
+    }
+    @Test
+    public void getLocationTest(){
+        Date date = new Date();
+        ArrayList<String> weekday = new ArrayList<>();
+        weekday.add("Monday");
+        User user = new User("user", "password");
+        HabitType habit = new HabitType(user, "habit1", "test", date, weekday);
+        HabitEvent event = new HabitEvent(habit, "comment", null, "location");
+        assertTrue(event.getLocation() != null);
 
 
     }
@@ -94,5 +105,27 @@ public class HabitEventTest {
         assertTrue(date == event.getDate());
 
 
+    }
+    @Test
+    public void likeTest(){
+        Date date = new Date();
+        ArrayList<String> weekday = new ArrayList<>();
+        weekday.add("Monday");
+        User user = new User("user", "password");
+        HabitType habit = new HabitType(user, "habit1", "test", date, weekday);
+        HabitEvent event = new HabitEvent(habit, "comment");
+        event.setLikes(4);
+        assertTrue(4 == event.getLikes());
+    }
+    @Test
+    public void dislikeTest(){
+        Date date = new Date();
+        ArrayList<String> weekday = new ArrayList<>();
+        weekday.add("Monday");
+        User user = new User("user", "password");
+        HabitType habit = new HabitType(user, "habit1", "test", date, weekday);
+        HabitEvent event = new HabitEvent(habit, "comment");
+        event.setDislikes(4);
+        assertTrue(4 == event.getDislikes());
     }
 }
