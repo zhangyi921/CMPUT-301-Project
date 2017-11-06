@@ -21,48 +21,41 @@ import java.util.ArrayList;
 
 public class LocalFileControler {
     private static final String UserFile = "user.sav";
-    private static final String HabitFile = "habit.sav";
-    private static final String EventFile = "event.sav";
+
     private ArrayList<User> users;
-    private ArrayList<HabitType> habitTypes;
-    private ArrayList<HabitEvent> habitEvents;
+
 
     public LocalFileControler(){
 
-        users = loadFromFile(UserFile);
-        habitTypes = loadFromFile(HabitFile);
-        habitEvents = loadFromFile(EventFile);
-    }
-    public ArrayList<User> getUsers(){
+        this.users = loadFromFile();
 
-        return users;
     }
-    public ArrayList<HabitType> getHabitTypes(){
 
-        return habitTypes;
+    public User Login(String username, String password){
+        for (User u : this.users){
+            if (u.getUsername() == username && u.getPassword() == password){
+                return u;
+            }
+        }
+        return null;
     }
-    public ArrayList<HabitEvent> getHabitEvents(){
-
-        return habitEvents;
+    public void Save(User user){
+        for (User u : this.users){
+            if (u.getUsername() == user.getUsername()){
+                int index = this.users.indexOf(u);
+                this.users.set(index, user);
+                SaveInFile();
+                break;
+            }
+        }
     }
-    public void UpdateUsers(ArrayList<User> users){
-
-        SaveInFile(users, UserFile);
-    }
-    public void UpdateHabitTypes(ArrayList<HabitType> habitTypes){
-
-        SaveInFile(habitTypes, HabitFile);
-    }
-    public void UpdateHabitEvents(ArrayList<HabitEvent> habitEvents){
-        SaveInFile(habitEvents, EventFile);
-    }
-    private void SaveInFile(ArrayList DataArray, String FileName){
+    private void SaveInFile(){
         try {
-            FileOutputStream fos = openFileOutput(FileName,
+            FileOutputStream fos = openFileOutput(UserFile,
                     Context.MODE_PRIVATE);
             OutputStreamWriter writer = new OutputStreamWriter(fos);
             Gson gson = new Gson();
-            gson.toJson(DataArray, writer);
+            gson.toJson(this.users, writer);
             writer.flush();
             fos.close();
         } catch (FileNotFoundException e) {
@@ -75,38 +68,25 @@ public class LocalFileControler {
             //e.printStackTrace();
         }
     }
-    private ArrayList loadFromFile(String FileName) {
+    private ArrayList loadFromFile() {
         //ArrayList<String> tweets = new ArrayList<String>();
         try {
-            FileInputStream fis = openFileInput(FileName);
+            FileInputStream fis = openFileInput(UserFile);
             BufferedReader in = new BufferedReader(new InputStreamReader(fis));
             Gson gson = new Gson();
-            Type listType;
-            if (FileName == UserFile){
-                listType = new TypeToken<ArrayList<User>>() {}.getType();
-            }
-            else if (FileName == HabitFile){
-                listType = new TypeToken<ArrayList<HabitType>>() {}.getType();
-            }
-            else {
-                listType = new TypeToken<ArrayList<HabitEvent>>() {}.getType();
-            }
+
+            Type listType = new TypeToken<ArrayList<User>>() {}.getType();
+
 
             return gson.fromJson(in, listType);
 
 
         } catch (FileNotFoundException e) {
             // TODO Auto-generated catch block
-            if (FileName == UserFile){
-                ArrayList<User> users = new ArrayList<>();
-                return users;
-            }
-            else if (FileName == HabitFile){
-                ArrayList<HabitType> habitTypes = new ArrayList<>();
-                return habitTypes;            }
-            else {
-                ArrayList<HabitEvent> habitEvents = new ArrayList<>();
-                return habitEvents;            }
+
+            ArrayList<User> users = new ArrayList<>();
+            return users;
+
             //e.printStackTrace();
         } catch (IOException e) {
             // TODO Auto-generated catch block
