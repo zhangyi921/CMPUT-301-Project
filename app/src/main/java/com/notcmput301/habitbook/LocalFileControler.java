@@ -23,21 +23,27 @@ public class LocalFileControler {
     private static final String UserFile = "user.sav";
     private static final String HabitFile = "habit.sav";
     private static final String EventFile = "event.sav";
+    private ArrayList<User> users;
+    private ArrayList<HabitType> habitTypes;
+    private ArrayList<HabitEvent> habitEvents;
 
     public LocalFileControler(){
 
+        users = loadFromFile(UserFile);
+        habitTypes = loadFromFile(HabitFile);
+        habitEvents = loadFromFile(EventFile);
     }
-    public ArrayList<User> LoadUsers(){
+    public ArrayList<User> getUsers(){
 
-        return loadFromFile(UserFile);
+        return users;
     }
-    public ArrayList<HabitType> LoadHabitTypes(){
+    public ArrayList<HabitType> getHabitTypes(){
 
-        return loadFromFile(HabitFile);
+        return habitTypes;
     }
-    public ArrayList<HabitEvent> LoadHabitEvents(){
+    public ArrayList<HabitEvent> getHabitEvents(){
 
-        return loadFromFile(EventFile);
+        return habitEvents;
     }
     public void UpdateUsers(ArrayList<User> users){
 
