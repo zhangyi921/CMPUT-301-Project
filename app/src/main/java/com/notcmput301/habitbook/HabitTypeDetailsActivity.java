@@ -18,6 +18,7 @@ public class HabitTypeDetailsActivity extends AppCompatActivity {
     private HabitType habit;
     private EditText titleText;
     private EditText reasonText;
+    private TextView startDate;
     private TextView habitSchedule;
     private TextView weekdays;
     private CheckBox monday;
@@ -58,6 +59,10 @@ public class HabitTypeDetailsActivity extends AppCompatActivity {
 
         titleText = (EditText) findViewById(R.id.Title);
         titleText.setText(currentHabitType.getTitle());
+        reasonText = (EditText) findViewById(R.id.Reason);
+        reasonText.setText(currentHabitType.getReason());
+        startDate = (TextView) findViewById(R.id.StartDate);
+        startDate.setText("Starting Date: "+currentHabitType.getStartDate().toString());
     }
 
     public void displayCompletionStatus(HabitType Habit){
