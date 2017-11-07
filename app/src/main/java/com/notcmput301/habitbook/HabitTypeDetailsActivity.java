@@ -20,7 +20,7 @@ public class HabitTypeDetailsActivity extends AppCompatActivity {
     private EditText reasonText;
     private TextView startDate;
     private TextView habitSchedule;
-    private TextView weekdays;
+    private ArrayList<Integer> weekdays;
     private CheckBox monday;
     private CheckBox tuesday;
     private CheckBox wednesday;
@@ -56,6 +56,7 @@ public class HabitTypeDetailsActivity extends AppCompatActivity {
         this.currentHabitType = this.habitTypes.get(index);
         this.target = bundle.getString("localfilecontroller");
         this.localFileControler = gson.fromJson(target, LocalFileControler.class);
+        this.weekdays = currentHabitType.getWeekdays();
 
         titleText = (EditText) findViewById(R.id.Title);
         titleText.setText(currentHabitType.getTitle());
@@ -63,6 +64,9 @@ public class HabitTypeDetailsActivity extends AppCompatActivity {
         reasonText.setText(currentHabitType.getReason());
         startDate = (TextView) findViewById(R.id.StartDate);
         startDate.setText("Starting Date: "+currentHabitType.getStartDate().toString());
+        monday = (CheckBox) findViewById(R.id.Mon);
+        monday.setChecked(this.weekdays.indexOf(1) != -1);
+
     }
 
     public void displayCompletionStatus(HabitType Habit){

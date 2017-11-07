@@ -15,10 +15,10 @@ public class HabitType {
     private Date startDate;
     private Integer eventsCompleted;
     private Integer totalEvents;
-    private ArrayList<String> weekdays;
+    private ArrayList<Integer> weekdays;
     private ArrayList<HabitEvent> events;
 
-    public HabitType(User owner, String title, String reason, Date startDate,  ArrayList<String> weekdays ) {
+    public HabitType(User owner, String title, String reason, Date startDate,  ArrayList<Integer> weekdays ) {
         this.owner = owner;
         this.title = title;
         this.reason = reason;
@@ -78,11 +78,11 @@ public class HabitType {
         this.totalEvents = totalEvents;
     }
 
-    public ArrayList<String> getWeekdays() {
+    public ArrayList<Integer> getWeekdays() {
         return weekdays;
     }
 
-    public void setWeekdays(ArrayList<String> weekdays) {
+    public void setWeekdays(ArrayList<Integer> weekdays) {
         this.weekdays = weekdays;
     }
 
