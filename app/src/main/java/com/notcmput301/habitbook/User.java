@@ -80,6 +80,12 @@ public class User {
         this.habitTypes.remove(habit);
     }
 
+    public void updateHabitType(HabitType OldHabit, HabitType NewHabit){
+
+        int index = this.habitTypes.indexOf(OldHabit);
+        this.habitTypes.set(index, NewHabit);
+    }
+
     public void addFollower(User follower){
         this.followers.add(follower);
     }
