@@ -1,5 +1,6 @@
 package com.notcmput301.habitbook;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,6 +19,11 @@ public class HabitTypeListActivity extends AppCompatActivity {
     private ArrayList<HabitType> habitTypes;
     private ListView habitTypeList;
     private Button addNewHabit;
+    ArrayAdapter<HabitType> Adapter;
+    private String target;
+    private Gson gson;
+    private User user;
+    private LocalFileControler localFileControler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,17 +31,27 @@ public class HabitTypeListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_habit_type_list);
 
         Bundle bundle = getIntent().getExtras();
-        String target = bundle.getString("user");
-        Gson gson = new Gson();
-        User user = gson.fromJson(target, User.class);
+        this.target = bundle.getString("user");
+        this.gson = new Gson();
+        this.user = gson.fromJson(target, User.class);
+        this.habitTypes = user.getHabitTypes();
+        this.target = bundle.getString("localfilecontroller");
+        this.localFileControler = gson.fromJson(target, LocalFileControler.class);
 
-        ArrayAdapter<HabitType> Adapter = new ArrayAdapter<HabitType>(HabitTypeListActivity.this,
-                android.R.layout.simple_list_item_1, user.getHabitTypes());
-        ListView HabitList = (ListView) findViewById(R.id.HabitList);
-        HabitList.setAdapter(Adapter);
-        HabitList.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+        this.Adapter = new ArrayAdapter<HabitType>(HabitTypeListActivity.this,
+                android.R.layout.simple_list_item_1, this.habitTypes);
+        this.habitTypeList = (ListView) findViewById(R.id.HabitList);
+        this.habitTypeList.setAdapter(Adapter);
+        this.habitTypeList.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l){
+                Intent intent = new Intent(HabitTypeListActivity.this, HabitTypeDetailsActivity.class);
+                intent.putExtra("index", i);
+                target = gson.toJson(user);
+                intent.putExtra("user", target);
+                target = gson.toJson(localFileControler);
+                intent.putExtra("localfilecontroller", target);
+                startActivityForResult(intent, 1);
 
             }
         });
@@ -45,8 +61,35 @@ public class HabitTypeListActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(HabitTypeListActivity.this, CreateHabitActivity.class);
-                startActivity(intent);
+                target = gson.toJson(user);
+                intent.putExtra("user", target);
+                target = gson.toJson(localFileControler);
+                intent.putExtra("localfilecontroller", target);
+                startActivityForResult(intent,2);
             }
         });
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent){
+        // back from detail page
+        if (requestCode == 1){
+            // if user makes changes
+            if (resultCode == Activity.RESULT_OK){
+                // reload user from saved file
+                this.user = this.localFileControler.Login(this.user.getUsername(), this.user.getPassword());
+                this.habitTypes = this.user.getHabitTypes();
+                this.Adapter.notifyDataSetChanged();
+            }
+        }
+        // back from creating habit type page
+        else if (requestCode == 2){
+            // if user makes changes
+            if (resultCode == Activity.RESULT_OK){
+                // reload user from saved file
+                this.user = this.localFileControler.Login(this.user.getUsername(), this.user.getPassword());
+                this.habitTypes = this.user.getHabitTypes();
+                this.Adapter.notifyDataSetChanged();
+            }
+        }
     }
 }
