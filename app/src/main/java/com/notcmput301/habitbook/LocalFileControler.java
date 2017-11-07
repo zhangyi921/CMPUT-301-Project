@@ -18,6 +18,9 @@ import java.util.ArrayList;
 /**
  * Created by yizhang on 2017-11-05.
  */
+/*
+* Use this class to login and get user object. Any changes made in user including the changes about
+* habit type or habit event, only need to update user. */
 
 public class LocalFileControler {
     private static final String UserFile = "user.sav";
