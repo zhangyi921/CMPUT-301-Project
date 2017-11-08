@@ -67,7 +67,7 @@ public class HabitTypeListActivity extends AppCompatActivity {
                 intent.putExtra("localfilecontroller", target);
                 startActivityForResult(intent,2);
             }
-        });
+        }   );
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent){

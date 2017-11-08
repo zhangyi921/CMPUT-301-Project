@@ -58,6 +58,14 @@ public class HabitType {
         return startDate;
     }
 
+    public void setCreationDate(Date date){
+        this.creationDate = date;
+    }
+
+    public Date getCreationDate(){
+        return this.creationDate;
+    }
+
     public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }

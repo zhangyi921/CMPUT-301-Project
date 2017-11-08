@@ -1,7 +1,9 @@
 package com.notcmput301.habitbook;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -81,7 +83,76 @@ public class HabitTypeDetailsActivity extends AppCompatActivity {
         completionStatus = (TextView) findViewById(R.id.Status);
         //completionStatus.setText(currentHabitType.get);
 
+        back = (Button) findViewById(R.id.Back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        }   );
+        update = (Button) findViewById(R.id.Update);
+        update.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+                if (monday.isChecked()){
+                    if (weekdays.indexOf(1) == -1){
+                        weekdays.add(1);
+                    }
+                }
+                if (tuesday.isChecked()){
+                    if (weekdays.indexOf(1) == -1){
+                        weekdays.add(2);
+                    }
+                }
+                if (wednesday.isChecked()){
+                    if (weekdays.indexOf(1) == -1){
+                        weekdays.add(3);
+                    }
+                }
+                if (thursday.isChecked()){
+                    if (weekdays.indexOf(1) == -1){
+                        weekdays.add(4);
+                    }
+                }
+                if (friday.isChecked()){
+                    if (weekdays.indexOf(1) == -1){
+                        weekdays.add(5);
+                    }
+                }
+                if (saturday.isChecked()){
+                    if (weekdays.indexOf(1) == -1){
+                        weekdays.add(6);
+                    }
+                }
+                if (sunday.isChecked()){
+                    if (weekdays.indexOf(1) == -1){
+                        weekdays.add(7);
+                    }
+                }
+                HabitType Newhabit = new HabitType(user, titleText.getText().toString(),
+                        reasonText.getText().toString(),
+                        currentHabitType.getStartDate(),
+                        weekdays);
+                Newhabit.setEvents(currentHabitType.getEvents());
+                Newhabit.setEventsCompleted(currentHabitType.getEventsCompleted());
+                Newhabit.setStartDate(currentHabitType.getStartDate());
+                Newhabit.setCreationDate(currentHabitType.getCreationDate());
+                Newhabit.setTotalEvents(currentHabitType.getTotalEvents());
+                user.updateHabitType(currentHabitType, Newhabit);
+                localFileControler.Save(user);
+                finish();
+
+            }
+        }   );
+        delete = (Button) findViewById(R.id.Delete);
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                user.removeHabitType(currentHabitType);
+                finish();
+            }
+        }   );
 
 
     }
