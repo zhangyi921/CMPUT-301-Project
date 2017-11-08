@@ -9,12 +9,7 @@
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1f0d1e18-7e3f-4709-a04b-40cac2678227" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/notcmput301/habitbook/HabitType.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/notcmput301/habitbook/HabitType.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/notcmput301/habitbook/HabitTypeDetailsActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/notcmput301/habitbook/HabitTypeDetailsActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/notcmput301/habitbook/HabitTypeListActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/notcmput301/habitbook/HabitTypeListActivity.java" />
-    </list>
+    <list default="true" id="1f0d1e18-7e3f-4709-a04b-40cac2678227" name="Default" comment="" />
     <ignored path="NOTcmput301.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -74,41 +69,16 @@
       <file leaf-file-name="HabitTypeDetailsActivity.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/notcmput301/habitbook/HabitTypeDetailsActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1044">
-              <caret line="143" column="13" lean-forward="true" selection-start-line="143" selection-start-column="13" selection-end-line="143" selection-end-column="13" />
+            <state relative-caret-position="1136">
+              <caret line="152" column="25" lean-forward="false" selection-start-line="152" selection-start-column="25" selection-end-line="152" selection-end-column="25" />
               <folding>
                 <element signature="e#3398#3543#0" expanded="true" />
                 <element signature="e#3542#3543#0" expanded="true" />
-                <element signature="e#3636#5709#0" expanded="true" />
+                <element signature="e#3636#5736#0" expanded="true" />
+                <element signature="e#5735#5736#0" expanded="true" />
+                <element signature="e#5829#6030#0" expanded="true" />
+                <element signature="e#6029#6030#0" expanded="true" />
                 <element signature="method#displayCompletionStatus#0;class#HabitTypeDetailsActivity#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="activity_create_habit.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_create_habit.xml">
-          <provider selected="true" editor-type-id="android-designer2">
-            <state />
-          </provider>
-          <provider editor-type-id="text-editor">
-            <state relative-caret-position="319">
-              <caret line="49" column="37" lean-forward="false" selection-start-line="49" selection-start-column="37" selection-end-line="49" selection-end-column="37" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="HabitType.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/notcmput301/habitbook/HabitType.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-45">
-              <caret line="16" column="4" lean-forward="true" selection-start-line="16" selection-start-column="4" selection-end-line="16" selection-end-column="4" />
-              <folding>
-                <element signature="e#1393#1394#0" expanded="true" />
-                <element signature="e#1433#1434#0" expanded="true" />
-                <element signature="e#1469#1470#0" expanded="true" />
-                <element signature="e#1509#1510#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -2187,7 +2157,7 @@
       <option name="ACTIVITY_CLASS" value="com.notcmput301.habitbook.HabitTypeDetailsActivity" />
       <method>
         <option name="Android.Gradle.BeforeRunTask" enabled="true" />
-        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1510170083257" />
+        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1510170403828" />
       </method>
     </configuration>
     <configuration default="true" type="AndroidJUnit" factoryName="Android JUnit">
@@ -2260,7 +2230,7 @@
       <option name="ACTIVITY_CLASS" value="" />
       <method>
         <option name="Android.Gradle.BeforeRunTask" enabled="true" />
-        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1510170083257" />
+        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1510170403828" />
       </method>
     </configuration>
     <configuration default="true" type="AndroidTestRunConfigurationType" factoryName="Android Instrumented Tests">
@@ -2308,7 +2278,7 @@
       </Profilers>
       <method>
         <option name="Android.Gradle.BeforeRunTask" enabled="true" />
-        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1510170083257" />
+        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1510170403828" />
       </method>
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -2470,7 +2440,7 @@
       <option name="ACTIVITY_CLASS" value="" />
       <method>
         <option name="Android.Gradle.BeforeRunTask" enabled="true" />
-        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1510170083258" />
+        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1510170403829" />
       </method>
     </configuration>
     <list size="6">
@@ -2888,17 +2858,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_habit_type_details.xml">
-      <provider selected="true" editor-type-id="android-designer2">
-        <state />
-      </provider>
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="1206">
-          <caret line="67" column="5" lean-forward="false" selection-start-line="67" selection-start-column="5" selection-end-line="67" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/notcmput301/habitbook/HabitTypeListActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="272">
@@ -2923,14 +2882,28 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_habit_type_details.xml">
+      <provider selected="true" editor-type-id="android-designer2">
+        <state />
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="1206">
+          <caret line="67" column="5" lean-forward="false" selection-start-line="67" selection-start-column="5" selection-end-line="67" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/notcmput301/habitbook/HabitTypeDetailsActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1044">
-          <caret line="143" column="13" lean-forward="true" selection-start-line="143" selection-start-column="13" selection-end-line="143" selection-end-column="13" />
+        <state relative-caret-position="1136">
+          <caret line="152" column="25" lean-forward="false" selection-start-line="152" selection-start-column="25" selection-end-line="152" selection-end-column="25" />
           <folding>
             <element signature="e#3398#3543#0" expanded="true" />
             <element signature="e#3542#3543#0" expanded="true" />
-            <element signature="e#3636#5709#0" expanded="true" />
+            <element signature="e#3636#5736#0" expanded="true" />
+            <element signature="e#5735#5736#0" expanded="true" />
+            <element signature="e#5829#6030#0" expanded="true" />
+            <element signature="e#6029#6030#0" expanded="true" />
             <element signature="method#displayCompletionStatus#0;class#HabitTypeDetailsActivity#0" expanded="false" />
           </folding>
         </state>
