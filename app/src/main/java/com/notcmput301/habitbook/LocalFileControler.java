@@ -1,6 +1,7 @@
 package com.notcmput301.habitbook;
 
 import android.content.Context;
+import android.support.v7.app.AppCompatActivity;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -22,7 +23,7 @@ import java.util.ArrayList;
 * Use this class to login and get user object. Any changes made in user including the changes about
 * habit type or habit event, only need to update user. */
 
-public class LocalFileControler {
+public class LocalFileControler extends AppCompatActivity{
     private static final String UserFile = "user.sav";
 
     private ArrayList<User> users;
@@ -87,7 +88,7 @@ public class LocalFileControler {
         } catch (FileNotFoundException e) {
             // TODO Auto-generated catch block
 
-            ArrayList<User> users = new ArrayList<>();
+            ArrayList<User> users = new ArrayList<User>();
             return users;
 
             //e.printStackTrace();
