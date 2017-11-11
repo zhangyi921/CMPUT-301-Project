@@ -1,19 +1,26 @@
 package com.notcmput301.habitbook;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 import java.util.Date;
+
+import io.searchbox.annotations.JestId;
 
 /**
  * Created by Cole on 2017-10-19.
  */
 
-public class User {
+public class User implements Parcelable {
     private String username;
     private String password;
     private Date creationDate;
     private ArrayList<User> followers;
     private ArrayList<User> followedUsers;
     private ArrayList<HabitType> habitTypes;
+    @JestId
+    private String id;
 
     public User(String username, String password) {
         this.username = username;
@@ -23,6 +30,10 @@ public class User {
         this.followedUsers = new ArrayList<User>();
         this.habitTypes = new ArrayList<HabitType>();
     }
+
+    public String getId(){return this.id;}
+
+    public void setId(String id){this.id=id;}
 
     public String getUsername() {
         return username;
@@ -120,18 +131,55 @@ public class User {
     }
 
     /**
-     * if (obj instanceof SwEngineer){ //see if is an isntance of it
-     SwEngineer test = (SwEngineer) obj;
-     if (test.projName.equals(this.projName) && test.getName().equals(this.getName())
-     && test.getBaseSalary() == this.getBaseSalary()) return true;
-     }
-     return false;
-     * @return
+     * Parcelables - Auto genereated
      */
+
     @Override
     public String toString(){
         return this.username;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.username);
+        dest.writeString(this.password);
+        dest.writeLong(this.creationDate != null ? this.creationDate.getTime() : -1);
+        dest.writeList(this.followers);
+        dest.writeList(this.followedUsers);
+        dest.writeList(this.habitTypes);
+        dest.writeString(this.id);
+    }
+
+    protected User(Parcel in) {
+        this.username = in.readString();
+        this.password = in.readString();
+        long tmpCreationDate = in.readLong();
+        this.creationDate = tmpCreationDate == -1 ? null : new Date(tmpCreationDate);
+        this.followers = new ArrayList<User>();
+        in.readList(this.followers, User.class.getClassLoader());
+        this.followedUsers = new ArrayList<User>();
+        in.readList(this.followedUsers, User.class.getClassLoader());
+        this.habitTypes = new ArrayList<HabitType>();
+        in.readList(this.habitTypes, HabitType.class.getClassLoader());
+        this.id = in.readString();
+    }
+
+    public static final Parcelable.Creator<User> CREATOR = new Parcelable.Creator<User>() {
+        @Override
+        public User createFromParcel(Parcel source) {
+            return new User(source);
+        }
+
+        @Override
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
 }
 
 

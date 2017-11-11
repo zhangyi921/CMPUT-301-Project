@@ -1,4 +1,15 @@
 <resources>
     <string name="app_name">HabitBook</string>
     <string name="title_activity_habit_event_details">HabitEventDetailsActivity</string>
+    <string name="login_welcome">WELCOME</string>
+    <string name="login_uhint">username</string>
+    <string name="login_phint">password</string>
+    <string name="login_lbtn">login</string>
+    <string name="login_sbtn">sign up</string>
+    <string name="createaccount_title">Create Account</string>
+    <string name="enter_your_uHint">Enter your username</string>
+    <string name="createAccount_pw">choose password</string>
+    <string name="createAccount_pwr">repeat password</string>
+    <string name="createAccount_back">Back</string>
+    <string name="createAccount_create">create</string>
 </resources>
