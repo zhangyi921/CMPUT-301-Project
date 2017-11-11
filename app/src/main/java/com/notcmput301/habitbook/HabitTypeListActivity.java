@@ -35,8 +35,8 @@ public class HabitTypeListActivity extends AppCompatActivity {
         this.gson = new Gson();
         this.user = gson.fromJson(target, User.class);
         this.habitTypes = user.getHabitTypes();
-        this.target = bundle.getString("localfilecontroller");
-        this.localFileControler = gson.fromJson(target, LocalFileControler.class);
+        //this.target = bundle.getString("localfilecontroller");
+        //this.localFileControler = gson.fromJson(target, LocalFileControler.class);
 
         this.Adapter = new ArrayAdapter<HabitType>(HabitTypeListActivity.this,
                 android.R.layout.simple_list_item_1, this.habitTypes);
@@ -49,8 +49,8 @@ public class HabitTypeListActivity extends AppCompatActivity {
                 intent.putExtra("index", i);
                 target = gson.toJson(user);
                 intent.putExtra("user", target);
-                target = gson.toJson(localFileControler);
-                intent.putExtra("localfilecontroller", target);
+                //target = gson.toJson(localFileControler);
+                //intent.putExtra("localfilecontroller", target);
                 startActivityForResult(intent, 1);
 
             }
@@ -63,8 +63,8 @@ public class HabitTypeListActivity extends AppCompatActivity {
                 Intent intent = new Intent(HabitTypeListActivity.this, CreateHabitActivity.class);
                 target = gson.toJson(user);
                 intent.putExtra("user", target);
-                target = gson.toJson(localFileControler);
-                intent.putExtra("localfilecontroller", target);
+                //target = gson.toJson(localFileControler);
+                //intent.putExtra("localfilecontroller", target);
                 startActivityForResult(intent,2);
             }
         }   );
@@ -86,7 +86,7 @@ public class HabitTypeListActivity extends AppCompatActivity {
             // if user makes changes
             if (resultCode == Activity.RESULT_OK){
                 // reload user from saved file
-                this.user = this.localFileControler.Login(this.user.getUsername(), this.user.getPassword());
+                //this.user = this.localFileControler.Login(this.user.getUsername(), this.user.getPassword());
                 this.habitTypes = this.user.getHabitTypes();
                 this.Adapter.notifyDataSetChanged();
             }
