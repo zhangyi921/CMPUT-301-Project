@@ -120,7 +120,7 @@ public class ElasticSearch {
 
             for (User user : users) {
 
-                Index index = new Index.Builder(user).index("team28").type("user").id(user.getId()).build();
+                Index index = new Index.Builder(user).index("t28test2").type("user").id(user.getId()).build();
                 try {
 
                     // where is the client?
