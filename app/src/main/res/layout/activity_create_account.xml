@@ -12,7 +12,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:text="@string/createaccount_title"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="30sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -61,25 +60,25 @@
 
     <Button
         android:id="@+id/createAccount_confirm"
+        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="85dp"
         android:layout_marginTop="32dp"
         android:onClick="caCreate"
         android:text="@string/createAccount_create"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/createAccount_passwordR" />
 
     <Button
         android:id="@+id/createAccount_back"
+        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="84dp"
         android:layout_marginTop="32dp"
         android:onClick="caBack"
         android:text="@string/createAccount_back"
-        android:textAppearance="@style/TextAppearance.AppCompat"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/createAccount_passwordR" />
 </android.support.constraint.ConstraintLayout>

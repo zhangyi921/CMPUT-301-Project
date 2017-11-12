@@ -33,7 +33,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (u==null){
                     Toast.makeText(this, "Check password or internet connection", Toast.LENGTH_LONG).show();
                 }else{
-                    Toast.makeText(this, "Logged in!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "Logged in!", Toast.LENGTH_SHORT).show();
                     Intent mainmenu = new Intent(LoginActivity.this, MainMenuActivity.class);
                     mainmenu.putExtra("passedUser", u);
                     startActivity(mainmenu);
