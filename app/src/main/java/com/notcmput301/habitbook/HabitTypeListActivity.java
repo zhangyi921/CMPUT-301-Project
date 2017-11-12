@@ -96,6 +96,12 @@ public class HabitTypeListActivity extends AppCompatActivity {
 
 
         this.habitTypes = this.user.getHabitTypes();
+
+
+        this.Adapter = new ArrayAdapter<HabitType>(HabitTypeListActivity.this,
+                android.R.layout.simple_list_item_1, this.habitTypes);
+        this.habitTypeList = (ListView) findViewById(R.id.HabitList);
+        this.habitTypeList.setAdapter(Adapter);
         this.Adapter.notifyDataSetChanged();
     }
 
