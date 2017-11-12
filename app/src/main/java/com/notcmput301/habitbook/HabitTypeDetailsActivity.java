@@ -140,7 +140,9 @@ public class HabitTypeDetailsActivity extends AppCompatActivity {
                 Newhabit.setCreationDate(currentHabitType.getCreationDate());
                 Newhabit.setTotalEvents(currentHabitType.getTotalEvents());
                 user.updateHabitType(currentHabitType, Newhabit);
-                localFileControler.Save(user);
+                //localFileControler.Save(user);
+                ElasticSearch.UpdateUserTask updateUserTask = new ElasticSearch.UpdateUserTask();
+                updateUserTask.execute(user);
                 finish();
 
             }
@@ -150,6 +152,8 @@ public class HabitTypeDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 user.removeHabitType(currentHabitType);
+                ElasticSearch.UpdateUserTask updateUserTask = new ElasticSearch.UpdateUserTask();
+                updateUserTask.execute(user);
                 finish();
             }
         }   );
