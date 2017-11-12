@@ -112,6 +112,33 @@ public class ElasticSearch {
         }
     }
 
+    /**
+     * Used to add HabitType to database
+     */
+    public static class addHabitType extends AsyncTask<HabitType, Void, Boolean>{
+
+        @Override
+        public Boolean doInBackground(HabitType... ht){
+            verifySettings();
+            if (ht.length != 1){
+                Log.e("Bad input", "expected 1 Habit type");
+                return false;
+            }
+            Index htitem = new Index.Builder(ht[0]).index("t28test2").type("habittype").build();
+            try{
+                DocumentResult result = client.execute(htitem);
+                if (result.isSucceeded()){
+                    return true;
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+                Log.e("failed add", "Failed to add HabitType");
+                return false;
+            }
+            return false;
+        }
+    }
+
     public static void verifySettings(){
         if (client==null){
             DroidClientConfig.Builder builder = new DroidClientConfig.Builder("http://cmput301.softwareprocess.es:8080/");

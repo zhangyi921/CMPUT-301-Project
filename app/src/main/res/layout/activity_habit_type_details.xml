@@ -29,7 +29,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <TextView
-        android:id="@+id/StartDate"
+        android:id="@+id/CHT_Startdate"
         android:layout_width="351dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
@@ -40,7 +40,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
     <EditText
-        android:id="@+id/Title"
+        android:id="@+id/CHT_Title"
         android:layout_width="0dp"
         android:layout_height="44dp"
         android:layout_marginEnd="16dp"
@@ -53,7 +53,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/Reason"
+        android:id="@+id/CHT_Reason"
         android:layout_width="0dp"
         android:layout_height="44dp"
         android:layout_marginEnd="16dp"
@@ -63,7 +63,7 @@
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Title" />
+        app:layout_constraintTop_toBottomOf="@+id/CHT_Title" />
 
     <TextView
         android:id="@+id/textView4"
@@ -76,51 +76,51 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.52"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/StartDate" />
+        app:layout_constraintTop_toBottomOf="@+id/CHT_Startdate" />
 
     <CheckBox
-        android:id="@+id/Tu"
+        android:id="@+id/CHT_T"
         android:layout_width="50dp"
         android:layout_height="30dp"
         android:layout_marginTop="20dp"
         android:text="T"
-        app:layout_constraintStart_toEndOf="@+id/Mon"
+        app:layout_constraintStart_toEndOf="@+id/CHT_M"
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
     <CheckBox
-        android:id="@+id/Wes"
+        android:id="@+id/CHT_W"
         android:layout_width="50dp"
         android:layout_height="30dp"
         android:layout_marginTop="20dp"
         android:text="W"
-        app:layout_constraintStart_toEndOf="@+id/Tu"
+        app:layout_constraintStart_toEndOf="@+id/CHT_T"
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
     <CheckBox
-        android:id="@+id/Thu"
+        android:id="@+id/CHT_Tr"
         android:layout_width="50dp"
         android:layout_height="30dp"
         android:layout_marginTop="20dp"
         android:text="T"
-        app:layout_constraintStart_toEndOf="@+id/Wes"
+        app:layout_constraintStart_toEndOf="@+id/CHT_W"
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
     <CheckBox
-        android:id="@+id/Fri"
+        android:id="@+id/CHT_F"
         android:layout_width="50dp"
         android:layout_height="30dp"
         android:layout_marginTop="20dp"
         android:text="F"
-        app:layout_constraintStart_toEndOf="@+id/Thu"
+        app:layout_constraintStart_toEndOf="@+id/CHT_Tr"
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
     <CheckBox
-        android:id="@+id/Sat"
+        android:id="@+id/CHT_Sa"
         android:layout_width="50dp"
         android:layout_height="30dp"
         android:layout_marginTop="20dp"
         android:text="Sa"
-        app:layout_constraintStart_toEndOf="@+id/Fri"
+        app:layout_constraintStart_toEndOf="@+id/CHT_F"
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
     <CheckBox
@@ -129,11 +129,11 @@
         android:layout_height="30dp"
         android:layout_marginTop="20dp"
         android:text="Su"
-        app:layout_constraintStart_toEndOf="@+id/Sat"
+        app:layout_constraintStart_toEndOf="@+id/CHT_Sa"
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
     <CheckBox
-        android:id="@+id/Mon"
+        android:id="@+id/CHT_M"
         android:layout_width="50dp"
         android:layout_height="30dp"
         android:layout_marginStart="20dp"

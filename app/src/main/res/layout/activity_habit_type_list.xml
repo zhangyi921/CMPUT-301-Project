@@ -8,6 +8,7 @@
 
     <ListView
         android:id="@+id/HabitList"
+        style="@android:style/Widget.DeviceDefault.ExpandableListView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="80dp"
@@ -20,13 +21,15 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/NewHabit"
+        android:id="@+id/HabitT_new"
+        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="186dp"
         android:layout_height="49dp"
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="148dp"
         android:layout_marginStart="148dp"
-        android:text="New habit"
+        android:onClick="HTLnewHabitType"
+        android:text="@string/HabitT_newhabit"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

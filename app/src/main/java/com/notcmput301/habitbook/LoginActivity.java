@@ -11,11 +11,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class LoginActivity extends AppCompatActivity {
-//    private TextView loginScreen;
-//    private EditText usernameText;
-//    private EditText passwordText;
-//    private Button login;
-//    private Button createAccount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

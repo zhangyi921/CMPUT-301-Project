@@ -8,6 +8,7 @@ import java.util.Date;
  */
 
 public class HabitType {
+    private String ownername;
     private User owner;
     private String title;
     private String reason;
@@ -15,10 +16,11 @@ public class HabitType {
     private Date startDate;
     private Integer eventsCompleted;
     private Integer totalEvents;
-    private ArrayList<Integer> weekdays;
+    private ArrayList<Boolean> weekdays;
     private ArrayList<HabitEvent> events;
 
-    public HabitType(User owner, String title, String reason, Date startDate,  ArrayList<Integer> weekdays ) {
+    public HabitType(User owner, String title, String reason, Date startDate,  ArrayList<Boolean> weekdays ) {
+        this.ownername = owner.getUsername();
         this.owner = owner;
         this.title = title;
         this.reason = reason;
@@ -86,11 +88,11 @@ public class HabitType {
         this.totalEvents = totalEvents;
     }
 
-    public ArrayList<Integer> getWeekdays() {
+    public ArrayList<Boolean> getWeekdays() {
         return weekdays;
     }
 
-    public void setWeekdays(ArrayList<Integer> weekdays) {
+    public void setWeekdays(ArrayList<Boolean> weekdays) {
         this.weekdays = weekdays;
     }
 

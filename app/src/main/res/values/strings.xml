@@ -12,4 +12,24 @@
     <string name="createAccount_pwr">repeat password</string>
     <string name="createAccount_back">Back</string>
     <string name="createAccount_create">create</string>
+    <string name="MM_Title">HabitBook</string>
+    <string name="MM_HabitT">Habit Type</string>
+    <string name="MM_THabit">Today\'s Habit</string>
+    <string name="MM_HabitEH">Habit Event History</string>
+    <string name="MM_Online">Online</string>
+    <string name="MM_Logout">Logout</string>
+    <string name="HabitT_newhabit">New habit</string>
+    <string name="CHT_F">F</string>
+    <string name="CHT_M">M</string>
+    <string name="CHT_Sat">Sa</string>
+    <string name="CHT_Su">Su</string>
+    <string name="CHT_T">T</string>
+    <string name="CHT_Tr">Tr</string>
+    <string name="CHT_W">W</string>
+    <string name="CHT_Title">Create Habit Type</string>
+    <string name="CHT_TitleEditText">Habit Type Title</string>
+    <string name="CHT_Schedule">Habit Schedule</string>
+    <string name="CHT_Create">Create</string>
+    <string name="CHT_StartdateEditText">Starting Date (YY-MM-DD)</string>
+    <string name="CHT_ReasonEditText">Your Reason</string>
 </resources>
