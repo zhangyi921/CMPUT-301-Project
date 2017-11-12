@@ -56,8 +56,8 @@ public class HabitTypeDetailsActivity extends AppCompatActivity {
         this.user = gson.fromJson(target, User.class);
         this.habitTypes = user.getHabitTypes();
         this.currentHabitType = this.habitTypes.get(index);
-        this.target = bundle.getString("localfilecontroller");
-        this.localFileControler = gson.fromJson(target, LocalFileControler.class);
+        //this.target = bundle.getString("localfilecontroller");
+        //this.localFileControler = gson.fromJson(target, LocalFileControler.class);
         this.weekdays = currentHabitType.getWeekdays();
 
         titleText = (EditText) findViewById(R.id.Title);

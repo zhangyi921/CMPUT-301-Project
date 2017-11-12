@@ -23,7 +23,7 @@ public class HabitTypeListActivity extends AppCompatActivity {
     private String target;
     private Gson gson;
     private User user;
-    private LocalFileControler localFileControler;
+    //private LocalFileControler localFileControler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,8 +93,10 @@ public class HabitTypeListActivity extends AppCompatActivity {
                 Bundle bundle = intent.getExtras();
                 this.target = bundle.getString("HabitType");
                 HabitType ht = gson.fromJson(target, HabitType.class);
-                this.habitTypes.add(ht);
+                this.user.addHabitType(ht);
                 this.Adapter.notifyDataSetChanged();
+                ElasticSearch.UpdateUserTask updateUserTask = new ElasticSearch.UpdateUserTask();
+                updateUserTask.execute(this.user);
             }
         }
     }

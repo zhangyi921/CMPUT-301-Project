@@ -112,6 +112,38 @@ public class ElasticSearch {
         }
     }
 
+    public static class UpdateUserTask extends AsyncTask<User, Void, Void> {
+
+        @Override
+        protected Void doInBackground(User... users) {
+            verifySettings();
+
+            for (User user : users) {
+
+                Index index = new Index.Builder(user).index("team28").type("user").id(user.getId()).build();
+                try {
+
+                    // where is the client?
+                    DocumentResult result = client.execute(index);
+                    if (result.isSucceeded()){
+
+                        //user.setId(result.getId());
+                        Log.i("debug", result.getId());
+                    }
+                    else
+                    {
+                        Log.i("debug","Elasticsearch was not able to update ");
+                    }
+                }
+                catch (Exception e) {
+                    Log.i("debug", e.getMessage());
+                }
+
+            }
+            return null;
+        }
+    }
+
     public static void verifySettings(){
         if (client==null){
             DroidClientConfig.Builder builder = new DroidClientConfig.Builder("http://cmput301.softwareprocess.es:8080/");
