@@ -1,5 +1,6 @@
 package com.notcmput301.habitbook;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Button;
@@ -9,6 +10,8 @@ import android.widget.TextView;
 
 public class HabitEventDetailsActivity extends AppCompatActivity {
     private User loggedInUser;
+    private int position;
+
     private HabitType habit;
     private HabitEvent habitEvent;
     private TextView habitEventInfo;
@@ -30,5 +33,8 @@ public class HabitEventDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_habit_event_details);
+        Intent receiver = getIntent();
+        this.loggedInUser = receiver.getParcelableExtra("passedUser");
+        this.position = receiver.getExtras().getInt("position");
     }
 }

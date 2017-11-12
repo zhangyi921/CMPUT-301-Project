@@ -1,5 +1,8 @@
 package com.notcmput301.habitbook;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -7,7 +10,7 @@ import java.util.Date;
  * Created by Cole on 2017-10-19.
  */
 
-public class HabitType {
+public class HabitType implements Parcelable {
     private String ownername;
     private User owner;
     private String title;
@@ -131,4 +134,53 @@ public class HabitType {
     public String toString(){
         return this.title;
     }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.ownername);
+        dest.writeParcelable(this.owner, flags);
+        dest.writeString(this.title);
+        dest.writeString(this.reason);
+        dest.writeLong(this.creationDate != null ? this.creationDate.getTime() : -1);
+        dest.writeLong(this.startDate != null ? this.startDate.getTime() : -1);
+        dest.writeValue(this.eventsCompleted);
+        dest.writeValue(this.totalEvents);
+        dest.writeList(this.weekdays);
+        dest.writeList(this.events);
+    }
+
+    protected HabitType(Parcel in) {
+        this.ownername = in.readString();
+        this.owner = in.readParcelable(User.class.getClassLoader());
+        this.title = in.readString();
+        this.reason = in.readString();
+        long tmpCreationDate = in.readLong();
+        this.creationDate = tmpCreationDate == -1 ? null : new Date(tmpCreationDate);
+        long tmpStartDate = in.readLong();
+        this.startDate = tmpStartDate == -1 ? null : new Date(tmpStartDate);
+        this.eventsCompleted = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.totalEvents = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.weekdays = new ArrayList<Boolean>();
+        in.readList(this.weekdays, Boolean.class.getClassLoader());
+        this.events = new ArrayList<HabitEvent>();
+        in.readList(this.events, HabitEvent.class.getClassLoader());
+    }
+
+    public static final Creator<HabitType> CREATOR = new Creator<HabitType>() {
+        @Override
+        public HabitType createFromParcel(Parcel source) {
+            return new HabitType(source);
+        }
+
+        @Override
+        public HabitType[] newArray(int size) {
+            return new HabitType[size];
+        }
+    };
 }

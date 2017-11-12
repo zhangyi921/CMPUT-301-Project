@@ -32,4 +32,7 @@
     <string name="CHT_Create">Create</string>
     <string name="CHT_StartdateEditText">Starting Date (YY-MM-DD)</string>
     <string name="CHT_ReasonEditText">Your Reason</string>
+    <string name="CHT_Back">Back</string>
+    <string name="HTL_Back">Back</string>
+    <string name="HTL_Refresh">Refresh</string>
 </resources>

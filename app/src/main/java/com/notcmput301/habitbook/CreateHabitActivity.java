@@ -88,9 +88,9 @@ public class CreateHabitActivity extends AppCompatActivity {
                 Toast.makeText(this, "Opps, Something went wrong on our end", Toast.LENGTH_SHORT).show();
             }else{
                 Toast.makeText(this, "Added Habit Type!", Toast.LENGTH_SHORT).show();
-                Intent mainmenu = new Intent(CreateHabitActivity.this, HabitTypeListActivity.class);
-                mainmenu.putExtra("passedUser", loggedInUser);
-                startActivity(mainmenu);
+                Intent habittypelist = new Intent(CreateHabitActivity.this, HabitTypeListActivity.class);
+                habittypelist.putExtra("passedUser", loggedInUser);
+                startActivity(habittypelist);
             }
         }catch(Exception e){
             Log.e("get failure", "Failed to retrieve");
@@ -98,5 +98,9 @@ public class CreateHabitActivity extends AppCompatActivity {
         }
     }
 
-
+    public void CHTBack(View view){
+        Intent habittypelist = new Intent(CreateHabitActivity.this, HabitTypeListActivity.class);
+        habittypelist.putExtra("passedUser", loggedInUser);
+        startActivity(habittypelist);
+    }
 }

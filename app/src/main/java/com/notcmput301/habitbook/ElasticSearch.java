@@ -7,6 +7,9 @@ import com.searchly.jestdroid.DroidClientConfig;
 import com.searchly.jestdroid.JestClientFactory;
 import com.searchly.jestdroid.JestDroidClient;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import io.searchbox.core.DocumentResult;
 import io.searchbox.core.Index;
 import io.searchbox.core.Search;
@@ -39,7 +42,7 @@ public class ElasticSearch {
             String username = q[0];
             String password = q[1];
             String jsonQuery = "{ \"query\": {\"bool\": {\"must\": [{\"match\": {\"username\": \""+username+"\"}},{\"match\": {\"password\": \""+password+"\"}}]}}}";
-            Search search = new Search.Builder(jsonQuery).addIndex("t28test2").addType("user").build();
+            Search search = new Search.Builder(jsonQuery).addIndex("t28test9").addType("user").build();
 
             try{
                 SearchResult result = client.execute(search);
@@ -68,7 +71,7 @@ public class ElasticSearch {
             }
             String username = q[0];
             String jsonQuery = "{\"query\": {\"match\": {\"username\": \""+username+"\"}}}";
-            Search search = new Search.Builder(jsonQuery).addIndex("t28test2").addType("user").build();
+            Search search = new Search.Builder(jsonQuery).addIndex("t28test9").addType("user").build();
 
             try{
                 SearchResult result = client.execute(search);
@@ -96,7 +99,7 @@ public class ElasticSearch {
                 Log.e("Bad input", "expected 1 user");
                 return null;
             }
-            Index uitem = new Index.Builder(u[0]).index("t28test2").type("user").build();
+            Index uitem = new Index.Builder(u[0]).index("t28test9").type("user").build();
             try{
                 DocumentResult result = client.execute(uitem);
                 if (result.isSucceeded()) {
@@ -113,7 +116,7 @@ public class ElasticSearch {
     }
 
     /**
-     * Used to add HabitType to database
+     * Used to add HabitType to database. Returns false on fail
      */
     public static class addHabitType extends AsyncTask<HabitType, Void, Boolean>{
 
@@ -124,7 +127,7 @@ public class ElasticSearch {
                 Log.e("Bad input", "expected 1 Habit type");
                 return false;
             }
-            Index htitem = new Index.Builder(ht[0]).index("t28test2").type("habittype").build();
+            Index htitem = new Index.Builder(ht[0]).index("t28test9").type("habittype").build();
             try{
                 DocumentResult result = client.execute(htitem);
                 if (result.isSucceeded()){
@@ -136,6 +139,38 @@ public class ElasticSearch {
                 return false;
             }
             return false;
+        }
+    }
+
+    /**
+     * Used to return list of habitTypes
+     */
+    public static class getHabitTypeList extends AsyncTask<String, Void, ArrayList<HabitType>>{
+
+        @Override
+        public ArrayList<HabitType> doInBackground(String... s) {
+            verifySettings();
+            ArrayList<HabitType> resultArr = new ArrayList<>();
+            if (s.length != 1) {
+                Log.e("Bad input", "expected 1 String");
+                return null;
+            }
+            String username = s[0];
+            String jsonQuery = "{ \"query\": {\"match\": {\"ownername\": \"" + username + "\"}}}";
+            Search search = new Search.Builder(jsonQuery).addIndex("t28test9").addType("habittype").build();
+
+            try {
+                SearchResult result = client.execute(search);
+                if (result.isSucceeded()) {
+                    List<HabitType> found = result.getSourceAsObjectList(HabitType.class);
+                    resultArr.addAll(found);
+                    return resultArr;
+                }
+            } catch (Exception e) {
+                Log.e("Failed Q", "Search broke");
+                return null;
+            }
+            return null;
         }
     }
 

@@ -11,6 +11,8 @@ import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -19,13 +21,11 @@ import java.util.ArrayList;
 public class HabitTypeListActivity extends AppCompatActivity {
     private User loggedInUser;
     private ArrayList<HabitType> habitTypes;
-    private ListView habitTypeList;
-    private Button addNewHabit;
     ArrayAdapter<HabitType> Adapter;
-    private String target;
-    private Gson gson;
-    //private User user;
-    private LocalFileControler localFileControler;
+//    private String target;
+//    private Gson gson;
+//    //private User user;
+//    private LocalFileControler localFileControler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +33,7 @@ public class HabitTypeListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_habit_type_list);
         Intent receiver = getIntent();
         loggedInUser = receiver.getParcelableExtra("passedUser");
-        ListView habitlist = (ListView) findViewById(R.id.HabitList);
+        fillList();
 
 //        Bundle bundle = getIntent().getExtras();
 //        this.target = bundle.getString("user");
@@ -75,15 +75,60 @@ public class HabitTypeListActivity extends AppCompatActivity {
 //        }   );
     }
 
+    public void fillList(){
+        ListView habitlist = (ListView) findViewById(R.id.HabitList);
+        ElasticSearch.getHabitTypeList ghtl = new ElasticSearch.getHabitTypeList();
+        ghtl.execute(loggedInUser.getUsername());
+        try {
+            habitTypes = ghtl.get();
+            if (habitTypes==null){
+                habitTypes = new ArrayList<>();
+            }
+            //loggedInUser.setHabitTypes(habitTypes);       //causes program to crash
+            Toast.makeText(this, "found "+habitTypes.size() + " items", Toast.LENGTH_SHORT).show();
+        }catch(Exception e){
+            e.printStackTrace();
+            Toast.makeText(this, "Failed to retrieve items. Check connection", Toast.LENGTH_SHORT).show();
+        }
+
+        HabitTypeAdapter hAdapter = new HabitTypeAdapter();
+        habitlist.setAdapter(hAdapter);
+
+        habitlist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent habitdetail = new Intent(HabitTypeListActivity.this, HabitTypeDetailsActivity.class);
+                habitdetail.putExtra("position", position);
+                habitdetail.putExtra("passedHabitType", habitTypes.get(position));
+                startActivity(habitdetail);
+            }
+        });
+    }
+
+
     public void HTLnewHabitType(View view){
+
         Intent createHabit = new Intent(HabitTypeListActivity.this, CreateHabitActivity.class);
         createHabit.putExtra("passedUser", loggedInUser);
         startActivity(createHabit);
     }
 
 
+    public void HTLRefresh(View view){
 
-    class HabitAdapter extends BaseAdapter{
+        fillList();
+    }
+
+
+    public void HTLBack(View view){
+
+        Intent mainmenu = new Intent(HabitTypeListActivity.this, MainMenuActivity.class);
+        mainmenu.putExtra("passedUser", loggedInUser);
+        startActivity(mainmenu);
+    }
+
+
+    class HabitTypeAdapter extends BaseAdapter{
 
         @Override
         public int getCount() {
@@ -102,7 +147,13 @@ public class HabitTypeListActivity extends AppCompatActivity {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            return null;
+            convertView = getLayoutInflater().inflate(R.layout.habit_type_list_layout, null);
+            TextView titleL = (TextView) convertView.findViewById(R.id.HTLIST_Title);
+            TextView descriptionL = (TextView) convertView.findViewById(R.id.HTLIST_Description);
+
+            titleL.setText(habitTypes.get(position).getTitle());
+            descriptionL.setText(habitTypes.get(position).getReason());
+            return convertView;
         }
     }
 
