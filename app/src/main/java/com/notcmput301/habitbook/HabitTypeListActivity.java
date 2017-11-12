@@ -51,7 +51,8 @@ public class HabitTypeListActivity extends AppCompatActivity {
                 intent.putExtra("user", target);
                 //target = gson.toJson(localFileControler);
                 //intent.putExtra("localfilecontroller", target);
-                startActivityForResult(intent, 1);
+                //startActivityForResult(intent, 1);
+                startActivity(intent);
 
             }
         });
@@ -65,7 +66,8 @@ public class HabitTypeListActivity extends AppCompatActivity {
                 intent.putExtra("user", target);
                 //target = gson.toJson(localFileControler);
                 //intent.putExtra("localfilecontroller", target);
-                startActivityForResult(intent,2);
+                //startActivityForResult(intent,2);
+                startActivityForResult(intent, 2);
             }
         }   );
     }
@@ -76,7 +78,8 @@ public class HabitTypeListActivity extends AppCompatActivity {
             // if user makes changes
             if (resultCode == Activity.RESULT_OK){
                 // reload user from saved file
-                this.user = this.localFileControler.Login(this.user.getUsername(), this.user.getPassword());
+                //this.user = this.localFileControler.Login(this.user.getUsername(), this.user.getPassword());
+
                 this.habitTypes = this.user.getHabitTypes();
                 this.Adapter.notifyDataSetChanged();
             }
@@ -87,7 +90,10 @@ public class HabitTypeListActivity extends AppCompatActivity {
             if (resultCode == Activity.RESULT_OK){
                 // reload user from saved file
                 //this.user = this.localFileControler.Login(this.user.getUsername(), this.user.getPassword());
-                this.habitTypes = this.user.getHabitTypes();
+                Bundle bundle = intent.getExtras();
+                this.target = bundle.getString("HabitType");
+                HabitType ht = gson.fromJson(target, HabitType.class);
+                this.habitTypes.add(ht);
                 this.Adapter.notifyDataSetChanged();
             }
         }
