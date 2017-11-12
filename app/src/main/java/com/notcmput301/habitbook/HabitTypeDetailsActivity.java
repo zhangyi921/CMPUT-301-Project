@@ -69,17 +69,17 @@ public class HabitTypeDetailsActivity extends AppCompatActivity {
         monday = (CheckBox) findViewById(R.id.Mon);
         monday.setChecked(this.weekdays.indexOf(1) != -1);
         tuesday = (CheckBox) findViewById(R.id.Tu);
-        tuesday.setChecked(this.weekdays.indexOf(1) != -1);
+        tuesday.setChecked(this.weekdays.indexOf(2) != -1);
         wednesday = (CheckBox) findViewById(R.id.Wes);
-        wednesday.setChecked(this.weekdays.indexOf(1) != -1);
+        wednesday.setChecked(this.weekdays.indexOf(3) != -1);
         thursday = (CheckBox) findViewById(R.id.Thu);
-        thursday.setChecked(this.weekdays.indexOf(1) != -1);
+        thursday.setChecked(this.weekdays.indexOf(4) != -1);
         friday = (CheckBox) findViewById(R.id.Fri);
-        friday.setChecked(this.weekdays.indexOf(1) != -1);
+        friday.setChecked(this.weekdays.indexOf(5) != -1);
         saturday = (CheckBox) findViewById(R.id.Sat);
-        saturday.setChecked(this.weekdays.indexOf(1) != -1);
+        saturday.setChecked(this.weekdays.indexOf(6) != -1);
         sunday = (CheckBox) findViewById(R.id.Sun);
-        sunday.setChecked(this.weekdays.indexOf(1) != -1);
+        sunday.setChecked(this.weekdays.indexOf(7) != -1);
         completionStatus = (TextView) findViewById(R.id.Status);
         //completionStatus.setText(currentHabitType.get);
 
