@@ -101,32 +101,32 @@ public class HabitTypeDetailsActivity extends AppCompatActivity {
                     }
                 }
                 if (tuesday.isChecked()){
-                    if (weekdays.indexOf(1) == -1){
+                    if (weekdays.indexOf(2) == -1){
                         weekdays.add(2);
                     }
                 }
                 if (wednesday.isChecked()){
-                    if (weekdays.indexOf(1) == -1){
+                    if (weekdays.indexOf(3) == -1){
                         weekdays.add(3);
                     }
                 }
                 if (thursday.isChecked()){
-                    if (weekdays.indexOf(1) == -1){
+                    if (weekdays.indexOf(4) == -1){
                         weekdays.add(4);
                     }
                 }
                 if (friday.isChecked()){
-                    if (weekdays.indexOf(1) == -1){
+                    if (weekdays.indexOf(5) == -1){
                         weekdays.add(5);
                     }
                 }
                 if (saturday.isChecked()){
-                    if (weekdays.indexOf(1) == -1){
+                    if (weekdays.indexOf(6) == -1){
                         weekdays.add(6);
                     }
                 }
                 if (sunday.isChecked()){
-                    if (weekdays.indexOf(1) == -1){
+                    if (weekdays.indexOf(7) == -1){
                         weekdays.add(7);
                     }
                 }

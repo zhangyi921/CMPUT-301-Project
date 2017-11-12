@@ -92,7 +92,6 @@ public class HabitTypeListActivity extends AppCompatActivity {
             Log.e("get failure", e.toString());
             e.printStackTrace();
         }
-        Log.e(":","reached here");
 
 
         this.habitTypes = this.user.getHabitTypes();
@@ -129,7 +128,6 @@ public class HabitTypeListActivity extends AppCompatActivity {
                 Log.e("get failure", e.toString());
                 e.printStackTrace();
             }
-            Log.e(":",this.user.getHabitTypes().get(0).getTitle());
 
 
             this.habitTypes = this.user.getHabitTypes();
