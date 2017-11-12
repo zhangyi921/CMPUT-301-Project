@@ -4,11 +4,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -51,11 +53,13 @@ public class HabitTypeListActivity extends AppCompatActivity {
                 intent.putExtra("user", target);
                 //target = gson.toJson(localFileControler);
                 //intent.putExtra("localfilecontroller", target);
-                //startActivityForResult(intent, 1);
-                startActivity(intent);
+                startActivityForResult(intent, 1);
+                //startActivity(intent);
 
             }
         });
+
+
 
         Button NewHabit = (Button) findViewById(R.id.NewHabit);
         NewHabit.setOnClickListener(new View.OnClickListener() {
@@ -71,18 +75,60 @@ public class HabitTypeListActivity extends AppCompatActivity {
             }
         }   );
     }
+
+    public void refresh(View v){
+        ElasticSearch.verifyLogin vl = new ElasticSearch.verifyLogin();
+        vl.execute(this.user.getUsername(), this.user.getPassword());
+        try{
+            User u = vl.get();
+            if (u==null){
+                Toast.makeText(this, "Check password or internet connection", Toast.LENGTH_LONG).show();
+            }else{
+                this.user = u;
+                Toast.makeText(this, u.getHabitTypes().get(0).getTitle(), Toast.LENGTH_LONG).show();
+
+            }
+        }catch(Exception e){
+            Log.e("get failure", e.toString());
+            e.printStackTrace();
+        }
+        Log.e(":","reached here");
+
+
+        this.habitTypes = this.user.getHabitTypes();
+        this.Adapter.notifyDataSetChanged();
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent){
         // back from detail page
         if (requestCode == 1){
             // if user makes changes
-            if (resultCode == Activity.RESULT_OK){
+            //if (resultCode == Activity.RESULT_OK){
                 // reload user from saved file
                 //this.user = this.localFileControler.Login(this.user.getUsername(), this.user.getPassword());
 
-                this.habitTypes = this.user.getHabitTypes();
-                this.Adapter.notifyDataSetChanged();
+            ElasticSearch.verifyLogin vl = new ElasticSearch.verifyLogin();
+            vl.execute(this.user.getUsername(), this.user.getPassword());
+            try{
+                User u = vl.get();
+                if (u==null){
+                    Toast.makeText(this, "Check password or internet connection", Toast.LENGTH_LONG).show();
+                }else{
+                    this.user = u;
+                    Toast.makeText(this, u.getHabitTypes().get(0).getTitle(), Toast.LENGTH_LONG).show();
+
+                }
+            }catch(Exception e){
+                Log.e("get failure", e.toString());
+                e.printStackTrace();
             }
+            Log.e(":",this.user.getHabitTypes().get(0).getTitle());
+
+
+            this.habitTypes = this.user.getHabitTypes();
+            this.Adapter.notifyDataSetChanged();
+            //}
         }
         // back from creating habit type page
         else if (requestCode == 2){

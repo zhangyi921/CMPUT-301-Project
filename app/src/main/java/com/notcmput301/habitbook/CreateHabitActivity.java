@@ -124,7 +124,7 @@ public class CreateHabitActivity extends AppCompatActivity {
             this.displayMessage("Exception!");
             return;
         }
-        HabitType ht = new HabitType(this.user, title, reason, date, tempDays);
+        HabitType ht = new HabitType(this.user.getUsername(), title, reason, date, tempDays);
         Intent returnIntent = new Intent();
         target = gson.toJson(ht);
         returnIntent.putExtra("HabitType", target);

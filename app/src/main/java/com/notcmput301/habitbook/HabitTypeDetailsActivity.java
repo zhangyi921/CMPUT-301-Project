@@ -130,7 +130,7 @@ public class HabitTypeDetailsActivity extends AppCompatActivity {
                         weekdays.add(7);
                     }
                 }
-                HabitType Newhabit = new HabitType(user, titleText.getText().toString(),
+                HabitType Newhabit = new HabitType(user.getUsername(), titleText.getText().toString(),
                         reasonText.getText().toString(),
                         currentHabitType.getStartDate(),
                         weekdays);
@@ -143,6 +143,9 @@ public class HabitTypeDetailsActivity extends AppCompatActivity {
                 //localFileControler.Save(user);
                 ElasticSearch.UpdateUserTask updateUserTask = new ElasticSearch.UpdateUserTask();
                 updateUserTask.execute(user);
+                Intent intent = new Intent(HabitTypeDetailsActivity.this, HabitTypeListActivity.class);
+                target = gson.toJson(Newhabit);
+                intent.putExtra("Newhabit", target);
                 finish();
 
             }

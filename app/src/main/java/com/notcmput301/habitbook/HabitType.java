@@ -2,13 +2,14 @@ package com.notcmput301.habitbook;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.StringTokenizer;
 
 /**
  * Created by Cole on 2017-10-19.
  */
 
 public class HabitType {
-    private User owner;
+    private String ownerName;
     private String title;
     private String reason;
     private Date creationDate;
@@ -18,8 +19,8 @@ public class HabitType {
     private ArrayList<Integer> weekdays;
     private ArrayList<HabitEvent> events;
 
-    public HabitType(User owner, String title, String reason, Date startDate,  ArrayList<Integer> weekdays ) {
-        this.owner = owner;
+    public HabitType(String ownerName, String title, String reason, Date startDate, ArrayList<Integer> weekdays ) {
+        this.ownerName = ownerName;
         this.title = title;
         this.reason = reason;
         this.creationDate = new Date();
@@ -30,12 +31,12 @@ public class HabitType {
         this.events = new ArrayList<HabitEvent>();
     }
 
-    public User getOwner() {
-        return owner;
+    public String getOwner() {
+        return ownerName;
     }
 
-    public void setOwner(User owner) {
-        this.owner = owner;
+    public void setOwner(String owner) {
+        this.ownerName = owner;
     }
 
     public String getTitle() {
