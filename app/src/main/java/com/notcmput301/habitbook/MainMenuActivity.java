@@ -25,8 +25,11 @@ public class MainMenuActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
-        Intent receiver = getIntent();
-        this.loggedInUser = receiver.getParcelableExtra("passedUser");
+        //Intent receiver = getIntent();
+        Bundle bundle = getIntent().getExtras();
+        String target = bundle.getString("passedUser");
+        Gson gson = new Gson();
+        this.loggedInUser = gson.fromJson(target, User.class);
         this.gson = new Gson();
         //this.localFileController = new LocalFileControler();
     }

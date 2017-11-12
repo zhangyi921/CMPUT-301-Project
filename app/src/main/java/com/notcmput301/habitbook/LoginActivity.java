@@ -10,6 +10,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
 public class LoginActivity extends AppCompatActivity {
 //    private TextView loginScreen;
 //    private EditText usernameText;
@@ -39,12 +41,13 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(this, "Check password or internet connection", Toast.LENGTH_LONG).show();
                 }else{
                     Toast.makeText(this, "Logged in!", Toast.LENGTH_LONG).show();
+                    Gson gson = new Gson();
                     Intent mainmenu = new Intent(LoginActivity.this, MainMenuActivity.class);
-                    mainmenu.putExtra("passedUser", u);
+                    mainmenu.putExtra("passedUser", gson.toJson(u));
                     startActivity(mainmenu);
                 }
             }catch(Exception e){
-                Log.e("get failure", "Failed to retrieve");
+                Log.e("get failure", e.toString());
                 e.printStackTrace();
             }
         }
