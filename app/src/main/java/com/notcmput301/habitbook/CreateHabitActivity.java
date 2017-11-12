@@ -48,7 +48,7 @@ public class CreateHabitActivity extends AppCompatActivity {
         CheckBox saE = (CheckBox) findViewById(R.id.CHT_Sa);
         CheckBox suE = (CheckBox) findViewById(R.id.CHT_Su);
 
-        title = titleE.getText().toString();
+        title = titleE.getText().toString().trim().replaceAll("\\s+", " ");
         reason = reasonE.getText().toString();
         String startdate = startdateE.getText().toString();
 
@@ -78,6 +78,23 @@ public class CreateHabitActivity extends AppCompatActivity {
             Toast.makeText(this, "Incorrect Date formatting", Toast.LENGTH_SHORT).show();
             return;
         }
+
+        ElasticSearch.habitTypeExists hte = new ElasticSearch.habitTypeExists();
+        hte.execute(loggedInUser.getUsername(), title);
+        try{
+            int success = hte.get();
+            if (success < 0){
+                Toast.makeText(this, "Opps, Something went wrong on our end", Toast.LENGTH_SHORT).show();
+                return;
+            }if (success > 0){
+                Toast.makeText(this, "Habit Type Title has to be unique!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+        }catch(Exception e){
+            Log.e("get failure", "Failed to retrieve");
+            e.printStackTrace();
+        }
+
 
         HabitType newHabit = new HabitType(loggedInUser, title, reason, this.startdate, this.weekdays);
         ElasticSearch.addHabitType aht = new ElasticSearch.addHabitType();

@@ -38,6 +38,11 @@ public class CreateAccountActivity extends AppCompatActivity {
         if (password.length() < 5){
             Toast.makeText(this, "password is too short", Toast.LENGTH_LONG).show();
         }
+        if (!username.matches("[a-zA-Z0-9]*")){
+            Toast.makeText(this, "Username can only contain letters and numbers", Toast.LENGTH_LONG).show();
+            return;
+        }
+
         //see if username exists in database
         ElasticSearch.userExists ue = new ElasticSearch.userExists();
         ue.execute(username);

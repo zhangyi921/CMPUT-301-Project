@@ -31,7 +31,7 @@ public class LoginActivity extends AppCompatActivity {
             try{
                 User u = vl.get();
                 if (u==null){
-                    Toast.makeText(this, "Check password or internet connection", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "Check password/Username or internet connection", Toast.LENGTH_LONG).show();
                 }else{
                     Toast.makeText(this, "Logged in!", Toast.LENGTH_SHORT).show();
                     Intent mainmenu = new Intent(LoginActivity.this, MainMenuActivity.class);

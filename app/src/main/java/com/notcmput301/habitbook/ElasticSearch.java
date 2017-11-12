@@ -47,7 +47,8 @@ public class ElasticSearch {
             try{
                 SearchResult result = client.execute(search);
                 if (result.isSucceeded()){
-                    return result.getSourceAsObject(User.class);
+                    User test = result.getSourceAsObject(User.class);
+                    if (test.getUsername().toLowerCase().equals(username.toLowerCase()) && test.getPassword().equals(password)) return test;
                 }
             }catch(Exception e){
                 Log.e("Failed Q", "Search broke");
@@ -76,13 +77,16 @@ public class ElasticSearch {
             try{
                 SearchResult result = client.execute(search);
                 if (result.isSucceeded()){
-                    return result.getTotal();
-                }
+                    User test = result.getSourceAsObject(User.class);
+                    if (test.getUsername().toLowerCase().equals(username.toLowerCase())){
+                        return 1;
+                    }
+                }else return -1;
             }catch(Exception e){
                 Log.e("Failed Q", "Search broke");
                 return -1;
             }
-            return -1;
+            return 0;
         }
     }
 
@@ -116,6 +120,41 @@ public class ElasticSearch {
     }
 
     /**
+     * Check if habit type NAME is unique
+     */
+    public static class habitTypeExists extends  AsyncTask<String, Void, Integer>{
+
+        @Override
+        public Integer doInBackground(String... s) {
+            verifySettings();
+            if (s.length != 2) {
+                Log.e("Bad input", "expected 2 strings");
+                return -1;
+            }
+            String ownername = s[0];
+            String title = s[1];
+            String jsonQuery = "{ \"query\": {\"bool\": {\"must\": [{\"match\": {\"ownername\": \"" + ownername + "\"}},{\"match\": {\"title\": \"" +title+"\"}}]}}}";
+            Search search = new Search.Builder(jsonQuery).addIndex("t28test9").addType("habittype").build();
+
+            try {
+                SearchResult result = client.execute(search);
+                if (result.isSucceeded()) {
+                    HabitType test = result.getSourceAsObject(HabitType.class);
+                    if (test.getTitle().toLowerCase().trim().replaceAll("\\s+", " ").equals(title.toLowerCase().trim().replaceAll("\\s+", " "))){
+                        return 1;
+                    }
+                }else{
+                    return -1;
+                }
+            } catch (Exception e) {
+                Log.e("Failed Q", "Search broke");
+                return -1;
+            }
+            return 0;
+        }
+    }
+
+    /**
      * Used to add HabitType to database. Returns false on fail
      */
     public static class addHabitType extends AsyncTask<HabitType, Void, Boolean>{
@@ -142,6 +181,7 @@ public class ElasticSearch {
         }
     }
 
+
     /**
      * Used to return list of habitTypes
      */
@@ -157,7 +197,7 @@ public class ElasticSearch {
             }
             String username = s[0];
             String jsonQuery = "{ \"query\": {\"match\": {\"ownername\": \"" + username + "\"}}}";
-            Search search = new Search.Builder(jsonQuery).addIndex("t28test9").addType("habittype").build();
+            Search search = new Search.Builder(jsonQuery).addIndex("t28test9").addType("habittype").build();            //potential issue here where match will amtch other owner name.
 
             try {
                 SearchResult result = client.execute(search);
