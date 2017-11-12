@@ -1,5 +1,7 @@
 package com.notcmput301.habitbook;
 
+package com.example.matteo.createhabit;
+
 import android.widget.ArrayAdapter;
 
 import java.util.ArrayList;
@@ -106,7 +108,7 @@ public class HabitTypeValid {
     }
 
     // Returns true if at least on checkbox is clicked (meaning validCheckbox is empty)
-    public static boolean validCheckbox(ArrayList<String> days) {
+    public static boolean validCheckbox(ArrayList<Integer> days) {
         if (days.isEmpty() ) return false;
         else return true;
     }
