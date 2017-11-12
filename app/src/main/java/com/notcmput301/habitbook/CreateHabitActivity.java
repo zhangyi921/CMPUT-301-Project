@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class CreateHabitActivity extends AppCompatActivity {
 
-    private ArrayList<String> tempDays = new ArrayList<String>();
+    private ArrayList<Integer> tempDays = new ArrayList<Integer>();
 
 
     @Override
@@ -29,32 +29,32 @@ public class CreateHabitActivity extends AppCompatActivity {
 
         switch (v.getId()) {
             case R.id.createHabitMonBox:
-                if (check) tempDays.add("Mon");
-                else tempDays.remove("Mon");
+                if (check) tempDays.add(1);
+                else tempDays.remove(1);
                 break;
             case R.id.createHabitTueBox:
-                if (check) tempDays.add("Tue");
-                else tempDays.remove("Tue");
+                if (check) tempDays.add(2);
+                else tempDays.remove(2);
                 break;
             case R.id.createHabitWedBox:
-                if (check) tempDays.add("Wed");
-                else tempDays.remove("Wed");
+                if (check) tempDays.add(3);
+                else tempDays.remove(3);
                 break;
             case R.id.createHabitThuBox:
-                if (check) tempDays.add("Thu");
-                else tempDays.remove("Thu");
+                if (check) tempDays.add(4);
+                else tempDays.remove(4);
                 break;
             case R.id.createHabitFriBox:
-                if (check) tempDays.add("Fri");
-                else tempDays.remove("Fri");
+                if (check) tempDays.add(5);
+                else tempDays.remove(5);
                 break;
             case R.id.createHabitSatBox:
-                if (check) tempDays.add("Sat");
-                else tempDays.remove("Sat");
+                if (check) tempDays.add(6);
+                else tempDays.remove(6);
                 break;
             case R.id.createHabitSunBox:
-                if (check) tempDays.add("Sun");
-                else tempDays.remove("Sun");
+                if (check) tempDays.add(7);
+                else tempDays.remove(7);
                 break;
         }
 
