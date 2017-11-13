@@ -18,7 +18,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainMenuActivity" />
-        <activity android:name=".CreateAccountActivity" />
+        <activity android:name=".CreateAccountActivity"
+            android:exported="true"/>
         <activity android:name=".TodaysHabitActivity" />
         <activity android:name=".HabitTypeListActivity" />
         <activity android:name=".CreateHabitActivity" />
