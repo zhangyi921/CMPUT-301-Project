@@ -112,6 +112,36 @@ public class ElasticSearch {
         }
     }
 
+    
+    /**
+     * Used to delete user, -1 denotes fault
+     */
+    public static class DeleteUser extends AsyncTask<String, Void, Integer>{
+
+        @Override
+        public Integer doInBackground(String... q){
+            verifySettings();
+            if (q.length != 1){
+                Log.e("Bad input", "expected 1 string");
+                return -1;
+            }
+            String username = q[0];
+            String jsonQuery = "{\"delete\": {\"match\": {\"username\": \""+username+"\"}}}";
+            Search search = new Search.Builder(jsonQuery).addIndex("t28test2").addType("user").build();
+
+            try{
+                SearchResult result = client.execute(search);
+                if (result.isSucceeded()){
+                    return result.getTotal();
+                }
+            }catch(Exception e){
+                Log.e("Failed Q", "Search broke");
+                return -1;
+            }
+            return -1;
+        }
+    }
+    
     public static class UpdateUserTask extends AsyncTask<User, Void, Void> {
 
         @Override
