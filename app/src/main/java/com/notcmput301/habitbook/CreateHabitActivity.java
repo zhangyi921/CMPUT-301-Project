@@ -35,38 +35,38 @@ public class CreateHabitActivity extends AppCompatActivity {
 
     // Method based of similar method in this YouTube Video
     // https://www.youtube.com/watch?v=NGRV2qY9ZiU
-    // Dynamically adds days to tempDays when checkBox is clicked
+    // Dynamically adds / removes days to tempDays when checkBox is clicked
     public void createHabitBoxClick(View v) {
         boolean check = ((CheckBox) v).isChecked();
 
         switch (v.getId()) {
             case R.id.createHabitMonBox:
                 if (check) tempDays.add(1);
-                else tempDays.remove(1);
+                else tempDays.remove((Integer) 1 );
                 break;
             case R.id.createHabitTueBox:
                 if (check) tempDays.add(2);
-                else tempDays.remove(2);
+                else tempDays.remove((Integer) 2);
                 break;
             case R.id.createHabitWedBox:
                 if (check) tempDays.add(3);
-                else tempDays.remove(3);
+                else tempDays.remove((Integer) 3);
                 break;
             case R.id.createHabitThuBox:
                 if (check) tempDays.add(4);
-                else tempDays.remove(4);
+                else tempDays.remove((Integer) 4);
                 break;
             case R.id.createHabitFriBox:
                 if (check) tempDays.add(5);
-                else tempDays.remove(5);
+                else tempDays.remove((Integer) 5);
                 break;
             case R.id.createHabitSatBox:
                 if (check) tempDays.add(6);
-                else tempDays.remove(6);
+                else tempDays.remove((Integer) 6);
                 break;
             case R.id.createHabitSunBox:
                 if (check) tempDays.add(7);
-                else tempDays.remove(7);
+                else tempDays.remove((Integer) 7);
                 break;
         }
 
@@ -86,12 +86,14 @@ public class CreateHabitActivity extends AppCompatActivity {
         Date date;
 
         // If title of habitType is blank or > 30 chars, display message and stop
+
         if (! HabitTypeValid.validName(title) ) {
             this.displayMessage("Name can't be blank/ over 20 chars");
             return;
         }
 
         // If title of habitType already exists, display message and stop
+        System.out.print("----\n" + this.user.getHabitTypes() + "\n----" );
         if (! HabitTypeValid.isUnique(title, this.user) ) {
             this.displayMessage("Title must be unique");
             return;
@@ -124,7 +126,7 @@ public class CreateHabitActivity extends AppCompatActivity {
             this.displayMessage("Exception!");
             return;
         }
-        HabitType ht = new HabitType(this.user.getUsername(), title, reason, date, tempDays);
+        HabitType ht = new HabitType(this.user, title, reason, date, tempDays);
         Intent returnIntent = new Intent();
         target = gson.toJson(ht);
         returnIntent.putExtra("HabitType", target);
