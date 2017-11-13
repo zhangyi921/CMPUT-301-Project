@@ -1,3 +1,15 @@
+/*
+ * HabitTypeListActivity
+ *
+ * Version 1.0
+ *
+ * November 12, 2017
+ *
+ * Copyright (c) 2017 Team NOTcmput301, CMPUT301, University of Alberta - All Rights Reserved
+ * You may use, distribute, or modify this code under terms and conditions of the Code of Student Behavior at University of Alberta.
+ * You can find a copy of the license in the project wiki on github. Otherwise please contact miller4@ualberta.ca.
+ */
+
 package com.notcmput301.habitbook;
 
 import android.app.Activity;
@@ -16,6 +28,15 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
+/**
+ * Activity for listing existing habit types
+ *
+ * @author NOTcmput301
+ * @version 1.0
+ * @see HabitType
+ * @since 1.0
+ */
+
 public class HabitTypeListActivity extends AppCompatActivity {
     private User loggedInUser;
     private ArrayList<HabitType> habitTypes;
@@ -25,8 +46,13 @@ public class HabitTypeListActivity extends AppCompatActivity {
     private String target;
     private Gson gson;
     private User user;
-    //private LocalFileControler localFileControler;
+    //private LocalFileController localFileControler;
 
+    /**
+     * Called when the activity is first created.
+     *
+     * @param savedInstanceState previous instance of activity
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +64,7 @@ public class HabitTypeListActivity extends AppCompatActivity {
         this.user = gson.fromJson(target, User.class);
         this.habitTypes = user.getHabitTypes();
         //this.target = bundle.getString("localfilecontroller");
-        //this.localFileControler = gson.fromJson(target, LocalFileControler.class);
+        //this.localFileControler = gson.fromJson(target, LocalFileController.class);
 
         this.Adapter = new ArrayAdapter<HabitType>(HabitTypeListActivity.this,
                 android.R.layout.simple_list_item_1, this.habitTypes);
@@ -76,6 +102,11 @@ public class HabitTypeListActivity extends AppCompatActivity {
         }   );
     }
 
+    /**
+     * Refreshes list of habits
+     *
+     * @param v view of current activity status
+     */
     public void refresh(View v){
         ElasticSearch.verifyLogin vl = new ElasticSearch.verifyLogin();
         vl.execute(this.user.getUsername(), this.user.getPassword());
@@ -104,6 +135,13 @@ public class HabitTypeListActivity extends AppCompatActivity {
         this.Adapter.notifyDataSetChanged();
     }
 
+    /**
+     * Processes return from activity
+     *
+     * @param requestCode determines the type of request made
+     * @param resultCode determines the result of the activity
+     * @param intent intent for obtaining results of activity
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent){
         // back from detail page

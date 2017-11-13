@@ -1,3 +1,15 @@
+/*
+ * LocalFileController
+ *
+ * Version 1.0
+ *
+ * November 12, 2017
+ *
+ * Copyright (c) 2017 Team NOTcmput301, CMPUT301, University of Alberta - All Rights Reserved
+ * You may use, distribute, or modify this code under terms and conditions of the Code of Student Behavior at University of Alberta.
+ * You can find a copy of the license in the project wiki on github. Otherwise please contact miller4@ualberta.ca.
+ */
+
 package com.notcmput301.habitbook;
 
 import android.content.Context;
@@ -19,17 +31,25 @@ import java.util.ArrayList;
 /**
  * Created by yizhang on 2017-11-05.
  */
+
+/**
+ * Controller for handling local offline files
+ *
+ * @author NOTcmput301
+ * @version 1.0
+ * @since 1.0
+ */
+
 /*
 * Use this class to login and get user object. Any changes made in user including the changes about
 * habit type or habit event, only need to update user. */
 
-public class LocalFileControler extends AppCompatActivity{
+public class LocalFileController extends AppCompatActivity{
     private static final String UserFile = "user.sav";
 
     private ArrayList<User> users;
 
-
-    public LocalFileControler(){
+    public LocalFileController(){
 
         this.users = loadFromFile();
 

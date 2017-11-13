@@ -1,3 +1,15 @@
+/*
+ * HabitTypeValid
+ *
+ * Version 1.0
+ *
+ * November 12, 2017
+ *
+ * Copyright (c) 2017 Team NOTcmput301, CMPUT301, University of Alberta - All Rights Reserved
+ * You may use, distribute, or modify this code under terms and conditions of the Code of Student Behavior at University of Alberta.
+ * You can find a copy of the license in the project wiki on github. Otherwise please contact miller4@ualberta.ca.
+ */
+
 package com.notcmput301.habitbook;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
@@ -10,9 +22,23 @@ import java.util.List;
  * Created by matteo on 2017-11-05.
  */
 
+/**
+ * Class for determining habit type info validity
+ *
+ * @author NOTcmput301
+ * @version 1.0
+ * @see HabitType
+ * @since 1.0
+ */
+
 public class HabitTypeValid {
 
-    // Returns ture if name is valid input
+    /**
+     * Determines validity of habit name
+     *
+     * @param n string representing habit name
+     * @return boolean for validity
+     */
     public static boolean validName(String n) {
         // Returns false if n is blank
 
@@ -24,14 +50,25 @@ public class HabitTypeValid {
         else return true;
     }
 
-    // Returns true if input String isn't already a habit type
+    /**
+     * Determines uniqueness of habit name
+     *
+     * @param n string representing habit name
+     * @param cUser owner of habit type
+     * @return boolean for validity
+     */
     public static boolean isUnique(String n, User cUser) {
         boolean retVal;
         retVal = HabitTypeManager.habitTypeExists(cUser, n); // Check if hatitType exists for that user
         return (!retVal); // retVal is reversed. If that habitType exists, the habitType name cannot be valid
     }
 
-    // Returns true if reason is valid input
+    /**
+     * Determines validity of habit reason
+     *
+     * @param r string representing habit reason
+     * @return boolean for validity
+     */
     public static boolean validReason(String r) {
         // Returns false if r is blank
         if (r.equals("") ) return false;
@@ -43,7 +80,12 @@ public class HabitTypeValid {
         else return true;
     }
 
-    // Returns true if date is valid input i.e. YYYY-MM-DD
+    /**
+     * Determines validity of habit reason
+     *
+     * @param d string representing habit reason
+     * @return boolean for validity
+     */
     public static boolean validDate(String d) {
         // Returns false if d isn't 10 chars long
         if (d.length() != 10) return false;
@@ -104,7 +146,12 @@ public class HabitTypeValid {
 
     }
 
-    // Returns true if at least on checkbox is clicked (meaning validCheckbox is empty)
+    /**
+     * Determines validity of habit weekdays
+     *
+     * @param days arraylist of weekdays
+     * @return boolean for validity
+     */
     public static boolean validCheckbox(ArrayList<Integer> days) {
         if (days.isEmpty() ) return false;
         else return true;

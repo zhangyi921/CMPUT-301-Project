@@ -1,3 +1,15 @@
+/*
+ * ElasticSearch
+ *
+ * Version 1.0
+ *
+ * November 12, 2017
+ *
+ * Copyright (c) 2017 Team NOTcmput301, CMPUT301, University of Alberta - All Rights Reserved
+ * You may use, distribute, or modify this code under terms and conditions of the Code of Student Behavior at University of Alberta.
+ * You can find a copy of the license in the project wiki on github. Otherwise please contact miller4@ualberta.ca.
+ */
+
 package com.notcmput301.habitbook;
 
 import android.os.AsyncTask;
@@ -16,6 +28,14 @@ import io.searchbox.core.SearchResult;
  * Created by shang on 11/10/2017.
  */
 
+/**
+ * class for elasticsearch queries
+ *
+ * @author NOTcmput301
+ * @version 1.0
+ * @since 1.0
+ */
+
 public class ElasticSearch {
     private static JestDroidClient client;
 
@@ -27,7 +47,7 @@ public class ElasticSearch {
         /**
          * Used to login. returns user upon success
          * @param q
-         * @return
+         * @return logged in user
          */
         @Override
         public User doInBackground(String... q){
@@ -86,7 +106,6 @@ public class ElasticSearch {
     /**
      * Used to add user to database, -1 deonted fault;
      */
-
     public static class addUser extends AsyncTask<User, Void, User>{
 
         @Override

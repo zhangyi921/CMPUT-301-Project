@@ -1,3 +1,15 @@
+/*
+ * CreateHabitAccount
+ *
+ * Version 1.0
+ *
+ * November 12, 2017
+ *
+ * Copyright (c) 2017 Team NOTcmput301, CMPUT301, University of Alberta - All Rights Reserved
+ * You may use, distribute, or modify this code under terms and conditions of the Code of Student Behavior at University of Alberta.
+ * You can find a copy of the license in the project wiki on github. Otherwise please contact miller4@ualberta.ca.
+ */
+
 package com.notcmput301.habitbook;
 
 import android.app.Activity;
@@ -15,6 +27,14 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+/**
+ * Activity for creating new HabitType
+ *
+ * @author NOTcmput301
+ * @version 1.0
+ * @see HabitType
+ * @since 1.0
+ */
 public class CreateHabitActivity extends AppCompatActivity {
 
     private ArrayList<Integer> tempDays = new ArrayList<Integer>();
@@ -22,6 +42,11 @@ public class CreateHabitActivity extends AppCompatActivity {
     private String target;
     private Gson gson;
 
+    /**
+     * Called when the activity is first created.
+     *
+     * @param savedInstanceState previous instance of activity
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +60,12 @@ public class CreateHabitActivity extends AppCompatActivity {
     // Method based of similar method in this YouTube Video
     // https://www.youtube.com/watch?v=NGRV2qY9ZiU
     // Dynamically adds / removes days to tempDays when checkBox is clicked
+
+    /**
+     * Sets value of weekdays for habit types
+     *
+     * @param v view of input info
+     */
     public void createHabitBoxClick(View v) {
         boolean check = ((CheckBox) v).isChecked();
 
@@ -72,6 +103,11 @@ public class CreateHabitActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Creates habit using given info
+     *
+     * @param v view of input info
+     */
     public void createHabitButtonClick(View v) {
         // Get editTexts to be used
         EditText titleBar = (EditText) findViewById(R.id.createHabitTitleBar);
@@ -133,6 +169,11 @@ public class CreateHabitActivity extends AppCompatActivity {
         finish();
     }
 
+    /**
+     * Button for returning to previous menu
+     *
+     * @param v view of current activity
+     */
     public void createHabitBackButton(View v) {
         this.goBack();
     }
