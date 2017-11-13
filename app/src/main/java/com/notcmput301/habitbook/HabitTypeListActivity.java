@@ -85,7 +85,7 @@ public class HabitTypeListActivity extends AppCompatActivity {
                 Toast.makeText(this, "Check password or internet connection", Toast.LENGTH_LONG).show();
             }else{
                 this.user = u;
-                Toast.makeText(this, u.getHabitTypes().get(0).getTitle(), Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Updated!", Toast.LENGTH_LONG).show();
 
             }
         }catch(Exception e){
@@ -113,7 +113,7 @@ public class HabitTypeListActivity extends AppCompatActivity {
                 // reload user from saved file
                 //this.user = this.localFileControler.Login(this.user.getUsername(), this.user.getPassword());
 
-            ElasticSearch.verifyLogin vl = new ElasticSearch.verifyLogin();
+            /*ElasticSearch.verifyLogin vl = new ElasticSearch.verifyLogin();
             vl.execute(this.user.getUsername(), this.user.getPassword());
             try{
                 User u = vl.get();
@@ -132,7 +132,7 @@ public class HabitTypeListActivity extends AppCompatActivity {
 
             this.habitTypes = this.user.getHabitTypes();
             this.Adapter.notifyDataSetChanged();
-            //}
+            //}*/
         }
         // back from creating habit type page
         else if (requestCode == 2){

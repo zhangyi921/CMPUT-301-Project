@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.google.gson.Gson;
@@ -145,6 +146,11 @@ public class HabitTypeDetailsActivity extends AppCompatActivity {
                 }
                 else{
                     weekdays.remove(new Integer(7));}
+
+                if (weekdays.isEmpty()){
+                    Toast.makeText(HabitTypeDetailsActivity.this, "weekdays cannot be empty ", Toast.LENGTH_LONG).show();
+                    return;
+                }
                 HabitType Newhabit = new HabitType(user.getUsername(), titleText.getText().toString(),
                         reasonText.getText().toString(),
                         currentHabitType.getStartDate(),

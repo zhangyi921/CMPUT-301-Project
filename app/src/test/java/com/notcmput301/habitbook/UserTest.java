@@ -142,6 +142,20 @@ public class UserTest {
     }
 
     @Test
+    public void UpdateHabitType() throws Exception {
+        User u1 = new User("test1", "carrot42"); //Test object
+        HabitType h1 = new HabitType(u1.getUsername(), "eating less", "coming close to morbid obesity",
+                new Date(), new ArrayList<Integer>());
+        HabitType h2 = new HabitType(u1.getUsername(), "watch less utube", "failing 301", new Date(),
+                new ArrayList<Integer>());
+        u1.addHabitType(h1);
+        u1.updateHabitType(h1, h2);
+
+        assertEquals("Failed to remove habit", false, u1.getHabitTypes().contains(h1));
+        assertEquals("Failed to remove habit", true, u1.getHabitTypes().contains(h2));
+    }
+
+    @Test
     public void addFollower() throws Exception {
         User u1 = new User("test1", "carrot42"); //Test object
         User f1 = new User("follower1", "carrot1"); //Test object
