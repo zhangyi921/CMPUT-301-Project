@@ -17,11 +17,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainMenuActivity" />
+        <activity android:name=".MainMenuActivity"
+            android:exported="true"/>
         <activity android:name=".CreateAccountActivity"
             android:exported="true"/>
         <activity android:name=".TodaysHabitActivity" />
-        <activity android:name=".HabitTypeListActivity" />
+        <activity android:name=".HabitTypeListActivity"
+            android:exported="true"/>
         <activity android:name=".CreateHabitActivity" />
         <activity android:name=".HabitTypeDetailsActivity" />
         <activity android:name=".HabitEventHistoryActivity" />
