@@ -7,14 +7,14 @@
         android:id="@+id/HTLIST_Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="11dp"
         android:layout_marginTop="17dp"
         android:text="TextView"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@android:color/background_light"
         android:textSize="20sp"
-        android:textStyle="bold"
-        android:layout_marginStart="11dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/HTLIST_Description"

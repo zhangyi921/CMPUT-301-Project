@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.notcmput301.habitbook.HabitTypeDetailsActivity">
+    tools:context="com.notcmput301.habitbook.HabitTypeDetailsActivity"
+    android:background="@drawable/backgroundhabittypedetail">
 
     <CheckBox
         android:id="@+id/HTD_T"

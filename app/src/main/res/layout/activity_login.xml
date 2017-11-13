@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.notcmput301.habitbook.LoginActivity">
+    tools:context="com.notcmput301.habitbook.LoginActivity"
+    android:background="@drawable/backgroundlogin">
 
     <TextView
         android:id="@+id/login_welcome_text"
@@ -12,11 +13,13 @@
         android:layout_height="45dp"
         android:layout_marginTop="54dp"
         android:text="@string/login_welcome"
+        android:textColor="#000000"
         android:textSize="30sp"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:textStyle="bold" />
 
     <EditText
         android:id="@+id/login_username"
