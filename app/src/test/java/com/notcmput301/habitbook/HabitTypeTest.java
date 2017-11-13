@@ -17,27 +17,27 @@ public class HabitTypeTest {
 
     @Test
     public void getOwner() throws Exception {
-        HabitType h1 = new HabitType(u1, "eating less", "coming close to morbid obesity", new Date(), new ArrayList<String>());
+        HabitType h1 = new HabitType(u1.getUsername(), "eating less", "coming close to morbid obesity", new Date(), new ArrayList<Integer>());
         assertEquals("Failed to get owner", u1, h1.getOwner());
     }
 
     @Test
     public void setOwner() throws Exception {
         User u2 = new User("test2", "carrot42"); //Test object
-        HabitType h1 = new HabitType(u1, "eating less", "coming close to morbid obesity", new Date(), new ArrayList<String>());
-        h1.setOwner(u2);
+        HabitType h1 = new HabitType(u1.getUsername(), "eating less", "coming close to morbid obesity", new Date(), new ArrayList<Integer>());
+        h1.setOwner(u2.getUsername());
         assertEquals("Failed to setOwner", u2, h1.getOwner());                                      //depends on success of getOwner
     }
 
     @Test
     public void getTitle() throws Exception {
-        HabitType h1 = new HabitType(u1, "eating less", "coming close to morbid obesity", new Date(), new ArrayList<String>());
+        HabitType h1 = new HabitType(u1.getUsername(), "eating less", "coming close to morbid obesity", new Date(), new ArrayList<Integer>());
         assertEquals("Failed to get title", "eating less", h1.getTitle());
     }
 
     @Test
     public void setTitle() throws Exception {
-        HabitType h1 = new HabitType(u1, "eating less", "coming close to morbid obesity", new Date(), new ArrayList<String>());
+        HabitType h1 = new HabitType(u1.getUsername(), "eating less", "coming close to morbid obesity", new Date(), new ArrayList<Integer>());
         String expectedT = "YEYEYYEE";
         h1.setTitle(expectedT);
         assertEquals("Failed to set Title", expectedT, h1.getTitle());                              //depends on the success of getTitle.
@@ -45,13 +45,13 @@ public class HabitTypeTest {
 
     @Test
     public void getReason() throws Exception {
-        HabitType h1 = new HabitType(u1, "eating less", "coming close to morbid obesity", new Date(), new ArrayList<String>());
+        HabitType h1 = new HabitType(u1.getUsername(), "eating less", "coming close to morbid obesity", new Date(), new ArrayList<Integer>());
         assertEquals("Failed to get Reason", "coming close to morbid obesity", h1.getReason());
     }
 
     @Test
     public void setReason() throws Exception {
-        HabitType h1 = new HabitType(u1, "eating less", "coming close to morbid obesity", new Date(), new ArrayList<String>());
+        HabitType h1 = new HabitType(u1.getUsername(), "eating less", "coming close to morbid obesity", new Date(), new ArrayList<Integer>());
         String expectedR = "new reason";
         h1.setReason(expectedR);
         assertEquals("Failed to set Title", expectedR, h1.getReason());                             //depends on success of getReason
@@ -60,13 +60,13 @@ public class HabitTypeTest {
     @Test
     public void getStartDate() throws Exception {
         Date d = new Date();
-        HabitType h1 = new HabitType(u1, "eating less", "coming close to morbid obesity", d, new ArrayList<String>());
+        HabitType h1 = new HabitType(u1.getUsername(), "eating less", "coming close to morbid obesity", d, new ArrayList<Integer>());
         assertEquals("Failed to get Date", d, h1.getStartDate());
     }
 
     @Test
     public void setStartDate() throws Exception {
-        HabitType h1 = new HabitType(u1, "eating less", "coming close to morbid obesity", new Date(), new ArrayList<String>());
+        HabitType h1 = new HabitType(u1.getUsername(), "eating less", "coming close to morbid obesity", new Date(), new ArrayList<Integer>());
         Date expected = new Date();
         Calendar cal = Calendar.getInstance();
         cal.setTime(expected);
@@ -78,7 +78,7 @@ public class HabitTypeTest {
 
     @Test
     public void getEventsCompleted() throws Exception {
-        HabitType h1 = new HabitType(u1, "eating less", "coming close to morbid obesity", new Date(), new ArrayList<String>());
+        HabitType h1 = new HabitType(u1.getUsername(), "eating less", "coming close to morbid obesity", new Date(), new ArrayList<Integer>());
 //        HabitEvent he1 = new HabitEvent(h1, "I bought a whole pizza today. I only ate 7 slices");
 //        HabitEvent he2 = new HabitEvent(h1, "Didnt really compelte my habit but im still going to add to my habit event");
         assertEquals("failed to get", (Integer) 0, h1.getEventsCompleted());                           //depends on success of h1.setEventCompleted()
@@ -86,7 +86,7 @@ public class HabitTypeTest {
 
     @Test
     public void setEventsCompleted() throws Exception {
-        HabitType h1 = new HabitType(u1, "eating less", "coming close to morbid obesity", new Date(), new ArrayList<String>());
+        HabitType h1 = new HabitType(u1.getUsername(), "eating less", "coming close to morbid obesity", new Date(), new ArrayList<Integer>());
         Integer expected = 1000;
         h1.setEventsCompleted(expected);
         assertEquals("failed to set events completed", expected, h1.getEventsCompleted());           //depends on success of h1.getEventCompleted()
@@ -94,13 +94,13 @@ public class HabitTypeTest {
 
     @Test
     public void getTotalEvents() throws Exception {
-        HabitType h1 = new HabitType(u1, "eating less", "coming close to morbid obesity", new Date(), new ArrayList<String>());
+        HabitType h1 = new HabitType(u1.getUsername(), "eating less", "coming close to morbid obesity", new Date(), new ArrayList<Integer>());
         assertEquals("Failed to get total event", (Integer) 0, h1.getEventsCompleted());
     }
 
     @Test
     public void setTotalEvents() throws Exception {
-        HabitType h1 = new HabitType(u1, "eating less", "coming close to morbid obesity", new Date(), new ArrayList<String>());
+        HabitType h1 = new HabitType(u1.getUsername(), "eating less", "coming close to morbid obesity", new Date(), new ArrayList<Integer>());
         Integer expected = 1000;
         h1.setTotalEvents(expected);
         assertEquals("failed to set total events", expected, h1.getTotalEvents());           //depends on success of h1.getEventCompleted()
@@ -109,28 +109,28 @@ public class HabitTypeTest {
 
     @Test
     public void getWeekdays() throws Exception {
-        HabitType h1 = new HabitType(u1, "eating less", "coming close to morbid obesity", new Date(), new ArrayList<String>());
-        assertEquals("Failed to getWeekdays", new ArrayList<String>(), h1.getWeekdays());
+        HabitType h1 = new HabitType(u1.getUsername(), "eating less", "coming close to morbid obesity", new Date(), new ArrayList<Integer>());
+        assertEquals("Failed to getWeekdays", new ArrayList<Integer>(), h1.getWeekdays());
     }
 
     @Test
     public void setWeekdays() throws Exception {
-        HabitType h1 = new HabitType(u1, "eating less", "coming close to morbid obesity", new Date(), new ArrayList<String>());
-        ArrayList<String> wkdy = new ArrayList<String>();
-        wkdy.add("M"); wkdy.add("T"); wkdy.add("TR");
+        HabitType h1 = new HabitType(u1.getUsername(), "eating less", "coming close to morbid obesity", new Date(), new ArrayList<Integer>());
+        ArrayList<Integer> wkdy = new ArrayList<Integer>();
+        wkdy.add(1); wkdy.add(2); wkdy.add(4);
         h1.setWeekdays(wkdy);
         assertEquals("Failed to set weekday", wkdy, h1.getWeekdays());                              //depends on the suuccess of getWeekdays()
     }
 
     @Test
     public void getEvents() throws Exception {
-        HabitType h1 = new HabitType(u1, "eating less", "coming close to morbid obesity", new Date(), new ArrayList<String>());
+        HabitType h1 = new HabitType(u1.getUsername(), "eating less", "coming close to morbid obesity", new Date(), new ArrayList<Integer>());
         assertEquals("Failed to get evets", new ArrayList<HabitEvent>(), h1.getEvents());
     }
 
     @Test
     public void setEvents() throws Exception {
-        HabitType h1 = new HabitType(u1, "eating less", "coming close to morbid obesity", new Date(), new ArrayList<String>());
+        HabitType h1 = new HabitType(u1.getUsername(), "eating less", "coming close to morbid obesity", new Date(), new ArrayList<Integer>());
         HabitEvent he1 = new HabitEvent(h1, "I bought a whole pizza today. I only ate 7 slices");
         HabitEvent he2 = new HabitEvent(h1, "Didnt really compelte my habit but im still going to add to my habit event");
         ArrayList<HabitEvent> hEvent = new ArrayList<HabitEvent>();
@@ -141,7 +141,7 @@ public class HabitTypeTest {
 
     @Test
     public void addHabitEvent() throws Exception {
-        HabitType h1 = new HabitType(u1, "eating less", "coming close to morbid obesity", new Date(), new ArrayList<String>());
+        HabitType h1 = new HabitType(u1.getUsername(), "eating less", "coming close to morbid obesity", new Date(), new ArrayList<Integer>());
         HabitEvent he1 = new HabitEvent(h1, "I bought a whole pizza today. I only ate 7 slices");
         h1.addHabitEvent(he1);
         assertEquals("Failed to add Habit Event", true, h1.getEvents().contains(he1));              //depends on the success of he1
@@ -149,7 +149,7 @@ public class HabitTypeTest {
 
     @Test
     public void removeHabitEvent() throws Exception {
-        HabitType h1 = new HabitType(u1, "eating less", "coming close to morbid obesity", new Date(), new ArrayList<String>());
+        HabitType h1 = new HabitType(u1.getUsername(), "eating less", "coming close to morbid obesity", new Date(), new ArrayList<Integer>());
         HabitEvent he1 = new HabitEvent(h1, "I bought a whole pizza today. I only ate 7 slices");
         HabitEvent he2 = new HabitEvent(h1, "Didnt really compelte my habit but im still going to add to my habit event");
         ArrayList<HabitEvent> hEvent = new ArrayList<HabitEvent>();
@@ -166,8 +166,8 @@ public class HabitTypeTest {
 
     @Test
     public void equals() throws Exception {
-        HabitType h1 = new HabitType(u1, "eating less", "coming close to morbid obesity", new Date(), new ArrayList<String>());
-        HabitType h2 = new HabitType(u1, "eating less", "coming close to morbid obesity", new Date(), new ArrayList<String>());
+        HabitType h1 = new HabitType(u1.getUsername(), "eating less", "coming close to morbid obesity", new Date(), new ArrayList<Integer>());
+        HabitType h2 = new HabitType(u1.getUsername(), "eating less", "coming close to morbid obesity", new Date(), new ArrayList<Integer>());
         assertEquals("Comparison Failed on equals", true, h1.equals(h2));
     }
 

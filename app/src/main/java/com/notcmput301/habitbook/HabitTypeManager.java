@@ -1,9 +1,31 @@
+/*
+ * HabitTypeManager
+ *
+ * Version 1.0
+ *
+ * November 12, 2017
+ *
+ * Copyright (c) 2017 Team NOTcmput301, CMPUT301, University of Alberta - All Rights Reserved
+ * You may use, distribute, or modify this code under terms and conditions of the Code of Student Behavior at University of Alberta.
+ * You can find a copy of the license in the project wiki on github. Otherwise please contact miller4@ualberta.ca.
+ */
+
 package com.notcmput301.habitbook;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
  * Created by Cole on 2017-10-21.
+ */
+
+/**
+ * Control class for managing habit type
+ *
+ * @author NOTcmput301
+ * @version 1.0
+ * @see HabitType
+ * @since 1.0
  */
 
 public final class HabitTypeManager {
@@ -12,6 +34,18 @@ public final class HabitTypeManager {
     }
 
     static public boolean habitTypeExists(User owner, String title) {
+        // Get habit types of corresponding user
+        ArrayList<HabitType> habitTypes = owner.getHabitTypes();
+        // Iterate through all habitTypes of that User
+        for (HabitType h : habitTypes) {
+            String hTitle = h.getTitle();
+            
+            // Returns true if title of habitType exists for that User
+            if (hTitle.equals(title)) {
+                return true;
+            }
+        }
+        // Returns false if title of habitType is unique for that user
         return false;
     }
 
