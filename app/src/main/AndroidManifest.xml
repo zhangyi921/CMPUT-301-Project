@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~  * Copyright (c) 2017 Team NOTcmput301, CMPUT301, University of Alberta - All Rights Reserved
+  ~  * You may use, distribute, or modify this code under terms and conditions of the Code of Student Behavior at University of Alberta.
+  ~  * You can find a copy of the license in the project wiki on github. Otherwise please contact miller4@ualberta.ca.
+  -->
+
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.notcmput301.habitbook">
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".MainMenuActivity"
+            android:exported="true"/>
+        <activity android:name=".CreateAccountActivity"
+            android:exported="true"/>
+        <activity android:name=".TodaysHabitActivity" />
+        <activity android:name=".HabitTypeListActivity"
+            android:exported="true"/>
+        <activity android:name=".CreateHabitActivity"
+            android:exported="true"/>
+        <activity android:name=".HabitTypeDetailsActivity" />
+        <activity android:name=".HabitEventHistoryActivity" />
+        <activity android:name=".HabitEventDetailsActivity" />
+        <activity android:name=".HabitMapActivity" />
+        <activity android:name=".OnlineMenuActivity" />
+        <activity android:name=".FollowedUsersMap" />
+        <activity android:name=".FollowerRequestsActivity"></activity>
+    </application>
+
+</manifest>

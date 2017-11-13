@@ -97,7 +97,15 @@ public class CreateAccountActivityTest extends ActivityInstrumentationTestCase2{
         solo.assertCurrentActivity("Not Create account Activity", CreateAccountActivity.class);
     }
 
+
     public void test_attempCreate() throws Exception{
+        //delete test user and check
+        /*ElasticSearch.verifyLogin vl = new ElasticSearch.verifyLogin();
+        vl.execute("CreateActTest1", "testpwd123");
+        User testUser = vl.get();*/
+        ElasticSearch.DeleteUser deleteUser = new ElasticSearch.DeleteUser();
+        deleteUser.execute("CreateActTest1");
+
         //this one should go through
         solo.assertCurrentActivity("Wrong Activity", CreateAccountActivity.class);
         solo.clearEditText((EditText) solo.getView(R.id.createAccount_Username));
@@ -120,7 +128,8 @@ public class CreateAccountActivityTest extends ActivityInstrumentationTestCase2{
         solo.waitForActivity(CreateAccountActivity.class);
         solo.assertCurrentActivity("Not Create account Activity", CreateAccountActivity.class);
 
-        //@todo delete test user and check,return true if nothing is found.
+
+
     }
     public void test_tearDown() throws Exception{
         solo.finishOpenedActivities();
