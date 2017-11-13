@@ -14,8 +14,10 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class HabitTypeDetailsActivity extends AppCompatActivity {
     private HabitType habit;
@@ -26,7 +28,6 @@ public class HabitTypeDetailsActivity extends AppCompatActivity {
     private ArrayList<CheckBox> weekdays = new ArrayList<>();
     private DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
     private Gson gson = new Gson();
-
 
 
     @Override
@@ -65,14 +66,87 @@ public class HabitTypeDetailsActivity extends AppCompatActivity {
     }
 
     public void HTDback(View view){
-        Intent habitTypeList = new Intent();
+        Intent habitTypeList = new Intent(HabitTypeDetailsActivity.this, HabitTypeListActivity.class);
         habitTypeList.putExtra("passedUser", gson.toJson(loggedInUser));
         startActivity(habitTypeList);
     }
 
     public void HTDUpdate(View view){
+        String title = titleE.getText().toString().trim().replaceAll("\\s+", " ");
+        String reason = reasonE.getText().toString();
+        String startdate = startDateE.getText().toString();
+        Date startdateD;
+        ArrayList<Boolean> checked = new ArrayList<>();
+        for (CheckBox ck: weekdays){
+            if (ck.isChecked()) checked.add(true);
+            else checked.add(false);
+        }
 
+        if (title.isEmpty() || reason.isEmpty() || startdate.isEmpty()){
+            Toast.makeText(this, "Some fields are not filled out!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (!checked.contains(true)){
+            Toast.makeText(this, "At least one day has to be checked", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        try {
+            DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            startdateD = formatter.parse(startdate);
+            Date today = new Date();
+            if (startdateD.before(today)){
+                Toast.makeText(this, "Start date cannot be in the past", Toast.LENGTH_SHORT).show();
+                return;
+            }
+        }catch (ParseException e){
+            Toast.makeText(this, "Incorrect Date formatting", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        //habit title can not be more than 20 char
+        if (title.length() > 20){
+            Toast.makeText(this, "Habit Title can't be longer than 20 characters", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        //habit reason can not be more than 30 char
+        if (reason.length() > 20){
+            Toast.makeText(this, "Habit Reason can't be longer than 30 characters", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        ElasticSearch.deleteHabitType dht = new ElasticSearch.deleteHabitType();
+        dht.execute(loggedInUser.getUsername(), habit.getTitle());
+        try{
+            boolean success = dht.get();
+            if (!success) {
+                Toast.makeText(this, "Opps, Something went wrong on our end", Toast.LENGTH_SHORT).show();
+                return;
+            }
+        }catch(Exception e){
+            Log.e("Error", "Failed to delete");
+            e.printStackTrace();
+            return;
+        }
+        HabitType newHabit = new HabitType(loggedInUser, title, reason, startdateD, checked);
+        ElasticSearch.addHabitType aht = new ElasticSearch.addHabitType();
+        aht.execute(newHabit);
+        try{
+            boolean success = aht.get();
+            if (!success){
+                Toast.makeText(this, "Opps, Something went wrong on our end", Toast.LENGTH_SHORT).show();
+            }else{
+                habit = newHabit;
+                Toast.makeText(this, "Updated Habit Type!", Toast.LENGTH_SHORT).show();
+                Intent habittypelist = new Intent(HabitTypeDetailsActivity.this, HabitTypeListActivity.class);
+                habittypelist.putExtra("passedUser", gson.toJson(loggedInUser));
+                startActivity(habittypelist);
+                return;
+            }
+        }catch(Exception e){
+            Log.e("get failure", "Failed to retrieve");
+            e.printStackTrace();
+        }
     }
+
 
     public void HTDDelete(View view){
         ElasticSearch.deleteHabitType delHT = new ElasticSearch.deleteHabitType();
