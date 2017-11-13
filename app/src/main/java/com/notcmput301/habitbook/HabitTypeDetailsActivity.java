@@ -100,36 +100,51 @@ public class HabitTypeDetailsActivity extends AppCompatActivity {
                         weekdays.add(1);
                     }
                 }
+                else{
+                    weekdays.remove(new Integer(1));
+                }
                 if (tuesday.isChecked()){
                     if (weekdays.indexOf(2) == -1){
                         weekdays.add(2);
                     }
                 }
+                else{
+                    weekdays.remove(new Integer(2));}
                 if (wednesday.isChecked()){
                     if (weekdays.indexOf(3) == -1){
                         weekdays.add(3);
                     }
                 }
+                else{
+                    weekdays.remove(new Integer(3));}
                 if (thursday.isChecked()){
                     if (weekdays.indexOf(4) == -1){
                         weekdays.add(4);
                     }
                 }
+                else{
+                    weekdays.remove(new Integer(4));}
                 if (friday.isChecked()){
                     if (weekdays.indexOf(5) == -1){
                         weekdays.add(5);
                     }
                 }
+                else{
+                    weekdays.remove(new Integer(5));}
                 if (saturday.isChecked()){
                     if (weekdays.indexOf(6) == -1){
                         weekdays.add(6);
                     }
                 }
+                else{
+                    weekdays.remove(new Integer(6));}
                 if (sunday.isChecked()){
                     if (weekdays.indexOf(7) == -1){
                         weekdays.add(7);
                     }
                 }
+                else{
+                    weekdays.remove(new Integer(7));}
                 HabitType Newhabit = new HabitType(user.getUsername(), titleText.getText().toString(),
                         reasonText.getText().toString(),
                         currentHabitType.getStartDate(),
