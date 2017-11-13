@@ -1,5 +1,6 @@
 package com.notcmput301.habitbook;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,8 +15,8 @@ public class HabitTypeValid {
     // Returns ture if name is valid input
     public static boolean validName(String n) {
         // Returns false if n is blank
-        if (n == "") return false;
 
+        if (n.equals("") ) return false;
         // Return false if n is longer than 20 characters
         if (n.length() > 20) return false;
 
@@ -33,7 +34,7 @@ public class HabitTypeValid {
     // Returns true if reason is valid input
     public static boolean validReason(String r) {
         // Returns false if r is blank
-        if (r == "") return false;
+        if (r.equals("") ) return false;
 
         // Return false if r is longer than 30 characters
         if (r.length() > 30) return false;
