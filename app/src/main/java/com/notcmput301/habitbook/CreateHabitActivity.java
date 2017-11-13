@@ -2,8 +2,8 @@ package com.notcmput301.habitbook;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -126,7 +125,7 @@ public class CreateHabitActivity extends AppCompatActivity {
             this.displayMessage("Exception!");
             return;
         }
-        HabitType ht = new HabitType(this.user, title, reason, date, tempDays);
+        HabitType ht = new HabitType(this.user.getUsername(), title, reason, date, tempDays);
         Intent returnIntent = new Intent();
         target = gson.toJson(ht);
         returnIntent.putExtra("HabitType", target);
