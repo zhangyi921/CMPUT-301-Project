@@ -10,7 +10,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
 public class LoginActivity extends AppCompatActivity {
+    private Gson gson = new Gson();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +38,7 @@ public class LoginActivity extends AppCompatActivity {
                 }else{
                     Toast.makeText(this, "Logged in!", Toast.LENGTH_SHORT).show();
                     Intent mainmenu = new Intent(LoginActivity.this, MainMenuActivity.class);
-                    mainmenu.putExtra("passedUser", u);
+                    mainmenu.putExtra("passedUser", gson.toJson(u));
                     startActivity(mainmenu);
                 }
             }catch(Exception e){

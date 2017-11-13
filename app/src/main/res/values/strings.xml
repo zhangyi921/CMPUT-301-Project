@@ -35,4 +35,11 @@
     <string name="CHT_Back">Back</string>
     <string name="HTL_Back">Back</string>
     <string name="HTL_Refresh">Refresh</string>
+    <string name="HTD_Delete">delete</string>
+    <string name="HTD_Update">update</string>
+    <string name="HTD_Reason">Reason</string>
+    <string name="HTD_AddEvent">Add Event</string>
+    <string name="HTD_Title">Title</string>
+    <string name="HTD_StartDate">Start Date</string>
+    <string name="HTD_HabitTypeDetails">Habit Type Details</string>
 </resources>

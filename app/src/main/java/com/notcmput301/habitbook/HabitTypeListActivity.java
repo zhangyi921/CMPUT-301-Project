@@ -21,7 +21,8 @@ import java.util.ArrayList;
 public class HabitTypeListActivity extends AppCompatActivity {
     private User loggedInUser;
     private ArrayList<HabitType> habitTypes;
-    ArrayAdapter<HabitType> Adapter;
+    private ArrayAdapter<HabitType> Adapter;
+    private Gson gson = new Gson();
 //    private String target;
 //    private Gson gson;
 //    //private User user;
@@ -32,7 +33,8 @@ public class HabitTypeListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_habit_type_list);
         Intent receiver = getIntent();
-        loggedInUser = receiver.getParcelableExtra("passedUser");
+        String u = receiver.getExtras().getString("passedUser");
+        loggedInUser = gson.fromJson(u, User.class);
         fillList();
 
 //        Bundle bundle = getIntent().getExtras();
@@ -98,8 +100,8 @@ public class HabitTypeListActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent habitdetail = new Intent(HabitTypeListActivity.this, HabitTypeDetailsActivity.class);
-                habitdetail.putExtra("position", position);
-                habitdetail.putExtra("passedHabitType", habitTypes.get(position));
+                habitdetail.putExtra("passedUser", gson.toJson(loggedInUser));
+                habitdetail.putExtra("passedHabitType", gson.toJson(habitTypes.get(position)));
                 startActivity(habitdetail);
             }
         });
@@ -109,7 +111,7 @@ public class HabitTypeListActivity extends AppCompatActivity {
     public void HTLnewHabitType(View view){
 
         Intent createHabit = new Intent(HabitTypeListActivity.this, CreateHabitActivity.class);
-        createHabit.putExtra("passedUser", loggedInUser);
+        createHabit.putExtra("passedUser", gson.toJson(loggedInUser));
         startActivity(createHabit);
     }
 
@@ -123,7 +125,7 @@ public class HabitTypeListActivity extends AppCompatActivity {
     public void HTLBack(View view){
 
         Intent mainmenu = new Intent(HabitTypeListActivity.this, MainMenuActivity.class);
-        mainmenu.putExtra("passedUser", loggedInUser);
+        mainmenu.putExtra("passedUser", gson.toJson(loggedInUser));
         startActivity(mainmenu);
     }
 

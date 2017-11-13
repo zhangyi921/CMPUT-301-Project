@@ -3,6 +3,7 @@ package com.notcmput301.habitbook;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -12,10 +13,20 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class HabitTypeDetailsActivity extends AppCompatActivity {
     private HabitType habit;
+    private User loggedInUser;
+    private EditText titleE;
+    private EditText reasonE;
+    private EditText startDateE;
+    private ArrayList<CheckBox> weekdays = new ArrayList<>();
+    private DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+    private Gson gson = new Gson();
+
 
 
     @Override
@@ -23,116 +34,70 @@ public class HabitTypeDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_habit_type_details);
         Intent receiver = getIntent();
-        this.habit = receiver.getParcelableExtra("passedHabitType");
-//        this.habit = loggedInUser.getHabitTypes().get(position);
-//        Toast.makeText(this, habit.getTitle(), Toast.LENGTH_SHORT).show();
-//
-//        Bundle bundle = getIntent().getExtras();
-//        int index = bundle.getInt("index");
-//        this.target = bundle.getString("user");
-//        this.gson = new Gson();
-//        this.user = gson.fromJson(target, User.class);
-//        this.habitTypes = user.getHabitTypes();
-//        this.currentHabitType = this.habitTypes.get(index);
-//        this.target = bundle.getString("localfilecontroller");
-//        this.localFileControler = gson.fromJson(target, LocalFileControler.class);
-//        this.weekdays = currentHabitType.getWeekdays();
-//
-////        titleText = (EditText) findViewById(R.id.CHT_Title);
-////        titleText.setText(currentHabitType.getTitle());
-////        reasonText = (EditText) findViewById(R.id.CHT_Reason);
-////        reasonText.setText(currentHabitType.getReason());
-////        startDate = (TextView) findViewById(R.id.CHT_Startdate);
-////        startDate.setText("Starting Date: "+currentHabitType.getStartDate().toString());
-////        monday = (CheckBox) findViewById(R.id.CHT_M);
-////        monday.setChecked(this.weekdays.indexOf(1) != -1);
-////        tuesday = (CheckBox) findViewById(R.id.CHT_T);
-////        tuesday.setChecked(this.weekdays.indexOf(1) != -1);
-////        wednesday = (CheckBox) findViewById(R.id.CHT_W);
-////        wednesday.setChecked(this.weekdays.indexOf(1) != -1);
-////        thursday = (CheckBox) findViewById(R.id.CHT_Tr);
-////        thursday.setChecked(this.weekdays.indexOf(1) != -1);
-////        friday = (CheckBox) findViewById(R.id.CHT_F);
-////        friday.setChecked(this.weekdays.indexOf(1) != -1);
-////        saturday = (CheckBox) findViewById(R.id.CHT_Sa);
-////        saturday.setChecked(this.weekdays.indexOf(1) != -1);
-////        sunday = (CheckBox) findViewById(R.id.Sun);
-////        sunday.setChecked(this.weekdays.indexOf(1) != -1);
-////        completionStatus = (TextView) findViewById(R.id.Status);
-////        //completionStatus.setText(currentHabitType.get);
-////
-////        back = (Button) findViewById(R.id.Back);
-////        back.setOnClickListener(new View.OnClickListener() {
-////            @Override
-////            public void onClick(View view) {
-////                finish();
-////            }
-////        }   );
-////        update = (Button) findViewById(R.id.Update);
-////        update.setOnClickListener(new View.OnClickListener() {
-////            @Override
-////            public void onClick(View view) {
-////
-////                if (monday.isChecked()){
-////                    if (weekdays.indexOf(1) == -1){
-////                        weekdays.add(1);
-////                    }
-////                }
-////                if (tuesday.isChecked()){
-////                    if (weekdays.indexOf(1) == -1){
-////                        weekdays.add(2);
-////                    }
-////                }
-////                if (wednesday.isChecked()){
-////                    if (weekdays.indexOf(1) == -1){
-////                        weekdays.add(3);
-////                    }
-////                }
-////                if (thursday.isChecked()){
-////                    if (weekdays.indexOf(1) == -1){
-////                        weekdays.add(4);
-////                    }
-////                }
-////                if (friday.isChecked()){
-////                    if (weekdays.indexOf(1) == -1){
-////                        weekdays.add(5);
-////                    }
-////                }
-////                if (saturday.isChecked()){
-////                    if (weekdays.indexOf(1) == -1){
-////                        weekdays.add(6);
-////                    }
-////                }
-////                if (sunday.isChecked()){
-////                    if (weekdays.indexOf(1) == -1){
-////                        weekdays.add(7);
-////                    }
-////                }
-////                HabitType Newhabit = new HabitType(user, titleText.getText().toString(),
-////                        reasonText.getText().toString(),
-////                        currentHabitType.getStartDate(),
-////                        weekdays);
-////                Newhabit.setEvents(currentHabitType.getEvents());
-////                Newhabit.setEventsCompleted(currentHabitType.getEventsCompleted());
-////                Newhabit.setStartDate(currentHabitType.getStartDate());
-////                Newhabit.setCreationDate(currentHabitType.getCreationDate());
-////                Newhabit.setTotalEvents(currentHabitType.getTotalEvents());
-////                user.updateHabitType(currentHabitType, Newhabit);
-////                localFileControler.Save(user);
-////                finish();
-////
-////            }
-////        }   );
-////        delete = (Button) findViewById(R.id.Delete);
-////        delete.setOnClickListener(new View.OnClickListener() {
-////            @Override
-////            public void onClick(View view) {
-////                user.removeHabitType(currentHabitType);
-////                finish();
-////            }
-////        }   );
+        String u = receiver.getExtras().getString("passedUser");
+        String h = receiver.getExtras().getString("passedHabitType");
+        this.loggedInUser = gson.fromJson(u, User.class);
+        this.habit = gson.fromJson(h, HabitType.class);
+        loadData();
+    }
+
+    public void loadData(){
+        titleE = (EditText) findViewById(R.id.HTD_TitleE);
+        reasonE = (EditText) findViewById(R.id.HTD_ReasonE);
+        startDateE = (EditText) findViewById(R.id.HTD_StartDateE);
+        weekdays = new ArrayList<>();
+        weekdays.add((CheckBox) findViewById(R.id.HTD_M));
+        weekdays.add((CheckBox) findViewById(R.id.HTD_T));
+        weekdays.add((CheckBox) findViewById(R.id.HTD_W));
+        weekdays.add((CheckBox) findViewById(R.id.HTD_Tr));
+        weekdays.add((CheckBox) findViewById(R.id.HTD_F));
+        weekdays.add((CheckBox) findViewById(R.id.HTD_Sa));
+        weekdays.add((CheckBox) findViewById(R.id.HTD_Su));
+        ArrayList<Boolean> checked = habit.getWeekdays();
+        for (int i = 0; i < weekdays.size(); i++){
+            if (checked.get(i)){
+                weekdays.get(i).toggle();
+            }
+        }
+        titleE.setText(habit.getTitle());
+        reasonE.setText(habit.getReason());
+        startDateE.setText(df.format(habit.getStartDate()));
+    }
+
+    public void HTDback(View view){
+        Intent habitTypeList = new Intent();
+        habitTypeList.putExtra("passedUser", gson.toJson(loggedInUser));
+        startActivity(habitTypeList);
+    }
+
+    public void HTDUpdate(View view){
 
     }
 
+    public void HTDDelete(View view){
+        ElasticSearch.deleteHabitType delHT = new ElasticSearch.deleteHabitType();
+        delHT.execute(loggedInUser.getUsername(), habit.getTitle());
+        try{
+            boolean result = delHT.get();
+            if (result){
+                Intent habitTypeList = new Intent(HabitTypeDetailsActivity.this, HabitTypeListActivity.class);
+                Toast.makeText(this, "deleted item!", Toast.LENGTH_SHORT).show();
+                habitTypeList.putExtra("passedUser", gson.toJson(loggedInUser));
+                startActivity(habitTypeList);
+                return;
+            }else{
+                Toast.makeText(this, "Failed to delete", Toast.LENGTH_SHORT).show();
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            Toast.makeText(this, "Failed to delete", Toast.LENGTH_SHORT).show();
+        }
+    }
 
+    public void HTDAddEvent(View view){
+        Intent createHabitEvent = new Intent(HabitTypeDetailsActivity.this, CreateHabitEventActivity.class);
+        createHabitEvent.putExtra("passedUser", gson.toJson(loggedInUser));
+        createHabitEvent.putExtra("passedHabitType", gson.toJson(habit));
+        startActivity(createHabitEvent);
+    }
 }

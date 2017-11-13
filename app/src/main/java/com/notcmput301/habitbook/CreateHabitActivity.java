@@ -5,26 +5,25 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ToggleButton;
+
+import com.google.gson.Gson;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.zip.DataFormatException;
 
 public class CreateHabitActivity extends AppCompatActivity {
     private User loggedInUser;
-    private ArrayList<Boolean> weekdays = new ArrayList<>();
+    private ArrayList<Boolean> weekdays;
     private Date startdate;
     private String title;
     private String reason;
+    private Gson gson = new Gson();
 
 
     @Override
@@ -32,26 +31,28 @@ public class CreateHabitActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_habit);
         Intent receiver = getIntent();
-        loggedInUser = receiver.getParcelableExtra("passedUser");
+        String u = receiver.getExtras().getString("passedUser");
+        this.loggedInUser = gson.fromJson(u, User.class);
     }
 
     public void CHTCreate(View view){
 
-        EditText titleE = (EditText) findViewById(R.id.CHT_Title);
-        EditText reasonE = (EditText) findViewById(R.id.CHT_Reason);
-        EditText startdateE = (EditText) findViewById(R.id.CHT_Startdate);
-        CheckBox mE = (CheckBox) findViewById(R.id.CHT_M);
-        CheckBox tE = (CheckBox) findViewById(R.id.CHT_T);
-        CheckBox wE = (CheckBox) findViewById(R.id.CHT_W);
-        CheckBox trE = (CheckBox) findViewById(R.id.CHT_Tr);
-        CheckBox fE = (CheckBox) findViewById(R.id.CHT_F);
-        CheckBox saE = (CheckBox) findViewById(R.id.CHT_Sa);
+        EditText titleE = (EditText) findViewById(R.id.HTD_TitleE);
+        EditText reasonE = (EditText) findViewById(R.id.HTD_ReasonE);
+        EditText startdateE = (EditText) findViewById(R.id.HTD_Startdate);
+        CheckBox mE = (CheckBox) findViewById(R.id.HTD_M);
+        CheckBox tE = (CheckBox) findViewById(R.id.HTD_T);
+        CheckBox wE = (CheckBox) findViewById(R.id.HTD_W);
+        CheckBox trE = (CheckBox) findViewById(R.id.HTD_Tr);
+        CheckBox fE = (CheckBox) findViewById(R.id.HTD_F);
+        CheckBox saE = (CheckBox) findViewById(R.id.HTD_Sa);
         CheckBox suE = (CheckBox) findViewById(R.id.CHT_Su);
 
         title = titleE.getText().toString().trim().replaceAll("\\s+", " ");
         reason = reasonE.getText().toString();
         String startdate = startdateE.getText().toString();
 
+        weekdays = new ArrayList<>();
         weekdays.add(mE.isChecked()); weekdays.add(tE.isChecked()); weekdays.add(wE.isChecked());
         weekdays.add(trE.isChecked()); weekdays.add(fE.isChecked()); weekdays.add(saE.isChecked());
         weekdays.add(suE.isChecked());
@@ -78,6 +79,20 @@ public class CreateHabitActivity extends AppCompatActivity {
             Toast.makeText(this, "Incorrect Date formatting", Toast.LENGTH_SHORT).show();
             return;
         }
+
+        //habit title can not be more than 20 char
+        if (title.length() > 20){
+            Toast.makeText(this, "Habit Title can't be longer than 20 characters", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (reason.length() > 20){
+            Toast.makeText(this, "Habit Reason can't be longer than 30 characters", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+
+        //habit reason can not be more than 30 char
 
         ElasticSearch.habitTypeExists hte = new ElasticSearch.habitTypeExists();
         hte.execute(loggedInUser.getUsername(), title);
@@ -106,7 +121,7 @@ public class CreateHabitActivity extends AppCompatActivity {
             }else{
                 Toast.makeText(this, "Added Habit Type!", Toast.LENGTH_SHORT).show();
                 Intent habittypelist = new Intent(CreateHabitActivity.this, HabitTypeListActivity.class);
-                habittypelist.putExtra("passedUser", loggedInUser);
+
                 startActivity(habittypelist);
             }
         }catch(Exception e){
@@ -117,7 +132,7 @@ public class CreateHabitActivity extends AppCompatActivity {
 
     public void CHTBack(View view){
         Intent habittypelist = new Intent(CreateHabitActivity.this, HabitTypeListActivity.class);
-        habittypelist.putExtra("passedUser", loggedInUser);
+        habittypelist.putExtra("passedUser", gson.toJson(loggedInUser));
         startActivity(habittypelist);
     }
 }

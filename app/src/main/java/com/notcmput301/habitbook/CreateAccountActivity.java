@@ -10,7 +10,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
 public class CreateAccountActivity extends AppCompatActivity {
+    private Gson gson = new Gson();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +76,7 @@ public class CreateAccountActivity extends AppCompatActivity {
             }else {
                 Toast.makeText(this, "Welcome!", Toast.LENGTH_LONG).show();
                 Intent mainmenu = new Intent(CreateAccountActivity.this, MainMenuActivity.class);
-                mainmenu.putExtra("passedUser", u);
+                mainmenu.putExtra("passedUser", gson.toJson(u));
                 startActivity(mainmenu);
                 return;
             }

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.notcmput301.habitbook">
-    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -28,7 +29,8 @@
         <activity android:name=".HabitMapActivity" />
         <activity android:name=".OnlineMenuActivity" />
         <activity android:name=".FollowedUsersMap" />
-        <activity android:name=".FollowerRequestsActivity"></activity>
+        <activity android:name=".FollowerRequestsActivity" />
+        <activity android:name=".CreateHabitEventActivity"></activity>
     </application>
 
 </manifest>

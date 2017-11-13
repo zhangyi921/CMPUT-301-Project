@@ -9,7 +9,11 @@ import com.searchly.jestdroid.JestDroidClient;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import io.searchbox.client.JestResult;
+import io.searchbox.core.Delete;
+import io.searchbox.core.DeleteByQuery;
 import io.searchbox.core.DocumentResult;
 import io.searchbox.core.Index;
 import io.searchbox.core.Search;
@@ -78,6 +82,9 @@ public class ElasticSearch {
                 SearchResult result = client.execute(search);
                 if (result.isSucceeded()){
                     User test = result.getSourceAsObject(User.class);
+                    if (test==null){
+                        return 0;
+                    }
                     if (test.getUsername().toLowerCase().equals(username.toLowerCase())){
                         return 1;
                     }
@@ -140,6 +147,9 @@ public class ElasticSearch {
                 SearchResult result = client.execute(search);
                 if (result.isSucceeded()) {
                     HabitType test = result.getSourceAsObject(HabitType.class);
+                    if (test==null){ //could nto find anything
+                        return 0;
+                    }
                     if (test.getTitle().toLowerCase().trim().replaceAll("\\s+", " ").equals(title.toLowerCase().trim().replaceAll("\\s+", " "))){
                         return 1;
                     }
@@ -147,6 +157,7 @@ public class ElasticSearch {
                     return -1;
                 }
             } catch (Exception e) {
+                e.printStackTrace();
                 Log.e("Failed Q", "Search broke");
                 return -1;
             }
@@ -196,7 +207,7 @@ public class ElasticSearch {
                 return null;
             }
             String username = s[0];
-            String jsonQuery = "{ \"query\": {\"match\": {\"ownername\": \"" + username + "\"}}}";
+            String jsonQuery = "{ \"size\": 10000, \"query\": {\"match\": {\"ownername\": \"" + username + "\"}}}";
             Search search = new Search.Builder(jsonQuery).addIndex("t28test9").addType("habittype").build();            //potential issue here where match will amtch other owner name.
 
             try {
@@ -211,6 +222,57 @@ public class ElasticSearch {
                 return null;
             }
             return null;
+        }
+    }
+
+
+    /**
+     * Deletes a habit type
+     */
+    public static class deleteHabitType extends AsyncTask<String, Void, Boolean>{
+
+        @Override
+        public Boolean doInBackground(String... s){
+            String ownername = s[0];
+            String title = s[1];
+            String jsonQuery = "{\"query\": {\"bool\": {\"must\": [{\"match\": {\"ownername\": \"" + ownername + "\"}},{\"match\": {\"title\": \"" +title+"\"}}]}}}";
+            Search search = new Search.Builder(jsonQuery).addIndex("t28test9").addType("habittype").build();
+            String jestId;
+            try {
+                SearchResult result = client.execute(search);
+                if (result.isSucceeded()) {
+                    SearchResult.Hit hit = result.getFirstHit(Map.class);
+                    Map source = (Map) hit.source;
+                    jestId = (String) source.get(JestResult.ES_METADATA_ID);
+                    if (jestId.isEmpty()){ //could nto find anything
+                        Log.e("error", "Could not find jest id");
+                        return false;
+                    }
+                    else{
+                        Log.i("jestId", jestId);
+                    }
+                }else{
+                    Log.e("error", "Search failed");
+                    return false;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.e("error", "Soomething went wrong");
+                return false;
+            }
+
+            Delete delete = new Delete.Builder(jestId).index("t28test9").type("habittype").build();
+            try {
+                if (client.execute(delete).isSucceeded()) {
+                    Log.e("SUCCESS", "WTF");
+                    return true;
+                }
+                Log.e("delete", "not succeeded");
+            } catch (Exception e) {
+                Log.e("Failed Q", "Failed delete");
+                return false;
+            }
+            return false;
         }
     }
 
