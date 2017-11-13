@@ -12,6 +12,18 @@ public final class HabitTypeManager {
     }
 
     static public boolean habitTypeExists(User owner, String title) {
+        // Get habit types of corresponding user
+        ArrayList<HabitType> habitTypes = owner.getHabitTypes();
+        // Iterate through all habitTypes of that User
+        for (HabitType h : habitTypes) {
+            String hTitle = h.getTitle();
+            
+            // Returns true if title of habitType exists for that User
+            if (hTitle.equals(title)) {
+                return true;
+            }
+        }
+        // Returns false if title of habitType is unique for that user
         return false;
     }
 
