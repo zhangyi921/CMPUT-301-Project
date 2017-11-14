@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.notcmput301.habitbook.CreateHabitActivity">
+    tools:context="com.notcmput301.habitbook.CreateHabitActivity"
+    android:background="@drawable/backgroundcreatehabittype">
 
     <EditText
         android:id="@+id/HTD_Startdate"
@@ -125,7 +126,8 @@
         android:text="@string/CHT_Su"
         app:layout_constraintStart_toEndOf="@+id/HTD_Sa"
         app:layout_constraintTop_toBottomOf="@+id/HTD_HabitSchedule"
-        tools:layout_editor_absoluteX="347dp" />
+        android:layout_marginRight="16dp"
+        app:layout_constraintRight_toRightOf="parent" />
 
     <CheckBox
         android:id="@+id/HTD_M"
@@ -136,7 +138,8 @@
         android:text="@string/CHT_M"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/HTD_HabitSchedule"
-        tools:layout_editor_absoluteX="50dp" />
+        android:layout_marginLeft="16dp"
+        app:layout_constraintLeft_toLeftOf="parent" />
 
     <Button
         android:id="@+id/CHT_Create"
