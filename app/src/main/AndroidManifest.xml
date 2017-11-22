@@ -3,8 +3,9 @@
     package="com.notcmput301.habitbook">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />﻿
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    ﻿
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -32,7 +33,11 @@
         <activity android:name=".OnlineMenuActivity" />
         <activity android:name=".FollowedUsersMap" />
         <activity android:name=".FollowerRequestsActivity" />
-        <activity android:name=".CreateHabitEventActivity"></activity>
+        <activity android:name=".CreateHabitEventActivity" />
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/title_activity_main"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

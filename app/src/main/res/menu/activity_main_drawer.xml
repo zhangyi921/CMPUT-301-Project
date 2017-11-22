@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/habit_type"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="Habit Type" />
+        <item
+            android:id="@+id/today_habit"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Today's Habit" />
+        <item
+            android:id="@+id/habit_event_history"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Habit Event History" />
+        <item
+            android:id="@+id/online"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="online" />
+    </group>
+
+    <item android:title="Other">
+        <menu>
+            <item
+                android:id="@+id/setting"
+                android:icon="@drawable/ic_menu_share"
+                android:title="Setting" />
+            <item
+                android:id="@+id/logout"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Logout" />
+        </menu>
+    </item>
+
+</menu>
