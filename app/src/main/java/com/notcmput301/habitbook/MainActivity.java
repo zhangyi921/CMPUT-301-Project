@@ -90,15 +90,19 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.habit_type) {
             // Handle the camera action
-            Intent habitType = new Intent(MainActivity.this, HabitTypeListActivity.class);
+            Intent habitType = new Intent(MainActivity.this, HabitTypeList2.class);
             habitType.putExtra("passedUser", gson.toJson(loggedInUser));
             startActivity(habitType);
         } else if (id == R.id.today_habit) {
 
         } else if (id == R.id.habit_event_history) {
-
+            Intent habitEventHistory = new Intent(MainActivity.this, HabitEventHistoryActivity.class);
+            habitEventHistory.putExtra("passedUser", gson.toJson(loggedInUser));
+            startActivity(habitEventHistory);
         } else if (id == R.id.online) {
-
+            Intent online = new Intent(MainActivity.this, OnlineMenuActivity.class);
+            online.putExtra("passedUser", gson.toJson(loggedInUser));
+            startActivity(online);
         } else if (id == R.id.setting) {
 
         } else if (id == R.id.logout) {
