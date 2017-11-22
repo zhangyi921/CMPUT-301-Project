@@ -48,8 +48,11 @@ public class HabitTypeList2 extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();*/
+                Intent createHabit = new Intent(HabitTypeList2.this, CreateHabitActivity.class);
+                createHabit.putExtra("passedUser", gson.toJson(loggedInUser));
+                startActivity(createHabit);
             }
         });
 

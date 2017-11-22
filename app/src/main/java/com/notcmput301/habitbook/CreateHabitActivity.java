@@ -131,8 +131,6 @@ public class CreateHabitActivity extends AppCompatActivity {
     }
 
     public void CHTBack(View view){
-        Intent habittypelist = new Intent(CreateHabitActivity.this, HabitTypeListActivity.class);
-        habittypelist.putExtra("passedUser", gson.toJson(loggedInUser));
-        startActivity(habittypelist);
+        finish();
     }
 }
