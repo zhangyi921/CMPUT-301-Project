@@ -12,9 +12,7 @@
   <component name="ChangeListManager">
     <list default="true" id="1f0d1e18-7e3f-4709-a04b-40cac2678227" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/notcmput301/habitbook/CreateHabitActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/notcmput301/habitbook/CreateHabitActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/notcmput301/habitbook/HabitTypeList2.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/notcmput301/habitbook/HabitTypeList2.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/app_bar_habit_type_list2.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/app_bar_habit_type_list2.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/notcmput301/habitbook/MainActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/notcmput301/habitbook/MainActivity.java" />
     </list>
     <ignored path="NOTcmput301.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -118,7 +116,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CreateHabitActivity.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="CreateHabitActivity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/notcmput301/habitbook/CreateHabitActivity.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="375">
@@ -158,11 +156,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/notcmput301/habitbook/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="235">
-              <caret line="94" column="37" selection-start-line="94" selection-start-column="37" selection-end-line="94" selection-end-column="37" />
+            <state relative-caret-position="155">
+              <caret line="94" column="21" selection-start-line="94" selection-start-column="21" selection-end-line="94" selection-end-column="21" />
               <folding />
             </state>
           </provider>
@@ -2059,10 +2057,10 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/app_bar_main.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/content_habit_type_list2.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_habit_type_list2.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/notcmput301/habitbook/MainActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/app_bar_habit_type_list2.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/notcmput301/habitbook/HabitTypeList2.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/notcmput301/habitbook/CreateHabitActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/notcmput301/habitbook/MainActivity.java" />
       </list>
     </option>
   </component>
@@ -3283,14 +3281,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/notcmput301/habitbook/MainActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="235">
-          <caret line="94" column="37" selection-start-line="94" selection-start-column="37" selection-end-line="94" selection-end-column="37" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/nav_header_habit_type_list2.xml">
       <provider selected="true" editor-type-id="android-designer2">
         <state />
@@ -3384,6 +3374,14 @@
             <element signature="e#5106#5107#0" expanded="true" />
             <element signature="e#5130#5131#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/notcmput301/habitbook/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="155">
+          <caret line="94" column="21" selection-start-line="94" selection-start-column="21" selection-end-line="94" selection-end-column="21" />
+          <folding />
         </state>
       </provider>
     </entry>

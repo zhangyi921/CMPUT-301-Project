@@ -124,7 +124,9 @@ public class HabitTypeList2 extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
+    /////////////////////////////////////////////////////////////
+    //copied form original file
+    /////////////////////////////////////////////////////////////
     public void fillList(){
         ListView habitlist = (ListView) findViewById(R.id.HabitList);
         ElasticSearch.getHabitTypeList ghtl = new ElasticSearch.getHabitTypeList();

@@ -92,6 +92,7 @@ public class MainActivity extends AppCompatActivity
             // Handle the camera action
             Intent habitType = new Intent(MainActivity.this, HabitTypeList2.class);
             habitType.putExtra("passedUser", gson.toJson(loggedInUser));
+            finish();
             startActivity(habitType);
         } else if (id == R.id.today_habit) {
 
