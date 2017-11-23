@@ -22,80 +22,6 @@
         app:layout_constraintTop_toBottomOf="@+id/MainMenu_title" />
 
     <TextView
-<<<<<<< HEAD
-        android:id="@+id/MainMenuTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Main Menu"
-        android:textSize="30sp"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="16dp"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent" />
-
-    <Button
-        android:id="@+id/MainMenuHabitTypeButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="32dp"
-        android:onClick="viewHabitTypeList"
-        android:text="Habit Types"
-        app:layout_constraintHorizontal_bias="0.503"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/MainMenuTitle" />
-
-    <Button
-        android:id="@+id/MainMenuTodaysHabitsButton"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:text="Today's Habits"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
-        android:layout_marginTop="32dp"
-        app:layout_constraintTop_toBottomOf="@+id/MainMenuHabitTypeButton" />
-
-    <Button
-        android:id="@+id/MainMenuHabitEventHistoryButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:text="Habit Event History"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginTop="32dp"
-        app:layout_constraintTop_toBottomOf="@+id/MainMenuTodaysHabitsButton" />
-
-    <Button
-        android:id="@+id/MainMenuOnlineFunctionsButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="32dp"
-        android:text="Online Functions"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/MainMenuHabitEventHistoryButton" />
-
-    <Button
-        android:id="@+id/MainMenuLogoutButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="32dp"
-        android:onClick="logoutUser"
-        android:text="Logout"
-=======
         android:id="@+id/MainMenu_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -103,14 +29,10 @@
         android:text="@string/MM_Title"
         android:textSize="45sp"
         app:layout_constraintHorizontal_bias="0.501"
->>>>>>> yi
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/MainMenuOnlineFunctionsButton" />
+        app:layout_constraintTop_toTopOf="parent" />
 
-<<<<<<< HEAD
-</android.support.constraint.ConstraintLayout>
-=======
     <Button
         android:id="@+id/MainMenu_THabit"
         style="@style/Widget.AppCompat.Button.Colored"
@@ -159,4 +81,3 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/MainMenu_Online" />
 </android.support.constraint.ConstraintLayout>
->>>>>>> yi

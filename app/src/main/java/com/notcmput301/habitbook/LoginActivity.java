@@ -1,14 +1,3 @@
-/*
- * LoginActivity
- *
- * Version 1.0
- *
- * November 12, 2017
- *
- * Copyright (c) 2017 Team NOTcmput301, CMPUT301, University of Alberta - All Rights Reserved
- * You may use, distribute, or modify this code under terms and conditions of the Code of Student Behavior at University of Alberta.
- * You can find a copy of the license in the project wiki on github. Otherwise please contact miller4@ualberta.ca.
- */
 package com.notcmput301.habitbook;
 
 import android.content.Intent;
@@ -23,37 +12,15 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 
-<<<<<<< HEAD
-/**
- * Activity for logging in to an account
- *
- * @author NOTcmput301
- * @version 1.0
- * @see User
- * @since 1.0
- */
-
-=======
->>>>>>> yi
 public class LoginActivity extends AppCompatActivity {
     private Gson gson = new Gson();
 
-    /**
-     * Called when the activity is first created.
-     *
-     * @param savedInstanceState previous instance of activity
-     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
     }
 
-    /**
-     * Logs a user into the app
-     *
-     * @param view view of current activity status
-     */
     public void login(View view){
         EditText usernameEt = (EditText) findViewById(R.id.login_username);
         EditText passwordEt = (EditText) findViewById(R.id.login_password);
@@ -69,29 +36,18 @@ public class LoginActivity extends AppCompatActivity {
                 if (u==null){
                     Toast.makeText(this, "Check password/Username or internet connection", Toast.LENGTH_LONG).show();
                 }else{
-<<<<<<< HEAD
-                    Toast.makeText(this, "Logged in!", Toast.LENGTH_LONG).show();
-                    Gson gson = new Gson();
-                    Intent mainmenu = new Intent(LoginActivity.this, MainMenuActivity.class);
-=======
                     Toast.makeText(this, "Logged in!", Toast.LENGTH_SHORT).show();
                     Intent mainmenu = new Intent(LoginActivity.this, MainActivity.class);
->>>>>>> yi
                     mainmenu.putExtra("passedUser", gson.toJson(u));
                     startActivity(mainmenu);
                 }
             }catch(Exception e){
-                Log.e("get failure", e.toString());
+                Log.e("get failure", "Failed to retrieve");
                 e.printStackTrace();
             }
         }
     }
 
-    /**
-     * Caller for create account activity
-     *
-     * @param view view of current activity status
-     */
     public void createAccount(View view){
         Intent createAccount = new Intent(LoginActivity.this, CreateAccountActivity.class);
         startActivity(createAccount);

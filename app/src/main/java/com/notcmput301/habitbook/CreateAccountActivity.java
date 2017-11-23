@@ -1,15 +1,3 @@
-/*
- * CreateAccountActivity
- *
- * Version 1.0
- *
- * November 12, 2017
- *
- * Copyright (c) 2017 Team NOTcmput301, CMPUT301, University of Alberta - All Rights Reserved
- * You may use, distribute, or modify this code under terms and conditions of the Code of Student Behavior at University of Alberta.
- * You can find a copy of the license in the project wiki on github. Otherwise please contact miller4@ualberta.ca.
- */
-
 package com.notcmput301.habitbook;
 
 import android.content.Intent;
@@ -22,38 +10,17 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-<<<<<<< HEAD
-/**
- * Activity for creating new account
- *
- * @author NOTcmput301
- * @version 1.0
- * @see User
- * @since 1.0
- */
-=======
 import com.google.gson.Gson;
->>>>>>> yi
 
 public class CreateAccountActivity extends AppCompatActivity {
     private Gson gson = new Gson();
 
-    /**
-     * Called when the activity is first created.
-     *
-     * @param savedInstanceState previous instance of activity
-     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_account);
     }
 
-    /**
-     * Creates account given information
-     *
-     * @param view view of input info
-     */
     public void caCreate(View view){
         EditText usernameEt = (EditText) findViewById(R.id.createAccount_Username);
         EditText passwordEt = (EditText) findViewById(R.id.createAccount_password);
@@ -121,11 +88,6 @@ public class CreateAccountActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * Returns to the previous activity
-     *
-     * @param view view of current activity
-     */
     public void caBack(View view){
         Intent back = new Intent(CreateAccountActivity.this, LoginActivity.class);
         startActivity(back);

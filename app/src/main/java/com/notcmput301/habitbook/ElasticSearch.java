@@ -1,15 +1,3 @@
-/*
- * ElasticSearch
- *
- * Version 1.0
- *
- * November 12, 2017
- *
- * Copyright (c) 2017 Team NOTcmput301, CMPUT301, University of Alberta - All Rights Reserved
- * You may use, distribute, or modify this code under terms and conditions of the Code of Student Behavior at University of Alberta.
- * You can find a copy of the license in the project wiki on github. Otherwise please contact miller4@ualberta.ca.
- */
-
 package com.notcmput301.habitbook;
 
 import android.os.AsyncTask;
@@ -35,14 +23,6 @@ import io.searchbox.core.SearchResult;
  * Created by shang on 11/10/2017.
  */
 
-/**
- * class for elasticsearch queries
- *
- * @author NOTcmput301
- * @version 1.0
- * @since 1.0
- */
-
 public class ElasticSearch {
     private static JestDroidClient client;
     protected static String db = "t28test9";    //DATABASE
@@ -55,7 +35,7 @@ public class ElasticSearch {
         /**
          * Used to login. returns user upon success
          * @param q
-         * @return logged in user
+         * @return
          */
         @Override
         public User doInBackground(String... q){
@@ -121,6 +101,7 @@ public class ElasticSearch {
     /**
      * Used to add user to database, -1 deonted fault;
      */
+
     public static class addUser extends AsyncTask<User, Void, User>{
 
         @Override
@@ -146,66 +127,6 @@ public class ElasticSearch {
         }
     }
 
-<<<<<<< HEAD
-    
-    /**
-     * Used to delete user, -1 denotes fault
-     */
-    public static class DeleteUser extends AsyncTask<String, Void, Integer>{
-
-        @Override
-        public Integer doInBackground(String... q){
-            verifySettings();
-            if (q.length != 1){
-                Log.e("Bad input", "expected 1 string");
-                return -1;
-            }
-            String username = q[0];
-            String jsonQuery = "{\"delete\": {\"match\": {\"username\": \""+username+"\"}}}";
-            Search search = new Search.Builder(jsonQuery).addIndex("t28test2").addType("user").build();
-
-            try{
-                SearchResult result = client.execute(search);
-                if (result.isSucceeded()){
-                    return result.getTotal();
-                }
-            }catch(Exception e){
-                Log.e("Failed Q", "Search broke");
-                return -1;
-            }
-            return -1;
-        }
-    }
-    
-    public static class UpdateUserTask extends AsyncTask<User, Void, Void> {
-
-        @Override
-        protected Void doInBackground(User... users) {
-            verifySettings();
-
-            for (User user : users) {
-
-                Index index = new Index.Builder(user).index("t28test2").type("user").id(user.getId()).build();
-                try {
-
-                    // where is the client?
-                    DocumentResult result = client.execute(index);
-                    if (result.isSucceeded()){
-
-                        //user.setId(result.getId());
-                        Log.i("debug", result.getId());
-                    }
-                    else
-                    {
-                        Log.i("debug","Elasticsearch was not able to update ");
-                    }
-                }
-                catch (Exception e) {
-                    Log.i("debug", e.getMessage());
-                }
-
-            }
-=======
     /**
      * Check if habit type NAME is unique
      */
@@ -351,13 +272,10 @@ public class ElasticSearch {
         } catch (Exception e) {
             e.printStackTrace();
             Log.e("error", "Something went wrong");
->>>>>>> yi
             return null;
         }
     }
 
-<<<<<<< HEAD
-=======
     /**
      * Method deletes an item with a given jestId and type
      * @param jestId
@@ -379,7 +297,6 @@ public class ElasticSearch {
         }
     }
 
->>>>>>> yi
     public static void verifySettings(){
         if (client==null){
             DroidClientConfig.Builder builder = new DroidClientConfig.Builder("http://cmput301.softwareprocess.es:8080/");

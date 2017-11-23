@@ -1,10 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-  ~  * Copyright (c) 2017 Team NOTcmput301, CMPUT301, University of Alberta - All Rights Reserved
-  ~  * You may use, distribute, or modify this code under terms and conditions of the Code of Student Behavior at University of Alberta.
-  ~  * You can find a copy of the license in the project wiki on github. Otherwise please contact miller4@ualberta.ca.
-  -->
-
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.notcmput301.habitbook">
 
@@ -27,15 +21,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainMenuActivity"
-            android:exported="true"/>
-        <activity android:name=".CreateAccountActivity"
-            android:exported="true"/>
+        <activity android:name=".MainMenuActivity" />
+        <activity android:name=".CreateAccountActivity" />
         <activity android:name=".TodaysHabitActivity" />
-        <activity android:name=".HabitTypeListActivity"
-            android:exported="true"/>
-        <activity android:name=".CreateHabitActivity"
-            android:exported="true"/>
+        <activity android:name=".HabitTypeListActivity" />
+        <activity android:name=".CreateHabitActivity" />
         <activity android:name=".HabitTypeDetailsActivity" />
         <activity android:name=".HabitEventHistoryActivity" />
         <activity android:name=".HabitEventDetailsActivity" />
