@@ -4,186 +4,222 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.notcmput301.habitbook.HabitTypeDetailsActivity">
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="84dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
-        android:text="Title:"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="85dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="40dp"
-        android:text="Reason:"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
-
-    <TextView
-        android:id="@+id/StartDate"
-        android:layout_width="351dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="40dp"
-        android:text="Starting Date:"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
-
-    <EditText
-        android:id="@+id/Title"
-        android:layout_width="0dp"
-        android:layout_height="44dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="16dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/Reason"
-        android:layout_width="0dp"
-        android:layout_height="44dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="20dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Title" />
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="94dp"
-        android:layout_height="19dp"
-        android:layout_marginEnd="127dp"
-        android:layout_marginStart="127dp"
-        android:layout_marginTop="40dp"
-        android:text="Habit Schedule"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.52"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/StartDate" />
+    tools:context="com.notcmput301.habitbook.HabitTypeDetailsActivity"
+    android:background="@drawable/backgroundhabittypedetail">
 
     <CheckBox
-        android:id="@+id/Tu"
+        android:id="@+id/HTD_T"
         android:layout_width="50dp"
         android:layout_height="30dp"
-        android:layout_marginTop="20dp"
-        android:text="T"
-        app:layout_constraintStart_toEndOf="@+id/Mon"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+        android:text="@string/CHT_T"
+        app:layout_constraintStart_toEndOf="@+id/HTD_M"
+        tools:layout_editor_absoluteX="44dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/HTD_Update" />
 
     <CheckBox
-        android:id="@+id/Wes"
+        android:id="@+id/HTD_W"
         android:layout_width="50dp"
         android:layout_height="30dp"
-        android:layout_marginTop="20dp"
-        android:text="W"
-        app:layout_constraintStart_toEndOf="@+id/Tu"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+        android:text="@string/CHT_W"
+        app:layout_constraintStart_toEndOf="@+id/HTD_T"
+        tools:layout_editor_absoluteX="118dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/HTD_Update" />
 
     <CheckBox
-        android:id="@+id/Thu"
+        android:id="@+id/HTD_Tr"
         android:layout_width="50dp"
         android:layout_height="30dp"
-        android:layout_marginTop="20dp"
-        android:text="T"
-        app:layout_constraintStart_toEndOf="@+id/Wes"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+        android:text="@string/CHT_Tr"
+        app:layout_constraintStart_toEndOf="@+id/HTD_W"
+        tools:layout_editor_absoluteX="168dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/HTD_Update" />
 
     <CheckBox
-        android:id="@+id/Fri"
+        android:id="@+id/HTD_F"
         android:layout_width="50dp"
         android:layout_height="30dp"
-        android:layout_marginTop="20dp"
-        android:text="F"
-        app:layout_constraintStart_toEndOf="@+id/Thu"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+        android:text="@string/CHT_F"
+        app:layout_constraintStart_toEndOf="@+id/HTD_Tr"
+        tools:layout_editor_absoluteX="218dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/HTD_Update" />
 
     <CheckBox
-        android:id="@+id/Sat"
+        android:id="@+id/HTD_Sa"
         android:layout_width="50dp"
         android:layout_height="30dp"
-        android:layout_marginTop="20dp"
-        android:text="Sa"
-        app:layout_constraintStart_toEndOf="@+id/Fri"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+        android:text="@string/CHT_Sat"
+        app:layout_constraintStart_toEndOf="@+id/HTD_F"
+        tools:layout_editor_absoluteX="268dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/HTD_Update" />
 
     <CheckBox
-        android:id="@+id/Sun"
+        android:id="@+id/HTD_Su"
         android:layout_width="50dp"
         android:layout_height="30dp"
-        android:layout_marginTop="20dp"
-        android:text="Su"
-        app:layout_constraintStart_toEndOf="@+id/Sat"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+        android:text="@string/CHT_Su"
+        app:layout_constraintStart_toEndOf="@+id/HTD_Sa"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/HTD_Update"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintRight_toRightOf="parent" />
 
     <CheckBox
-        android:id="@+id/Mon"
-        android:layout_width="50dp"
+        android:id="@+id/HTD_M"
         android:layout_height="30dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:text="M"
+        android:layout_marginBottom="16dp"
+        android:layout_marginStart="24dp"
+        android:text="@string/CHT_M"
+        app:layout_constraintBottom_toTopOf="@+id/HTD_Update"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+        android:layout_width="wrap_content" />
 
     <Button
-        android:id="@+id/Delete"
+        android:id="@+id/HTD_Delete"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="48dp"
-        android:layout_marginStart="36dp"
-        android:text="delete"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="32dp"
+        android:onClick="HTDDelete"
+        android:text="@string/HTD_Delete"
+        app:layout_constraintBottom_toTopOf="@+id/HTD_AddEvent"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/Back"
+        android:id="@+id/HTD_Back"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="48dp"
-        android:layout_marginEnd="36dp"
-        android:text="Back"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="32dp"
+        android:onClick="HTDback"
+        android:text="@string/CHT_Back"
+        app:layout_constraintBottom_toTopOf="@+id/HTD_AddEvent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
     <Button
-        android:id="@+id/Update"
+        android:id="@+id/HTD_Update"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="48dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
-        android:text="update"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/Back"
-        app:layout_constraintStart_toEndOf="@+id/Delete" />
+        android:onClick="HTDUpdate"
+        android:text="@string/HTD_Update"
+        app:layout_constraintBottom_toTopOf="@+id/HTD_AddEvent"
+        app:layout_constraintEnd_toStartOf="@+id/HTD_Back"
+        app:layout_constraintLeft_toRightOf="@+id/HTD_Delete"
+        app:layout_constraintRight_toLeftOf="@+id/HTD_Back"
+        app:layout_constraintStart_toEndOf="@+id/HTD_Delete" />
 
-    <TextView
-        android:id="@+id/Status"
+    <Button
+        android:id="@+id/HTD_AddEvent"
+        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="88dp"
-        android:layout_marginEnd="171dp"
-        android:layout_marginStart="172dp"
-        android:text="Status"
-        app:layout_constraintBottom_toTopOf="@+id/Update"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:layout_marginBottom="32dp"
+        android:onClick="HTDAddEvent"
+        android:text="@string/HTD_AddEvent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <EditText
+        android:id="@+id/HTD_TitleE"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@+id/HTD_ReasonE"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <EditText
+        android:id="@+id/HTD_ReasonE"
+        android:layout_width="0dp"
+        android:layout_height="43dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@+id/HTD_StartDateE"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginBottom="32dp" />
+
+    <TextView
+        android:id="@+id/HTD_Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="@string/HTD_Title"
+        app:layout_constraintBottom_toTopOf="@+id/HTD_TitleE"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <TextView
+        android:id="@+id/HTD_Reason"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="@string/HTD_Reason"
+        app:layout_constraintBottom_toTopOf="@+id/HTD_ReasonE"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <TextView
+        android:id="@+id/HTD_StartDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="@string/HTD_StartDate"
+        app:layout_constraintBottom_toTopOf="@+id/HTD_StartDateE"
+        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:text="@string/HTD_StartDate" />
+
+    <EditText
+        android:id="@+id/HTD_StartDateE"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="50dp"
+        android:ems="10"
+        android:inputType="date"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@+id/HTD_Tr"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <TextView
+        android:id="@+id/HTD_HabitTypeDetails"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/HTD_HabitTypeDetails"
+        android:textColor="@color/colorPrimary"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toTopOf="@+id/HTD_Title"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

@@ -4,20 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.notcmput301.habitbook.LoginActivity">
+    tools:context="com.notcmput301.habitbook.LoginActivity"
+    android:background="@drawable/backgroundlogin">
 
     <TextView
         android:id="@+id/login_welcome_text"
         android:layout_width="wrap_content"
         android:layout_height="45dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="54dp"
         android:text="@string/login_welcome"
-        android:textAppearance="@style/TextAppearance.AppCompat"
+        android:textColor="#000000"
         android:textSize="30sp"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:textStyle="bold" />
 
     <EditText
         android:id="@+id/login_username"
@@ -49,25 +51,25 @@
 
     <Button
         android:id="@+id/login_login"
+        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="85dp"
         android:layout_marginTop="32dp"
         android:onClick="login"
         android:text="@string/login_lbtn"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/login_password" />
 
     <Button
         android:id="@+id/login_signup"
+        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="84dp"
         android:layout_marginTop="31dp"
         android:onClick="createAccount"
         android:text="@string/login_sbtn"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/login_password" />
 </android.support.constraint.ConstraintLayout>

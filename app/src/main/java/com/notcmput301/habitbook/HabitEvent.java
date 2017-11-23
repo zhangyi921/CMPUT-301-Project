@@ -12,6 +12,7 @@
 
 package com.notcmput301.habitbook;
 
+import android.graphics.Bitmap;
 import android.location.Location;
 import android.media.Image;
 
@@ -34,7 +35,7 @@ public class HabitEvent {
 
     private HabitType habitType;
     private String comment;
-    private Image image;
+    private Bitmap image;
     private Date date;
     private int likes;
     private int dislikes;
@@ -60,7 +61,7 @@ public class HabitEvent {
         this.location = location;
     }
 
-    public HabitEvent(HabitType habit, String comment, Image image){
+    public HabitEvent(HabitType habit, String comment, Bitmap image){
         this.habitType = habit;
         this.comment = comment;
         this.image = image;
@@ -70,7 +71,7 @@ public class HabitEvent {
         this.location = null;
     }
 
-    public HabitEvent(HabitType habit, String comment, Image image, Location location){
+    public HabitEvent(HabitType habit, String comment, Bitmap image, Location location){
         this.habitType = habit;
         this.comment = comment;
         this.image = image;
@@ -96,11 +97,11 @@ public class HabitEvent {
         this.comment = comment;
     }
 
-    public Image getImage() {
+    public Bitmap getImage() {
         return image;
     }
 
-    public void setImage(Image image) {
+    public void setImage(Bitmap image) {
         this.image = image;
     }
 

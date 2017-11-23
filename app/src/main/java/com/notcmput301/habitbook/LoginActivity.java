@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 
+<<<<<<< HEAD
 /**
  * Activity for logging in to an account
  *
@@ -32,12 +33,10 @@ import com.google.gson.Gson;
  * @since 1.0
  */
 
+=======
+>>>>>>> yi
 public class LoginActivity extends AppCompatActivity {
-//    private TextView loginScreen;
-//    private EditText usernameText;
-//    private EditText passwordText;
-//    private Button login;
-//    private Button createAccount;
+    private Gson gson = new Gson();
 
     /**
      * Called when the activity is first created.
@@ -68,11 +67,16 @@ public class LoginActivity extends AppCompatActivity {
             try{
                 User u = vl.get();
                 if (u==null){
-                    Toast.makeText(this, "Check password or internet connection", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "Check password/Username or internet connection", Toast.LENGTH_LONG).show();
                 }else{
+<<<<<<< HEAD
                     Toast.makeText(this, "Logged in!", Toast.LENGTH_LONG).show();
                     Gson gson = new Gson();
                     Intent mainmenu = new Intent(LoginActivity.this, MainMenuActivity.class);
+=======
+                    Toast.makeText(this, "Logged in!", Toast.LENGTH_SHORT).show();
+                    Intent mainmenu = new Intent(LoginActivity.this, MainActivity.class);
+>>>>>>> yi
                     mainmenu.putExtra("passedUser", gson.toJson(u));
                     startActivity(mainmenu);
                 }

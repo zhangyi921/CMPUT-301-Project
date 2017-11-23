@@ -23,6 +23,7 @@ import io.searchbox.annotations.JestId;
  * Created by Cole on 2017-10-19.
  */
 
+<<<<<<< HEAD
 /**
  * Class for representing users
  *
@@ -33,6 +34,9 @@ import io.searchbox.annotations.JestId;
  */
 
 public class User implements Parcelable {
+=======
+public class User {
+>>>>>>> yi
     private String username;
     private String password;
     private Date creationDate;
@@ -278,48 +282,6 @@ public class User implements Parcelable {
     public String toString(){
         return this.username;
     }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.username);
-        dest.writeString(this.password);
-        dest.writeLong(this.creationDate != null ? this.creationDate.getTime() : -1);
-        dest.writeList(this.followers);
-        dest.writeList(this.followedUsers);
-        dest.writeList(this.habitTypes);
-        dest.writeString(this.id);
-    }
-
-    protected User(Parcel in) {
-        this.username = in.readString();
-        this.password = in.readString();
-        long tmpCreationDate = in.readLong();
-        this.creationDate = tmpCreationDate == -1 ? null : new Date(tmpCreationDate);
-        this.followers = new ArrayList<User>();
-        in.readList(this.followers, User.class.getClassLoader());
-        this.followedUsers = new ArrayList<User>();
-        in.readList(this.followedUsers, User.class.getClassLoader());
-        this.habitTypes = new ArrayList<HabitType>();
-        in.readList(this.habitTypes, HabitType.class.getClassLoader());
-        this.id = in.readString();
-    }
-
-    public static final Parcelable.Creator<User> CREATOR = new Parcelable.Creator<User>() {
-        @Override
-        public User createFromParcel(Parcel source) {
-            return new User(source);
-        }
-
-        @Override
-        public User[] newArray(int size) {
-            return new User[size];
-        }
-    };
 }
 
 

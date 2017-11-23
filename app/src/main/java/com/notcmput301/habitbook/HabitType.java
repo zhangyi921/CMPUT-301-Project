@@ -11,14 +11,20 @@
  */
 package com.notcmput301.habitbook;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.StringTokenizer;
+
+import io.searchbox.annotations.JestId;
 
 /**
  * Created by Cole on 2017-10-19.
  */
 
+<<<<<<< HEAD
 /**
  * Class for habit type objects
  *
@@ -28,15 +34,21 @@ import java.util.StringTokenizer;
  */
 public class HabitType {
     private String ownerName;
+=======
+public class HabitType{
+    private String ownername;
+    private User owner;
+>>>>>>> yi
     private String title;
     private String reason;
     private Date creationDate;
     private Date startDate;
     private Integer eventsCompleted;
     private Integer totalEvents;
-    private ArrayList<Integer> weekdays;
+    private ArrayList<Boolean> weekdays;
     private ArrayList<HabitEvent> events;
 
+<<<<<<< HEAD
     /**
      * Constructs habit Type object
      *
@@ -48,6 +60,11 @@ public class HabitType {
      */
     public HabitType(String ownerName, String title, String reason, Date startDate, ArrayList<Integer> weekdays ) {
         this.ownerName = ownerName;
+=======
+    public HabitType(User owner, String title, String reason, Date startDate,  ArrayList<Boolean> weekdays ) {
+        this.ownername = owner.getUsername();
+        this.owner = owner;
+>>>>>>> yi
         this.title = title;
         this.reason = reason;
         this.creationDate = new Date();
@@ -185,6 +202,7 @@ public class HabitType {
         this.totalEvents = totalEvents;
     }
 
+<<<<<<< HEAD
     /**
      * Gets weekdays habit occurs on
      *
@@ -200,6 +218,13 @@ public class HabitType {
      * @param weekdays array used to set weekdays
      */
     public void setWeekdays(ArrayList<Integer> weekdays) {
+=======
+    public ArrayList<Boolean> getWeekdays() {
+        return weekdays;
+    }
+
+    public void setWeekdays(ArrayList<Boolean> weekdays) {
+>>>>>>> yi
         this.weekdays = weekdays;
     }
 
@@ -274,4 +299,5 @@ public class HabitType {
     public String toString(){
         return this.title;
     }
+
 }

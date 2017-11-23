@@ -18,6 +18,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.gson.Gson;
 
 import com.google.gson.Gson;
 
@@ -32,6 +35,7 @@ import com.google.gson.Gson;
 
 public class MainMenuActivity extends AppCompatActivity {
     private User loggedInUser;
+<<<<<<< HEAD
     private TextView mainMenu;
     private Button habitTypes;
     private Button todaysHabits;
@@ -41,6 +45,9 @@ public class MainMenuActivity extends AppCompatActivity {
     private String target;
     private Gson gson;
     private LocalFileController localFileController;
+=======
+    private Gson gson = new Gson();
+>>>>>>> yi
 
     /**
      * Called when the activity is first created.
@@ -51,6 +58,7 @@ public class MainMenuActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
+<<<<<<< HEAD
         //Intent receiver = getIntent();
         Bundle bundle = getIntent().getExtras();
         String target = bundle.getString("passedUser");
@@ -82,6 +90,41 @@ public class MainMenuActivity extends AppCompatActivity {
         //target = gson.toJson(localFileController);
         //intent.putExtra("localfilecontroller", target);
         startActivity(intent);
+=======
+        Intent receiver = getIntent();
+        String u = receiver.getExtras().getString("passedUser");
+        this.loggedInUser = gson.fromJson(u, User.class);
+    }
+
+    public void MMLogout(View view){
+        Intent logout = new Intent(MainMenuActivity.this, LoginActivity.class);
+        startActivity(logout);
+        Toast.makeText(this, "Logged out!", Toast.LENGTH_SHORT).show();
+    }
+
+    public void MMHabitType(View view){
+        Intent habitType = new Intent(MainMenuActivity.this, HabitTypeListActivity.class);
+        habitType.putExtra("passedUser", gson.toJson(loggedInUser));
+        startActivity(habitType);
+    }
+
+    public void MMTodayHabit(View view){
+        Intent todayHabit = new Intent(MainMenuActivity.this, TodaysHabitActivity.class);
+        todayHabit.putExtra("passedUser", gson.toJson(loggedInUser));
+        startActivity(todayHabit);
+    }
+
+    public void MMHabitEventHistory(View view){
+        Intent habitEventHistory = new Intent(MainMenuActivity.this, HabitEventHistoryActivity.class);
+        habitEventHistory.putExtra("passedUser", gson.toJson(loggedInUser));
+        startActivity(habitEventHistory);
+    }
+
+    public void MMOnline(View view){
+        Intent online = new Intent(MainMenuActivity.this, OnlineMenuActivity.class);
+        online.putExtra("passedUser", gson.toJson(loggedInUser));
+        startActivity(online);
+>>>>>>> yi
     }
 }
 

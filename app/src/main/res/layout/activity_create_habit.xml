@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+<<<<<<< HEAD
     tools:context="com.notcmput301.habitbook.CreateAccountActivity">
 
     <TextView
@@ -205,4 +206,180 @@
         android:text="Back"
         app:layout_constraintLeft_toRightOf="@+id/createHabitButton"
         app:layout_constraintTop_toBottomOf="@+id/createHabitSatBox" />
+=======
+    tools:context="com.notcmput301.habitbook.CreateHabitActivity"
+    android:background="@drawable/backgroundcreatehabittype">
+
+    <EditText
+        android:id="@+id/HTD_Startdate"
+        android:layout_width="0dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="32dp"
+        android:ems="10"
+        android:hint="@string/CHT_StartdateEditText"
+        android:textAlignment="center"
+        android:inputType="date"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/HTD_ReasonE" />
+
+    <EditText
+        android:id="@+id/HTD_TitleE"
+        android:layout_width="0dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="102dp"
+        android:ems="10"
+        android:hint="@string/CHT_TitleEditText"
+        android:textAlignment="center"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/HTD_ReasonE"
+        android:layout_width="0dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="32dp"
+        android:ems="10"
+        android:hint="@string/CHT_ReasonEditText"
+        android:textAlignment="center"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/HTD_TitleE" />
+
+    <TextView
+        android:id="@+id/HTD_HabitSchedule"
+        android:layout_width="94dp"
+        android:layout_height="19dp"
+        android:text="@string/CHT_Schedule"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="24dp"
+        app:layout_constraintTop_toBottomOf="@+id/HTD_Startdate"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <CheckBox
+        android:id="@+id/HTD_T"
+        android:layout_width="50dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="26dp"
+        android:text="@string/CHT_T"
+        app:layout_constraintStart_toEndOf="@+id/HTD_M"
+        app:layout_constraintTop_toBottomOf="@+id/HTD_HabitSchedule"
+        tools:layout_editor_absoluteX="100dp" />
+
+    <CheckBox
+        android:id="@+id/HTD_W"
+        android:layout_width="50dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="26dp"
+        android:text="@string/CHT_W"
+        app:layout_constraintStart_toEndOf="@+id/HTD_T"
+        app:layout_constraintTop_toBottomOf="@+id/HTD_HabitSchedule"
+        tools:layout_editor_absoluteX="146dp" />
+
+    <CheckBox
+        android:id="@+id/HTD_Tr"
+        android:layout_width="50dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="26dp"
+        android:text="@string/CHT_Tr"
+        app:layout_constraintStart_toEndOf="@+id/HTD_W"
+        app:layout_constraintTop_toBottomOf="@+id/HTD_HabitSchedule"
+        tools:layout_editor_absoluteX="197dp" />
+
+    <CheckBox
+        android:id="@+id/HTD_F"
+        android:layout_width="50dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="26dp"
+        android:text="@string/CHT_F"
+        app:layout_constraintStart_toEndOf="@+id/HTD_Tr"
+        app:layout_constraintTop_toBottomOf="@+id/HTD_HabitSchedule"
+        tools:layout_editor_absoluteX="247dp" />
+
+    <CheckBox
+        android:id="@+id/HTD_Sa"
+        android:layout_width="50dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="26dp"
+        android:text="@string/CHT_Sat"
+        app:layout_constraintStart_toEndOf="@+id/HTD_F"
+        app:layout_constraintTop_toBottomOf="@+id/HTD_HabitSchedule"
+        tools:layout_editor_absoluteX="297dp" />
+
+    <CheckBox
+        android:id="@+id/CHT_Su"
+        style="@style/Widget.AppCompat.CompoundButton.CheckBox"
+        android:layout_width="50dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="26dp"
+        android:text="@string/CHT_Su"
+        app:layout_constraintStart_toEndOf="@+id/HTD_Sa"
+        app:layout_constraintTop_toBottomOf="@+id/HTD_HabitSchedule"
+        android:layout_marginRight="16dp"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <CheckBox
+        android:id="@+id/HTD_M"
+        android:layout_width="50dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="26dp"
+        android:text="@string/CHT_M"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/HTD_HabitSchedule"
+        android:layout_marginLeft="16dp"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <Button
+        android:id="@+id/CHT_Create"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="55dp"
+        android:layout_marginEnd="148dp"
+        android:layout_marginStart="148dp"
+        android:onClick="CHTCreate"
+        android:text="@string/CHT_Create"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/CHT_Title"
+        android:textSize="25sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/CHT_Back"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:onClick="CHTBack"
+        android:text="@string/CHT_Back"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/CHT_Create" />
+
+>>>>>>> yi
 </android.support.constraint.ConstraintLayout>
