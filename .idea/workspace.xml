@@ -6,12 +6,21 @@
     </shared>
   </component>
   <component name="AndroidLogFilters">
-    <option name="TOOL_WINDOW_LOG_LEVEL" value="error" />
+    <option name="TOOL_WINDOW_LOG_LEVEL" value="info" />
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
+    <option name="TOOL_WINDOW_REGEXP_FILTER" value="false" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1f0d1e18-7e3f-4709-a04b-40cac2678227" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+<<<<<<< HEAD
+=======
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/app.iml" afterPath="$PROJECT_DIR$/app/app.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build.gradle" afterPath="$PROJECT_DIR$/app/build.gradle" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/notcmput301/habitbook/CreateHabitEventActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/notcmput301/habitbook/CreateHabitEventActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/notcmput301/habitbook/HabitEvent.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/notcmput301/habitbook/HabitEvent.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_create_habit_event.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_create_habit_event.xml" />
+>>>>>>> origin/shang
     </list>
     <ignored path="NOTcmput301.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -43,6 +52,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+<<<<<<< HEAD
       <file leaf-file-name="HabitTypeDetailsActivity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/notcmput301/habitbook/HabitTypeDetailsActivity.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -53,6 +63,8 @@
           </provider>
         </entry>
       </file>
+=======
+>>>>>>> origin/shang
       <file leaf-file-name="HabitEventDetailsActivity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/notcmput301/habitbook/HabitEventDetailsActivity.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -66,6 +78,7 @@
       <file leaf-file-name="HabitTypeList2.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/notcmput301/habitbook/HabitTypeList2.java">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
             <state relative-caret-position="351">
               <caret line="150" column="93" selection-start-line="150" selection-start-column="69" selection-end-line="150" selection-end-column="93" />
               <folding>
@@ -79,10 +92,16 @@
                 <element signature="e#6886#6887#0" expanded="true" />
                 <element signature="e#6918#6919#0" expanded="true" />
               </folding>
+=======
+            <state relative-caret-position="2601">
+              <caret line="170" column="8" selection-start-line="170" selection-start-column="8" selection-end-line="173" selection-end-column="40" />
+              <folding />
+>>>>>>> origin/shang
             </state>
           </provider>
         </entry>
       </file>
+<<<<<<< HEAD
       <file leaf-file-name="content_habit_type_list2.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/content_habit_type_list2.xml">
           <provider selected="true" editor-type-id="android-designer2">
@@ -92,10 +111,21 @@
             <state relative-caret-position="15">
               <caret line="1" column="15" selection-start-line="1" selection-start-column="15" selection-end-line="1" selection-end-column="15" />
               <folding />
+=======
+      <file leaf-file-name="CreateHabitEventActivity.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/notcmput301/habitbook/CreateHabitEventActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="380">
+              <caret line="149" column="5" selection-start-line="149" selection-start-column="5" selection-end-line="149" selection-end-column="5" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+>>>>>>> origin/shang
             </state>
           </provider>
         </entry>
       </file>
+<<<<<<< HEAD
       <file leaf-file-name="app_bar_main.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/app_bar_main.xml">
           <provider editor-type-id="android-designer2">
@@ -104,22 +134,56 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="330">
               <caret line="22" column="50" selection-start-line="22" selection-start-column="29" selection-end-line="22" selection-end-column="50" />
+=======
+      <file leaf-file-name="HabitEvent.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/notcmput301/habitbook/HabitEvent.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1649">
+              <caret line="130" column="5" selection-start-line="130" selection-start-column="5" selection-end-line="130" selection-end-column="5" />
+>>>>>>> origin/shang
               <folding />
             </state>
           </provider>
         </entry>
       </file>
+<<<<<<< HEAD
       <file leaf-file-name="app_bar_habit_type_list2.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/app_bar_habit_type_list2.xml">
           <provider selected="true" editor-type-id="android-designer2">
+=======
+      <file leaf-file-name="AndroidManifest.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="357">
+              <caret line="21" column="19" selection-start-line="21" selection-start-column="19" selection-end-line="21" selection-end-column="19" />
+              <folding />
+            </state>
+          </provider>
+          <provider editor-type-id="android-manifest">
+>>>>>>> origin/shang
             <state />
           </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ElasticSearch.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/notcmput301/habitbook/ElasticSearch.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1530">
+              <caret line="107" column="46" selection-start-line="107" selection-start-column="8" selection-end-line="107" selection-end-column="46" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="activity_create_habit.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_create_habit.xml">
           <provider editor-type-id="text-editor">
             <state relative-caret-position="276">
               <caret line="22" column="53" selection-start-line="22" selection-start-column="29" selection-end-line="22" selection-end-column="53" />
               <folding />
             </state>
           </provider>
+<<<<<<< HEAD
         </entry>
       </file>
       <file leaf-file-name="activity_habit_type_list2.xml" pinned="false" current-in-tab="false">
@@ -140,11 +204,24 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="132">
               <caret line="18" column="26" selection-start-line="18" selection-start-column="22" selection-end-line="18" selection-end-column="26" />
+=======
+          <provider selected="true" editor-type-id="android-designer2">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="build.gradle" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/build.gradle">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="527">
+              <caret line="31" column="79" selection-start-line="31" selection-start-column="79" selection-end-line="31" selection-end-column="79" />
+>>>>>>> origin/shang
               <folding />
             </state>
           </provider>
         </entry>
       </file>
+<<<<<<< HEAD
       <file leaf-file-name="activity_habit_type_list2_drawer.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/menu/activity_habit_type_list2_drawer.xml">
           <provider selected="true" editor-type-id="android-designer2">
@@ -167,6 +244,27 @@
                 <element signature="e#5125#5126#0" expanded="true" />
                 <element signature="e#5149#5150#0" expanded="true" />
               </folding>
+=======
+      <file leaf-file-name="activity_create_habit_event.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_create_habit_event.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1734">
+              <caret line="102" column="0" selection-start-line="102" selection-start-column="0" selection-end-line="102" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+          <provider editor-type-id="android-designer2">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="HabitEventTest.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/test/java/com/notcmput301/habitbook/HabitEventTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="306">
+              <caret line="26" column="0" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
+              <folding />
+>>>>>>> origin/shang
             </state>
           </provider>
         </entry>
@@ -177,8 +275,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="JUnit4 Test Class" />
-        <option value="Class" />
         <option value="layoutResourceFile_vertical" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -397,6 +495,11 @@
                 <option name="name" value="compileReleaseRenderscript" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
+                <option name="description" value="Prepare id.zelory:compressor:2.1.0" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="prepareIdZeloryCompressor210Library" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
                 <option name="description" value="Assembles all Debug builds." />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
                 <option name="name" value="assembleDebug" />
@@ -423,6 +526,11 @@
                 <option name="description" value="Prepare com.android.support:support-v4:25.3.1" />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
                 <option name="name" value="prepareComAndroidSupportSupportV42531Library" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Prepare de.hdodenhof:circleimageview:2.2.0" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="prepareDeHdodenhofCircleimageview220Library" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
@@ -1131,6 +1239,11 @@
                 <option name="name" value="compileReleaseRenderscript" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
+                <option name="description" value="Prepare id.zelory:compressor:2.1.0" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
+                <option name="name" value="prepareIdZeloryCompressor210Library" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
                 <option name="description" value="Assembles all Debug builds." />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
                 <option name="name" value="assembleDebug" />
@@ -1157,6 +1270,11 @@
                 <option name="description" value="Prepare com.android.support:support-v4:25.3.1" />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
                 <option name="name" value="prepareComAndroidSupportSupportV42531Library" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Prepare de.hdodenhof:circleimageview:2.2.0" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
+                <option name="name" value="prepareDeHdodenhofCircleimageview220Library" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
@@ -1702,7 +1820,7 @@
       <map>
         <entry key="$PROJECT_DIR$" value="4532787699368" />
         <entry key="C:\Users\Cole\AndroidStudioProjects\NOTcmput301" value="4526200490962" />
-        <entry key="C:\git\NOTcmput301" value="4531233084727" />
+        <entry key="C:\git\NOTcmput301" value="4531408791372" />
         <entry key="D:\git301\NOTcmput301" value="4525873788258" />
         <entry key="H:\study\CMPUT301\NOTcmput301" value="4526191548466" />
       </map>
@@ -2005,6 +2123,15 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
+<<<<<<< HEAD
+=======
+        <option value="$PROJECT_DIR$/app/src/androidTest/java/com/notcmput301/habitbook/HabitTypeTest.java" />
+        <option value="$PROJECT_DIR$/app/src/androidTest/java/com/notcmput301/habitbook/UserTest.java" />
+        <option value="$PROJECT_DIR$/app/src/test/java/com/notcmput301/habitbook/ExampleUnitTest.java" />
+        <option value="$PROJECT_DIR$/app/src/test/java/com/notcmput301/habitbook/CreateAccountActivityTest.java" />
+        <option value="$PROJECT_DIR$/app/src/test/java/com/notcmput301/habitbook/CreateHabitActivityTest.java" />
+        <option value="$PROJECT_DIR$/app/src/test/java/com/notcmput301/habitbook/FollowedUsersMapTest.java" />
+>>>>>>> origin/shang
         <option value="$PROJECT_DIR$/app/src/test/java/com/notcmput301/habitbook/FollowerRequestsActivityTest.java" />
         <option value="$PROJECT_DIR$/app/src/test/java/com/notcmput301/habitbook/HabitEventDetailsActivityTest.java" />
         <option value="$PROJECT_DIR$/app/src/test/java/com/notcmput301/habitbook/HabitEventHistoryActivityTest.java" />
@@ -2019,7 +2146,6 @@
         <option value="$PROJECT_DIR$/app/src/test/java/com/notcmput301/habitbook/UserTest.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/notcmput301/habitbook/FollowerRequest.java" />
         <option value="$PROJECT_DIR$/app/src/test/java/com/notcmput301/habitbook/FollowerRequestTest.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/notcmput301/habitbook/HabitEvent.java" />
         <option value="$PROJECT_DIR$/app/src/test/java/com/notcmput301/habitbook/HabitTypeTest.java" />
         <option value="$PROJECT_DIR$/app/src/test/java/com/notcmput301/habitbook/HabitEventTest.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/notcmput301/habitbook/HabitTypeManager.java" />
@@ -2027,7 +2153,6 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/notcmput301/habitbook/LocalFileControler.java" />
         <option value="$PROJECT_DIR$/build.gradle" />
         <option value="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/values-ldltr-v21/values-ldltr-v21.xml" />
-        <option value="$PROJECT_DIR$/app/build.gradle" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/notcmput301/habitbook/HabitEventDetailsActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/notcmput301/habitbook/User.java" />
@@ -2043,9 +2168,10 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_habit_type_list.xml" />
         <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_create_habit.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/notcmput301/habitbook/CreateHabitEventActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/notcmput301/habitbook/HabitTypeListActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/notcmput301/habitbook/ImageSetter.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_create_habit_event.xml" />
+<<<<<<< HEAD
         <option value="$PROJECT_DIR$/app/src/main/res/menu/activity_main_drawer.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/notcmput301/habitbook/LoginActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/app_bar_main.xml" />
@@ -2056,6 +2182,11 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/notcmput301/habitbook/HabitTypeDetailsActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/app_bar_habit_type_list2.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/content_habit_type_list2.xml" />
+=======
+        <option value="$PROJECT_DIR$/app/src/main/java/com/notcmput301/habitbook/HabitEvent.java" />
+        <option value="$PROJECT_DIR$/app/build.gradle" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/notcmput301/habitbook/CreateHabitEventActivity.java" />
+>>>>>>> origin/shang
       </list>
     </option>
   </component>
@@ -2090,7 +2221,10 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+<<<<<<< HEAD
       <pane id="Scratches" />
+=======
+>>>>>>> origin/shang
       <pane id="AndroidView">
         <subPane>
           <PATH>
@@ -2108,6 +2242,7 @@
               <option name="myItemId" value="NOTcmput301" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
             </PATH_ELEMENT>
+<<<<<<< HEAD
             <PATH_ELEMENT>
               <option name="myItemId" value="app" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
@@ -2227,6 +2362,17 @@
           </PATH>
         </subPane>
       </pane>
+=======
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="ProjectPane">
+        <subPane />
+      </pane>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
+      <pane id="Scratches" />
+>>>>>>> origin/shang
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -2234,7 +2380,7 @@
     <property name="android.project.structure.last.selected" value="app" />
     <property name="android.project.structure.proportion" value="0.15" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Early alpha/NOTcmput301" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="last_directory_selection" value="$PROJECT_DIR$/app/src/test/java/com/notcmput301/habitbook" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit4" />
     <property name="sync.plugin.last.upgrade.timestamp" value="1509996532361" />
@@ -2256,6 +2402,8 @@
       <recent name="com.notcmput301.habitbook" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\git\NOTcmput301\app\libs" />
+      <recent name="C:\git\NOTcmput301\app\src\include" />
       <recent name="C:\git\NOTcmput301\app\src\main\res\drawable" />
       <recent name="C:\git\NOTcmput301\app\src\main\res" />
     </key>
@@ -2818,8 +2966,7 @@
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.0" sideWeight="0.5055733" order="10" side_tool="true" content_ui="tabs" />
-      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.30904725" sideWeight="0.49442676" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31987077" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.48919135" sideWeight="0.49442676" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32746196" sideWeight="0.49840763" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32746196" sideWeight="0.49840763" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.58732396" sideWeight="0.4968153" order="12" side_tool="false" content_ui="tabs" />
@@ -2845,6 +2992,7 @@
       <window_info id="simpleUML" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31987077" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
@@ -2902,6 +3050,72 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+<<<<<<< HEAD
+=======
+    <entry file="file://$PROJECT_DIR$/app/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="22" column="4" selection-start-line="22" selection-start-column="4" selection-end-line="22" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/notcmput301/habitbook/HabitTypeDetailsActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2482">
+          <caret line="163" column="0" selection-start-line="163" selection-start-column="0" selection-end-line="163" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/notcmput301/habitbook/HabitType.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1377">
+          <caret line="122" column="0" selection-start-line="122" selection-start-column="0" selection-end-line="122" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_create_habit.xml">
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="833">
+          <caret line="49" column="37" selection-start-line="49" selection-start-column="37" selection-end-line="49" selection-end-column="37" />
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_habit_type_details.xml">
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/build/intermediates/res/merged/debug/values-v21/values-v21.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4675">
+          <caret line="275" column="0" selection-start-line="275" selection-start-column="0" selection-end-line="275" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/AppData/Local/Android/sdk/extras/android/m2repository/com/android/support/test/rules/0.5/rules-0.5-sources.jar!/android/support/test/rule/logging/LoggingBaseRule.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1632">
+          <caret line="114" column="4" selection-start-line="114" selection-start-column="4" selection-end-line="114" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+>>>>>>> origin/shang
     <entry file="file://$PROJECT_DIR$/app/proguard-rules.pro">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -2931,14 +3145,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="55" selection-start-line="7" selection-start-column="55" selection-end-line="7" selection-end-column="55" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/notcmput301/habitbook/FollowedUsersMap.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
@@ -2946,61 +3152,54 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/notcmput301/habitbook/HabitEvent.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-282">
-          <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_habit_event_history.xml">
-      <provider selected="true" editor-type-id="android-designer2">
-        <state />
-      </provider>
       <provider editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
+      </provider>
+      <provider selected="true" editor-type-id="android-designer2">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_habit_map.xml">
-      <provider selected="true" editor-type-id="android-designer2">
-        <state />
-      </provider>
       <provider editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
+      </provider>
+      <provider selected="true" editor-type-id="android-designer2">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_follower_requests.xml">
-      <provider selected="true" editor-type-id="android-designer2">
-        <state />
-      </provider>
       <provider editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
+      </provider>
+      <provider selected="true" editor-type-id="android-designer2">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_followed_users_map.xml">
-      <provider selected="true" editor-type-id="android-designer2">
-        <state />
-      </provider>
       <provider editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
+      </provider>
+      <provider selected="true" editor-type-id="android-designer2">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_online_menu.xml">
-      <provider selected="true" editor-type-id="android-designer2">
-        <state />
-      </provider>
       <provider editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
+      </provider>
+      <provider selected="true" editor-type-id="android-designer2">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/notcmput301/habitbook/HabitTypeManager.java">
@@ -3011,13 +3210,13 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_todays_habit.xml">
-      <provider selected="true" editor-type-id="android-designer2">
-        <state />
-      </provider>
       <provider editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
+      </provider>
+      <provider selected="true" editor-type-id="android-designer2">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
@@ -3095,6 +3294,7 @@
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/app/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
@@ -3104,6 +3304,9 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+=======
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/notcmput301/habitbook/CreateHabitActivity.java">
+>>>>>>> origin/shang
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="555">
           <caret line="42" column="11" selection-start-line="42" selection-start-column="11" selection-end-line="42" selection-end-column="11" />
@@ -3125,16 +3328,21 @@
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_create_habit.xml">
       <provider selected="true" editor-type-id="android-designer2">
         <state />
       </provider>
+=======
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/habit_type_list_layout.xml">
+>>>>>>> origin/shang
       <provider editor-type-id="text-editor">
         <state relative-caret-position="105">
           <caret line="7" column="61" selection-start-line="7" selection-start-column="61" selection-end-line="7" selection-end-column="61" />
           <folding />
         </state>
       </provider>
+<<<<<<< HEAD
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_habit_event_details.xml">
       <provider selected="true" editor-type-id="android-designer2">
@@ -3148,6 +3356,13 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/notcmput301/habitbook/CreateHabitEventActivity.java">
+=======
+      <provider selected="true" editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main_menu.xml">
+>>>>>>> origin/shang
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1170">
           <caret line="100" column="5" selection-start-line="100" selection-start-column="5" selection-end-line="100" selection-end-column="5" />
@@ -3156,6 +3371,9 @@
             <element signature="e#2696#2697#0" expanded="false" />
           </folding>
         </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_create_habit_event.xml">
@@ -3169,6 +3387,7 @@
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main_menu.xml">
       <provider selected="true" editor-type-id="android-designer2">
         <state />
@@ -3181,18 +3400,37 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_habit_type_list.xml">
+=======
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="15" column="35" selection-start-line="15" selection-start-column="35" selection-end-line="15" selection-end-column="35" />
+        </state>
+      </provider>
+>>>>>>> origin/shang
       <provider editor-type-id="android-designer2">
         <state />
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_create_account.xml">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="61" selection-end-column="46" />
           <folding>
             <element signature="e#39#2586#0" expanded="false" />
           </folding>
+=======
+        <state relative-caret-position="816">
+          <caret line="48" column="13" selection-start-line="48" selection-start-column="13" selection-end-line="48" selection-end-column="13" />
+>>>>>>> origin/shang
         </state>
       </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml">
       <provider editor-type-id="android-designer2">
         <state />
@@ -3232,10 +3470,44 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="313">
           <caret line="38" column="8" selection-start-line="38" selection-start-column="8" selection-end-line="40" selection-end-column="34" />
+=======
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_habit_type_details.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="61" selection-start-line="7" selection-start-column="61" selection-end-line="7" selection-end-column="61" />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_habit_type_list.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="748">
+          <caret line="44" column="36" selection-start-line="44" selection-start-column="36" selection-end-line="44" selection-end-column="36" />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/notcmput301/habitbook/HabitTypeListActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="697">
+          <caret line="153" column="0" selection-start-line="153" selection-start-column="0" selection-end-line="153" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="55" selection-start-line="7" selection-start-column="55" selection-end-line="7" selection-end-column="55" />
+>>>>>>> origin/shang
           <folding />
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/nav_header_habit_type_list2.xml">
       <provider selected="true" editor-type-id="android-designer2">
         <state />
@@ -3243,10 +3515,27 @@
       <provider editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+=======
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_habit_event_details.xml">
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/notcmput301/habitbook/ElasticSearch.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1530">
+          <caret line="107" column="46" selection-start-line="107" selection-start-column="8" selection-end-line="107" selection-end-column="46" />
+>>>>>>> origin/shang
           <folding />
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/content_main.xml">
       <provider selected="true" editor-type-id="android-designer2">
         <state />
@@ -3254,11 +3543,22 @@
       <provider editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+=======
+    <entry file="file://$PROJECT_DIR$/app/src/test/java/com/notcmput301/habitbook/HabitEventTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="26" column="0" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
+>>>>>>> origin/shang
           <folding />
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/notcmput301/habitbook/MainActivity.java">
+=======
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/notcmput301/habitbook/ImageSetter.java" />
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/notcmput301/habitbook/HabitEventDetailsActivity.java">
+>>>>>>> origin/shang
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="260">
           <caret line="94" column="21" selection-start-line="94" selection-start-column="21" selection-end-line="94" selection-end-column="21" />
@@ -3266,14 +3566,33 @@
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/notcmput301/habitbook/LoginActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="480">
           <caret line="42" column="17" selection-start-line="42" selection-start-column="17" selection-end-line="42" selection-end-column="17" />
+=======
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_create_habit_event.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1734">
+          <caret line="102" column="0" selection-start-line="102" selection-start-column="0" selection-end-line="102" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/notcmput301/habitbook/HabitEvent.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1649">
+          <caret line="130" column="5" selection-start-line="130" selection-start-column="5" selection-end-line="130" selection-end-column="5" />
+>>>>>>> origin/shang
           <folding />
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/notcmput301/habitbook/HabitTypeList2.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="351">
@@ -3307,10 +3626,17 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="20">
           <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+=======
+    <entry file="file://$PROJECT_DIR$/app/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="527">
+          <caret line="31" column="79" selection-start-line="31" selection-start-column="79" selection-end-line="31" selection-end-column="79" />
+>>>>>>> origin/shang
           <folding />
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/notcmput301/habitbook/HabitTypeDetailsActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="350">
@@ -3321,15 +3647,31 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/menu/activity_habit_type_list2_drawer.xml">
       <provider selected="true" editor-type-id="android-designer2">
-        <state />
-      </provider>
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+=======
+    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="21" column="19" selection-start-line="21" selection-start-column="19" selection-end-line="21" selection-end-column="19" />
           <folding />
         </state>
       </provider>
+      <provider editor-type-id="android-manifest">
+>>>>>>> origin/shang
+        <state />
+      </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_create_habit.xml">
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="61" selection-start-line="7" selection-start-column="61" selection-end-line="7" selection-end-column="61" />
+          <folding />
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/app_bar_main.xml">
       <provider editor-type-id="android-designer2">
         <state />
@@ -3337,10 +3679,17 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="330">
           <caret line="22" column="50" selection-start-line="22" selection-start-column="29" selection-end-line="22" selection-end-column="50" />
+=======
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/notcmput301/habitbook/HabitTypeDetailsActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2601">
+          <caret line="170" column="8" selection-start-line="170" selection-start-column="8" selection-end-line="173" selection-end-column="40" />
+>>>>>>> origin/shang
           <folding />
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/content_habit_type_list2.xml">
       <provider selected="true" editor-type-id="android-designer2">
         <state />
@@ -3379,6 +3728,15 @@
         <state relative-caret-position="132">
           <caret line="18" column="26" selection-start-line="18" selection-start-column="22" selection-end-line="18" selection-end-column="26" />
           <folding />
+=======
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/notcmput301/habitbook/CreateHabitEventActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="380">
+          <caret line="149" column="5" selection-start-line="149" selection-start-column="5" selection-end-line="149" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+>>>>>>> origin/shang
         </state>
       </provider>
     </entry>
