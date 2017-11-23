@@ -120,8 +120,9 @@ public class CreateHabitActivity extends AppCompatActivity {
                 Toast.makeText(this, "Opps, Something went wrong on our end", Toast.LENGTH_SHORT).show();
             }else{
                 Toast.makeText(this, "Added Habit Type!", Toast.LENGTH_SHORT).show();
-                Intent habittypelist = new Intent(CreateHabitActivity.this, HabitTypeListActivity.class);
+                Intent habittypelist = new Intent(CreateHabitActivity.this, HabitTypeList2.class);
                 habittypelist.putExtra("passedUser", gson.toJson(loggedInUser));
+                finish();
                 startActivity(habittypelist);
             }
         }catch(Exception e){
