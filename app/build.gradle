@@ -25,12 +25,14 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile files('src/include/jest-droid-2.0.1-SNAPSHOT.jar')
+
+    //for circular image view
+    //for image compression
+
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.android.support:design:25.3.1'
-
-    compile 'de.hdodenhof:circleimageview:2.2.0'        //for circular image view
-    compile 'id.zelory:compressor:2.1.0'                //for image compression
+    compile 'de.hdodenhof:circleimageview:2.2.0'
+    compile 'id.zelory:compressor:2.1.0'
     testCompile 'junit:junit:4.12'
-
 }

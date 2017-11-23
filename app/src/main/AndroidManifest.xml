@@ -21,13 +21,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainMenuActivity" />
         <activity android:name=".CreateAccountActivity" />
         <activity android:name=".TodaysHabitActivity" />
-        <activity android:name=".HabitTypeListActivity" />
         <activity android:name=".CreateHabitActivity" />
         <activity android:name=".HabitTypeDetailsActivity" />
-        <activity android:name=".HabitEventHistoryActivity" />
         <activity android:name=".HabitEventDetailsActivity" />
         <activity android:name=".HabitMapActivity" />
         <activity android:name=".OnlineMenuActivity" />
@@ -41,6 +38,10 @@
         <activity
             android:name=".HabitTypeList2"
             android:label="@string/title_activity_habit_type_list2"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".HabitEventHistory2"
+            android:label="@string/title_activity_habit_event_history2"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

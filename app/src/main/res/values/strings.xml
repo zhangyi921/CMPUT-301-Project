@@ -56,4 +56,6 @@
 
     <string name="action_settings">Settings</string>
     <string name="title_activity_habit_type_list2">HabitTypeList2</string>
+    <string name="title_activity_habit_event2">HabitEvent2</string>
+    <string name="title_activity_habit_event_history2">HabitEventHistory2</string>
 </resources>

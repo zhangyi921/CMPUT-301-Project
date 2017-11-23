@@ -75,7 +75,7 @@ public class CreateAccountActivity extends AppCompatActivity {
                 return;
             }else {
                 Toast.makeText(this, "Welcome!", Toast.LENGTH_LONG).show();
-                Intent mainmenu = new Intent(CreateAccountActivity.this, MainMenuActivity.class);
+                Intent mainmenu = new Intent(CreateAccountActivity.this, MainActivity.class);
                 mainmenu.putExtra("passedUser", gson.toJson(u));
                 startActivity(mainmenu);
                 return;

@@ -97,8 +97,9 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.today_habit) {
 
         } else if (id == R.id.habit_event_history) {
-            Intent habitEventHistory = new Intent(MainActivity.this, HabitEventHistoryActivity.class);
+            Intent habitEventHistory = new Intent(MainActivity.this, HabitEventHistory2.class);
             habitEventHistory.putExtra("passedUser", gson.toJson(loggedInUser));
+            finish();
             startActivity(habitEventHistory);
         } else if (id == R.id.online) {
             Intent online = new Intent(MainActivity.this, OnlineMenuActivity.class);
