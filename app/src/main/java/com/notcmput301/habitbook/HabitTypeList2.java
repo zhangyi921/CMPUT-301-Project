@@ -120,6 +120,11 @@ public class HabitTypeList2 extends AppCompatActivity
             startActivity(habitType);
         } else if (id == R.id.online) {
 
+            Intent online = new Intent(HabitTypeList2.this, Online.class);
+            online.putExtra("passedUser", gson.toJson(loggedInUser));
+            finish();
+            startActivity(online);
+
         } else if (id == R.id.setting) {
 
         } else if (id == R.id.logout) {

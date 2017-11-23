@@ -1,3 +1,9 @@
+/*
+ *  * Copyright (c) 2017 Team NOTcmput301, CMPUT301, University of Alberta - All Rights Reserved
+ *  * You may use, distribute, or modify this code under terms and conditions of the Code of Student Behavior at University of Alberta.
+ *  * You can find a copy of the license in the project wiki on github. Otherwise please contact miller4@ualberta.ca.
+ */
+
 package com.notcmput301.habitbook;
 
 import android.content.Intent;
@@ -16,7 +22,7 @@ import android.view.MenuItem;
 
 import com.google.gson.Gson;
 
-public class MainActivity extends AppCompatActivity
+public class Online extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private User loggedInUser;
     private Gson gson = new Gson();
@@ -24,7 +30,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_online);
         Intent receiver = getIntent();
         String u = receiver.getExtras().getString("passedUser");
         this.loggedInUser = gson.fromJson(u, User.class);
@@ -63,7 +69,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.online, menu);
         return true;
     }
 
@@ -89,23 +95,26 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.habit_type) {
-            // Handle the camera action
-            Intent habitType = new Intent(MainActivity.this, HabitTypeList2.class);
+            Intent habitType = new Intent(Online.this, HabitTypeList2.class);
             habitType.putExtra("passedUser", gson.toJson(loggedInUser));
             finish();
             startActivity(habitType);
+
         } else if (id == R.id.today_habit) {
 
-        } else if (id == R.id.habit_event_history) {
-            Intent habitEventHistory = new Intent(MainActivity.this, HabitEventHistory2.class);
-            habitEventHistory.putExtra("passedUser", gson.toJson(loggedInUser));
+            Intent habitType = new Intent(Online.this, MainActivity.class);
+            habitType.putExtra("passedUser", gson.toJson(loggedInUser));
             finish();
-            startActivity(habitEventHistory);
-        } else if (id == R.id.online) {
-            Intent online = new Intent(MainActivity.this, Online.class);
+            startActivity(habitType);
+        } else if (id == R.id.habit_event_history) {
+
+            Intent online = new Intent(Online.this, HabitEventHistory2.class);
             online.putExtra("passedUser", gson.toJson(loggedInUser));
             finish();
             startActivity(online);
+        } else if (id == R.id.online) {
+
+
         } else if (id == R.id.setting) {
 
         } else if (id == R.id.logout) {

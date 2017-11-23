@@ -113,12 +113,12 @@ public class HabitEventHistory2 extends AppCompatActivity
             startActivity(habitType);
         } else if (id == R.id.habit_event_history) {
 
-            Intent habitType = new Intent(HabitEventHistory2.this, HabitEventHistory2.class);
-            habitType.putExtra("passedUser", gson.toJson(loggedInUser));
-            finish();
-            startActivity(habitType);
         } else if (id == R.id.online) {
 
+            Intent online = new Intent(HabitEventHistory2.this, Online.class);
+            online.putExtra("passedUser", gson.toJson(loggedInUser));
+            finish();
+            startActivity(online);
         } else if (id == R.id.setting) {
 
         } else if (id == R.id.logout) {

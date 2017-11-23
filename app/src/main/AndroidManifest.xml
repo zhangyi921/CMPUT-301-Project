@@ -27,7 +27,6 @@
         <activity android:name=".HabitTypeDetailsActivity" />
         <activity android:name=".HabitEventDetailsActivity" />
         <activity android:name=".HabitMapActivity" />
-        <activity android:name=".OnlineMenuActivity" />
         <activity android:name=".FollowedUsersMap" />
         <activity android:name=".FollowerRequestsActivity" />
         <activity android:name=".CreateHabitEventActivity" />
@@ -42,6 +41,10 @@
         <activity
             android:name=".HabitEventHistory2"
             android:label="@string/title_activity_habit_event_history2"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Online"
+            android:label="@string/title_activity_online"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
