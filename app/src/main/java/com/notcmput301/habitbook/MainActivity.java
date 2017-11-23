@@ -107,8 +107,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.setting) {
 
         } else if (id == R.id.logout) {
-            Intent createAccount = new Intent(MainActivity.this, LoginActivity.class);
-            startActivity(createAccount);
+            finish();
 
         }
 

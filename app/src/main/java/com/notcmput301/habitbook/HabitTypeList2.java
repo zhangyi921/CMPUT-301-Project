@@ -108,6 +108,10 @@ public class HabitTypeList2 extends AppCompatActivity
             // Handle the camera action
         } else if (id == R.id.today_habit) {
 
+            Intent habitType = new Intent(HabitTypeList2.this, MainActivity.class);
+            habitType.putExtra("passedUser", gson.toJson(loggedInUser));
+            finish();
+            startActivity(habitType);
         } else if (id == R.id.habit_event_history) {
 
         } else if (id == R.id.online) {
@@ -115,8 +119,7 @@ public class HabitTypeList2 extends AppCompatActivity
         } else if (id == R.id.setting) {
 
         } else if (id == R.id.logout) {
-            Intent createAccount = new Intent(HabitTypeList2.this, LoginActivity.class);
-            startActivity(createAccount);
+            finish();
 
         }
 

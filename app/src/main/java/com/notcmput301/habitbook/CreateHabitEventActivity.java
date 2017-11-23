@@ -81,10 +81,10 @@ public class CreateHabitEventActivity extends AppCompatActivity {
     }
 
     public void back(View view){
-        Intent habitdetails = new Intent(CreateHabitEventActivity.this, HabitTypeDetailsActivity.class);
-        habitdetails.putExtra("passedUser", gson.toJson(loggedInUser));
-        habitdetails.putExtra("passedHabitType", gson.toJson(habit));
-        startActivity(habitdetails);
+        Intent habittypelist = new Intent(CreateHabitEventActivity.this, HabitTypeList2.class);
+        habittypelist.putExtra("passedUser", gson.toJson(loggedInUser));
+        finish();
+        startActivity(habittypelist);
     }
 
     public void loadImage(){

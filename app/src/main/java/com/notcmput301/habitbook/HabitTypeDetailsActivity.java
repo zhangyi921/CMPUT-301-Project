@@ -66,9 +66,7 @@ public class HabitTypeDetailsActivity extends AppCompatActivity {
     }
 
     public void HTDback(View view){
-        Intent habitTypeList = new Intent(HabitTypeDetailsActivity.this, HabitTypeListActivity.class);
-        habitTypeList.putExtra("passedUser", gson.toJson(loggedInUser));
-        startActivity(habitTypeList);
+        finish();
     }
 
     public void HTDUpdate(View view){
@@ -136,10 +134,7 @@ public class HabitTypeDetailsActivity extends AppCompatActivity {
             }else{
                 habit = newHabit;
                 Toast.makeText(this, "Updated Habit Type!", Toast.LENGTH_SHORT).show();
-                Intent habittypelist = new Intent(HabitTypeDetailsActivity.this, HabitTypeList2.class);
-                habittypelist.putExtra("passedUser", gson.toJson(loggedInUser));
                 finish();
-                startActivity(habittypelist);
                 return;
             }
         }catch(Exception e){
@@ -154,11 +149,8 @@ public class HabitTypeDetailsActivity extends AppCompatActivity {
         try{
             boolean result = delHT.get();
             if (result){
-                Intent habitTypeList = new Intent(HabitTypeDetailsActivity.this, HabitTypeListActivity.class);
                 Toast.makeText(this, "deleted item!", Toast.LENGTH_SHORT).show();
-                habitTypeList.putExtra("passedUser", gson.toJson(loggedInUser));
-                startActivity(habitTypeList);
-                return;
+                finish();
             }else{
                 Toast.makeText(this, "Failed to delete", Toast.LENGTH_SHORT).show();
             }
