@@ -125,6 +125,7 @@ public class HabitTypeDetailsActivity extends AppCompatActivity {
             return;
         }
         HabitType newHabit = new HabitType(loggedInUser, title, reason, startdateD, checked);
+        newHabit.setEvents(habit.getEvents());
         ElasticSearch.addHabitType aht = new ElasticSearch.addHabitType();
         aht.execute(newHabit);
         try{
@@ -143,7 +144,7 @@ public class HabitTypeDetailsActivity extends AppCompatActivity {
         }
     }
 
-    public void HTDDelete(View view){
+    public void HTDDelete(){
         ElasticSearch.deleteHabitType delHT = new ElasticSearch.deleteHabitType();
         delHT.execute(loggedInUser.getUsername(), habit.getTitle());
         try{
@@ -164,6 +165,9 @@ public class HabitTypeDetailsActivity extends AppCompatActivity {
         Intent createHabitEvent = new Intent(HabitTypeDetailsActivity.this, CreateHabitEventActivity.class);
         createHabitEvent.putExtra("passedUser", gson.toJson(loggedInUser));
         createHabitEvent.putExtra("passedHabitType", gson.toJson(habit));
+        finish();
         startActivity(createHabitEvent);
     }
+
+
 }

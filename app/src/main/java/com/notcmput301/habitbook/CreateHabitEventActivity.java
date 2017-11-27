@@ -125,6 +125,44 @@ public class CreateHabitEventActivity extends AppCompatActivity {
         }
     }
 
+    public void CreateEvent(View view){
+
+        ElasticSearch.deleteHabitType delHT = new ElasticSearch.deleteHabitType();
+        delHT.execute(loggedInUser.getUsername(), habit.getTitle());
+        try{
+            boolean result = delHT.get();
+            if (result){
+                //Toast.makeText(this, "deleted item!", Toast.LENGTH_SHORT).show();
+                finish();
+            }else{
+                Toast.makeText(this, "Failed to delete", Toast.LENGTH_SHORT).show();
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            Toast.makeText(this, "Failed to delete", Toast.LENGTH_SHORT).show();
+        }
+
+        HabitEvent habitEvent = new HabitEvent(commentE.getText().toString());
+        habit.addHabitEvent(habitEvent);
+        ElasticSearch.addHabitType aht = new ElasticSearch.addHabitType();
+        aht.execute(habit);
+        try{
+            boolean success = aht.get();
+            if (!success){
+                Toast.makeText(this, "Opps, Something went wrong on our end", Toast.LENGTH_SHORT).show();
+            }else{
+
+                Toast.makeText(this, "habit event added! ", Toast.LENGTH_SHORT).show();
+                finish();
+                return;
+            }
+        }catch(Exception e){
+            Log.e("get failure", "Failed to retrieve");
+            e.printStackTrace();
+        }
+        finish();
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
