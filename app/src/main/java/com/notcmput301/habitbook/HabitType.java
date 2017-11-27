@@ -89,10 +89,6 @@ public class HabitType{
         return totalEvents;
     }
 
-    public void setTotalEvents(Integer totalEvents) {
-        this.totalEvents = totalEvents;
-    }
-
     public ArrayList<Boolean> getWeekdays() {
         return weekdays;
     }
@@ -111,6 +107,7 @@ public class HabitType{
 
     public void addHabitEvent(HabitEvent event) {
         this.events.add(event);
+        this.totalEvents += 1;
     }
 
     public void removeHabitEvent(HabitEvent event) {

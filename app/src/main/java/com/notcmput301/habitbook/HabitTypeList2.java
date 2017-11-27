@@ -207,7 +207,9 @@ public class HabitTypeList2 extends AppCompatActivity
             convertView = getLayoutInflater().inflate(R.layout.habit_type_list_layout, null);
             TextView titleL = (TextView) convertView.findViewById(R.id.HTLIST_Title);
             TextView descriptionL = (TextView) convertView.findViewById(R.id.HTLIST_Description);
+            TextView NumEvents = (TextView) convertView.findViewById(R.id.NumEvents);
 
+            NumEvents.setText("Number of total events: "+habitTypes.get(position).getTotalEvents().toString());
             titleL.setText(habitTypes.get(position).getTitle());
             descriptionL.setText(habitTypes.get(position).getReason());
             return convertView;

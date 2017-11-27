@@ -13,7 +13,7 @@ import java.util.Date;
 
 public class HabitEvent {
 
-    private HabitType habitType;
+    //private HabitType habitType;
     private String comment;
     private Bitmap image;
     private Date date;
@@ -21,8 +21,8 @@ public class HabitEvent {
     private int dislikes;
     private Location location;
 
-    public HabitEvent(HabitType habit, String comment){
-        this.habitType = habit;
+    public HabitEvent(String comment){
+        //this.habitType = habit;
         this.comment = comment;
         this.image = null;
         this.date = new Date();
@@ -31,8 +31,8 @@ public class HabitEvent {
         this.location = null;
     }
 
-    public HabitEvent(HabitType habit, String comment, Location location){
-        this.habitType = habit;
+    public HabitEvent(String comment, Location location){
+        //this.habitType = habit;
         this.comment = comment;
         this.image = null;
         this.date = new Date();
@@ -41,8 +41,8 @@ public class HabitEvent {
         this.location = location;
     }
 
-    public HabitEvent(HabitType habit, String comment, Bitmap image){
-        this.habitType = habit;
+    public HabitEvent(String comment, Bitmap image){
+        //this.habitType = habit;
         this.comment = comment;
         this.image = image;
         this.date = new Date();
@@ -51,8 +51,8 @@ public class HabitEvent {
         this.location = null;
     }
 
-    public HabitEvent(HabitType habit, String comment, Bitmap image, Location location){
-        this.habitType = habit;
+    public HabitEvent(String comment, Bitmap image, Location location){
+        //this.habitType = habit;
         this.comment = comment;
         this.image = image;
         this.date = new Date();
@@ -61,13 +61,13 @@ public class HabitEvent {
         this.location = location;
     }
 
-    public HabitType getHabitType() {
+/*    public HabitType getHabitType() {
         return habitType;
     }
 
     public void setHabitType(HabitType habitType) {
         this.habitType = habitType;
-    }
+    }*/
 
     public String getComment() {
         return comment;
@@ -123,7 +123,7 @@ public class HabitEvent {
         if (o == null || getClass() != o.getClass()) return false;
         if (o instanceof  HabitEvent){
             HabitEvent test = (HabitEvent) o;
-            if (this.habitType.equals(test.getHabitType()) && this.comment.equals(test.getComment())
+            if ( this.comment.equals(test.getComment())
                     && this.image.equals(test.getImage()) &&  this.date.equals(test.getDate()) &&
                     this.likes == test.getLikes() && this.dislikes == test.getDislikes() &&
                     this.location.equals(test.getLocation())) return true; }
