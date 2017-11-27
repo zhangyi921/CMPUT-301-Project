@@ -125,6 +125,7 @@ public class HabitTypeDetailsActivity extends AppCompatActivity {
             return;
         }
         HabitType newHabit = new HabitType(loggedInUser, title, reason, startdateD, checked);
+        newHabit.setEvents(habit.getEvents());
         ElasticSearch.addHabitType aht = new ElasticSearch.addHabitType();
         aht.execute(newHabit);
         try{
