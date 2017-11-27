@@ -20,10 +20,11 @@
         android:id="@+id/HTLIST_Description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/HTLIST_Title"
+        android:layout_below="@+id/HTLIST_Title"
         android:layout_marginTop="10dp"
         android:text="TextView"
-        android:layout_below="@+id/HTLIST_Title"
-        android:layout_alignStart="@+id/HTLIST_Title" />
+        android:textColor="@android:color/background_light" />
 
     <TextView
         android:id="@+id/NumEvents"
@@ -32,6 +33,7 @@
         android:layout_alignTop="@+id/HTLIST_Description"
         android:layout_marginStart="29dp"
         android:layout_toEndOf="@+id/HTLIST_Title"
-        android:text="TextView" />
+        android:text="TextView"
+        android:textColor="@android:color/background_light" />
 
 </RelativeLayout>
