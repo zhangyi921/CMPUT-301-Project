@@ -14,7 +14,7 @@ import io.searchbox.annotations.JestId;
 
 public class HabitType{
     private String ownername;
-    private User owner;
+    //private User owner;
     private String title;
     private String reason;
     private Date creationDate;
@@ -26,7 +26,7 @@ public class HabitType{
 
     public HabitType(User owner, String title, String reason, Date startDate,  ArrayList<Boolean> weekdays ) {
         this.ownername = owner.getUsername();
-        this.owner = owner;
+        //this.owner = owner;
         this.title = title;
         this.reason = reason;
         this.creationDate = new Date();
@@ -37,13 +37,13 @@ public class HabitType{
         this.events = new ArrayList<HabitEvent>();
     }
 
-    public User getOwner() {
+/*    public User getOwner() {
         return owner;
     }
 
     public void setOwner(User owner) {
         this.owner = owner;
-    }
+    }*/
 
     public String getTitle() {
         return title;
@@ -128,7 +128,7 @@ public class HabitType{
 
         HabitType habitType = (HabitType) o;
 
-        if (!getOwner().equals(habitType.getOwner())) return false;
+        //if (!getOwner().equals(habitType.getOwner())) return false;
         return getTitle().equals(habitType.getTitle());
     }
 

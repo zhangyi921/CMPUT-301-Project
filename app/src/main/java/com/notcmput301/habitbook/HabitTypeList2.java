@@ -148,7 +148,7 @@ public class HabitTypeList2 extends AppCompatActivity
             if (habitTypes==null){
                 habitTypes = new ArrayList<>();
             }
-            loggedInUser.setHabitTypes(habitTypes);       //causes program to crash
+            //loggedInUser.setHabitTypes(habitTypes);       //causes program to crash
         }catch(Exception e){
             e.printStackTrace();
             Toast.makeText(this, "Failed to retrieve items. Check connection", Toast.LENGTH_SHORT).show();

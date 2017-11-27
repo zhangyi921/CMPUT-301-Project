@@ -18,7 +18,7 @@ public class User {
     private Date creationDate;
     private ArrayList<User> followers;
     private ArrayList<User> followedUsers;
-    private ArrayList<HabitType> habitTypes;
+    //private ArrayList<HabitType> habitTypes;
     @JestId
     private String id;
 
@@ -28,7 +28,7 @@ public class User {
         this.creationDate = new Date();
         this.followers = new ArrayList<User>();
         this.followedUsers = new ArrayList<User>();
-        this.habitTypes = new ArrayList<HabitType>();
+        //this.habitTypes = new ArrayList<HabitType>();
     }
 
     public String getId(){return this.id;}
@@ -75,7 +75,7 @@ public class User {
         this.followedUsers = followedUsers;
     }
 
-    public ArrayList<HabitType> getHabitTypes() {
+/*    public ArrayList<HabitType> getHabitTypes() {
         return habitTypes;
     }
 
@@ -95,7 +95,7 @@ public class User {
 
         int index = this.habitTypes.indexOf(OldHabit);
         this.habitTypes.set(index, NewHabit);
-    }
+    }*/
 
     public void addFollower(User follower){
         this.followers.add(follower);
@@ -125,7 +125,7 @@ public class User {
             User test = (User) o;
             if (this.username.equals(test.getUsername()) && this.password.equals(test.getPassword())
                     && this.creationDate.equals(test.getCreationDate()) && this.followers.equals(test.getFollowers())
-                    && this.followedUsers.equals(test.getFollowedUsers()) && this.habitTypes.equals(test.getHabitTypes())) return true;
+                    && this.followedUsers.equals(test.getFollowedUsers())) return true;
         }
         return false;
     }
