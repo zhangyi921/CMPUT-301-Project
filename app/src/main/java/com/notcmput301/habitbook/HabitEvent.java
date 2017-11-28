@@ -14,6 +14,7 @@ import java.util.Date;
 public class HabitEvent {
 
     //private HabitType habitType;
+    private String habit;
     private String comment;
     private Bitmap image;
     private Date date;
@@ -21,8 +22,9 @@ public class HabitEvent {
     private int dislikes;
     private Location location;
 
-    public HabitEvent(String comment){
+    public HabitEvent(String habit, String comment){
         //this.habitType = habit;
+        this.habit = habit;
         this.comment = comment;
         this.image = null;
         this.date = new Date();
@@ -68,6 +70,10 @@ public class HabitEvent {
     public void setHabitType(HabitType habitType) {
         this.habitType = habitType;
     }*/
+
+    public String getHabit(){
+        return habit;
+    }
 
     public String getComment() {
         return comment;

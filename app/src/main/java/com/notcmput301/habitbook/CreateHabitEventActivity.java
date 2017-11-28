@@ -142,7 +142,7 @@ public class CreateHabitEventActivity extends AppCompatActivity {
             Toast.makeText(this, "Failed to delete", Toast.LENGTH_SHORT).show();
         }
 
-        HabitEvent habitEvent = new HabitEvent(commentE.getText().toString());
+        HabitEvent habitEvent = new HabitEvent(habit.getTitle(), commentE.getText().toString());
         habit.addHabitEvent(habitEvent);
         ElasticSearch.addHabitType aht = new ElasticSearch.addHabitType();
         aht.execute(habit);

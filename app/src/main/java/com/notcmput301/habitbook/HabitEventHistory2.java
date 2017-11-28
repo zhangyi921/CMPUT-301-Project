@@ -204,7 +204,7 @@ public class HabitEventHistory2 extends AppCompatActivity
             TextView descriptionL = (TextView) convertView.findViewById(R.id.HTLIST_Description);
 
             titleL.setText(habitEvents.get(position).getComment());
-            //descriptionL.setText(habitTypes.get(position).getReason());
+            descriptionL.setText("hbit type:"+habitEvents.get(position).getHabit());
             return convertView;
         }
     }
