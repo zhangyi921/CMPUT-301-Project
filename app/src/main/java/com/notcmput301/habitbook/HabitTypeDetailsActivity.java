@@ -144,7 +144,7 @@ public class HabitTypeDetailsActivity extends AppCompatActivity {
         }
     }
 
-    public void HTDDelete(){
+    public void HTDDelete(View view){
         ElasticSearch.deleteHabitType delHT = new ElasticSearch.deleteHabitType();
         delHT.execute(loggedInUser.getUsername(), habit.getTitle());
         try{

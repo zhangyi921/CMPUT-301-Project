@@ -117,7 +117,7 @@ public class HabitEvent {
         this.location = location;
     }
 
-    @Override
+/*    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -128,7 +128,7 @@ public class HabitEvent {
                     this.likes == test.getLikes() && this.dislikes == test.getDislikes() &&
                     this.location.equals(test.getLocation())) return true; }
         return false;
-    }
+    }*/
 
     @Override
     public String toString(){

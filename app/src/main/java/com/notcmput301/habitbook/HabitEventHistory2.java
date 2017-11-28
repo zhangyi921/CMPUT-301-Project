@@ -158,16 +158,23 @@ public class HabitEventHistory2 extends AppCompatActivity
             Toast.makeText(this, "Failed to retrieve items. Check connection", Toast.LENGTH_SHORT).show();
         }
         for (HabitType h :habitTypes){
-            for (HabitEvent e : h.getEvents()){
+            ArrayList<HabitEvent> events = h.getEvents();
+            habitEvents.addAll(events);
+            Integer i = habitEvents.size();
+            Toast.makeText(this, i.toString(), Toast.LENGTH_SHORT).show();
+            /*for (HabitEvent e : events){
                 habitEvents.add(e);
-            }
+            }*/
         }
         HabitEventHistory2.EventHistoryAdapter eventHistoryAdapter = new HabitEventHistory2.EventHistoryAdapter();
         EventHistoryList.setAdapter(eventHistoryAdapter);
         EventHistoryList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                Intent habitdetail = new Intent(HabitEventHistory2.this, HabitEventDetailsActivity.class);
+                habitdetail.putExtra("passedUser", gson.toJson(loggedInUser));
+                habitdetail.putExtra("passedHabitEvent", gson.toJson(habitEvents.get(position)));
+                startActivity(habitdetail);
             }
         });
     }
@@ -177,7 +184,7 @@ public class HabitEventHistory2 extends AppCompatActivity
 
         @Override
         public int getCount() {
-            return habitTypes.size();
+            return habitEvents.size();
         }
 
         @Override
@@ -197,7 +204,7 @@ public class HabitEventHistory2 extends AppCompatActivity
             TextView descriptionL = (TextView) convertView.findViewById(R.id.HTLIST_Description);
 
             titleL.setText(habitEvents.get(position).getComment());
-            descriptionL.setText(habitTypes.get(position).getReason());
+            //descriptionL.setText(habitTypes.get(position).getReason());
             return convertView;
         }
     }
