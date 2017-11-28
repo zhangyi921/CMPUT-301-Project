@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.ListViewAutoScrollHelper;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -19,7 +20,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -29,6 +36,7 @@ public class HabitEventHistory2 extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private User loggedInUser;
     private ArrayList<HabitType> habitTypes;
+    private ArrayList<HabitEvent> habitEvents = new ArrayList<>();
     private Gson gson = new Gson();
 
     @Override
@@ -39,6 +47,8 @@ public class HabitEventHistory2 extends AppCompatActivity
         Intent receiver = getIntent();
         String u = receiver.getExtras().getString("passedUser");
         loggedInUser = gson.fromJson(u, User.class);
+        FillList();
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -129,5 +139,66 @@ public class HabitEventHistory2 extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+
+
+    public void FillList(){
+        ListView EventHistoryList = (ListView) findViewById(R.id.eventList);
+        ElasticSearch.getHabitTypeList ghtl = new ElasticSearch.getHabitTypeList();
+        ghtl.execute(loggedInUser.getUsername());
+        try {
+            habitTypes = ghtl.get();
+            if (habitTypes==null){
+                habitTypes = new ArrayList<>();
+            }
+            //loggedInUser.setHabitTypes(habitTypes);       //causes program to crash
+        }catch(Exception e){
+            e.printStackTrace();
+            Toast.makeText(this, "Failed to retrieve items. Check connection", Toast.LENGTH_SHORT).show();
+        }
+        for (HabitType h :habitTypes){
+            for (HabitEvent e : h.getEvents()){
+                habitEvents.add(e);
+            }
+        }
+        HabitEventHistory2.EventHistoryAdapter eventHistoryAdapter = new HabitEventHistory2.EventHistoryAdapter();
+        EventHistoryList.setAdapter(eventHistoryAdapter);
+        EventHistoryList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+        });
+    }
+
+
+    class EventHistoryAdapter extends BaseAdapter {
+
+        @Override
+        public int getCount() {
+            return habitTypes.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return null;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            convertView = getLayoutInflater().inflate(R.layout.habit_event_list_layout, null);
+            TextView titleL = (TextView) convertView.findViewById(R.id.HTLIST_Title);
+            TextView descriptionL = (TextView) convertView.findViewById(R.id.HTLIST_Description);
+
+            titleL.setText(habitEvents.get(position).getComment());
+            descriptionL.setText(habitTypes.get(position).getReason());
+            return convertView;
+        }
     }
 }
