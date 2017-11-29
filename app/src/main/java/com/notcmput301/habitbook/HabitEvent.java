@@ -23,7 +23,6 @@ public class HabitEvent {
     private Location location;
 
     public HabitEvent(String habit, String comment){
-        //this.habitType = habit;
         this.habit = habit;
         this.comment = comment;
         this.image = null;
@@ -33,8 +32,8 @@ public class HabitEvent {
         this.location = null;
     }
 
-    public HabitEvent(String comment, Location location){
-        //this.habitType = habit;
+    public HabitEvent(String habit,String comment, Location location){
+        this.habit = habit;
         this.comment = comment;
         this.image = null;
         this.date = new Date();
@@ -43,8 +42,8 @@ public class HabitEvent {
         this.location = location;
     }
 
-    public HabitEvent(String comment, Bitmap image){
-        //this.habitType = habit;
+    public HabitEvent(String habit,String comment, Bitmap image){
+        this.habit = habit;
         this.comment = comment;
         this.image = image;
         this.date = new Date();
@@ -53,8 +52,8 @@ public class HabitEvent {
         this.location = null;
     }
 
-    public HabitEvent(String comment, Bitmap image, Location location){
-        //this.habitType = habit;
+    public HabitEvent(String habit,String comment, Bitmap image, Location location){
+        this.habit = habit;
         this.comment = comment;
         this.image = image;
         this.date = new Date();
