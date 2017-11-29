@@ -1,5 +1,6 @@
 package com.notcmput301.habitbook;
 
+import android.content.Intent;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -86,7 +87,8 @@ public class HabitType{
     }
 
     public Integer getTotalEvents() {
-        return totalEvents;
+        Integer i = this.events.size();
+        return i;
     }
 
     public ArrayList<Boolean> getWeekdays() {

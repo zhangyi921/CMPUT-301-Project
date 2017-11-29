@@ -52,12 +52,11 @@ public class HabitEventHistory2 extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.refresh);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                FillList();
             }
         });
 
@@ -157,14 +156,12 @@ public class HabitEventHistory2 extends AppCompatActivity
             e.printStackTrace();
             Toast.makeText(this, "Failed to retrieve items. Check connection", Toast.LENGTH_SHORT).show();
         }
+
+        habitEvents.clear();
         for (HabitType h :habitTypes){
             ArrayList<HabitEvent> events = h.getEvents();
             habitEvents.addAll(events);
-            Integer i = habitEvents.size();
-            Toast.makeText(this, i.toString(), Toast.LENGTH_SHORT).show();
-            /*for (HabitEvent e : events){
-                habitEvents.add(e);
-            }*/
+
         }
         HabitEventHistory2.EventHistoryAdapter eventHistoryAdapter = new HabitEventHistory2.EventHistoryAdapter();
         EventHistoryList.setAdapter(eventHistoryAdapter);
