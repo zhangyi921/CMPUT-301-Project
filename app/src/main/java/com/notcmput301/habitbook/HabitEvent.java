@@ -62,13 +62,10 @@ public class HabitEvent {
         this.location = location;
     }
 
-/*    public HabitType getHabitType() {
-        return habitType;
-    }
 
-    public void setHabitType(HabitType habitType) {
-        this.habitType = habitType;
-    }*/
+    public void setHabit(String habit){
+        this.habit = habit;
+    }
 
     public String getHabit(){
         return habit;
