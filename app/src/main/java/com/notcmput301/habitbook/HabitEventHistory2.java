@@ -9,8 +9,6 @@ package com.notcmput301.habitbook;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.widget.ListViewAutoScrollHelper;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -22,7 +20,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -31,6 +28,8 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class HabitEventHistory2 extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -211,7 +210,13 @@ public class HabitEventHistory2 extends AppCompatActivity
             convertView = getLayoutInflater().inflate(R.layout.habit_event_list_layout, null);
             TextView titleL = (TextView) convertView.findViewById(R.id.HTLIST_Title);
             TextView descriptionL = (TextView) convertView.findViewById(R.id.HTLIST_Description);
+            CircleImageView imageV = (CircleImageView) convertView.findViewById(R.id.eventImg);
 
+            try {
+                imageV.setImageBitmap(habitEvents.get(position).imageToBitmap());
+            }catch (Exception e){
+
+            }
             titleL.setText(habitEvents.get(position).getComment());
             descriptionL.setText("hbit type:"+habitEvents.get(position).getHabit());
             return convertView;

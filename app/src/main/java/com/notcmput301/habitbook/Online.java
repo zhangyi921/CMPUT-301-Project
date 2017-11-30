@@ -9,7 +9,6 @@ package com.notcmput301.habitbook;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -243,7 +242,7 @@ public class Online extends AppCompatActivity
             TextView titleE = (TextView) convertView.findViewById(R.id.OLIST_Title);
             TextView nameE = (TextView) convertView.findViewById(R.id.OLIST_Name);
             TextView dateE = (TextView) convertView.findViewById(R.id.OLIST_Date);
-            CircleImageView imageV = (CircleImageView) convertView.findViewById(R.id.OLIST_Img);
+            CircleImageView imageV = (CircleImageView) convertView.findViewById(R.id.eventImg);
             titleE.setText(eventlist.get(position).getHabit());
             nameE.setText(eventlist.get(position).getComment());
             Date start = eventlist.get(position).getDate();

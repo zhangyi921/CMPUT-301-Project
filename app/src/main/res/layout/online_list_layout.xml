@@ -11,7 +11,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/OLIST_Img"
+        android:id="@+id/eventImg"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:src="@drawable/background"
@@ -27,7 +27,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="15dp"
         android:layout_marginTop="12dp"
-        android:layout_toEndOf="@+id/OLIST_Img"
+        android:layout_toEndOf="@+id/eventImg"
         android:text="TextView"
         android:textColor="@color/colorAccent"
         android:textSize="20sp" />
@@ -36,7 +36,7 @@
         android:id="@+id/OLIST_Name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/OLIST_Img"
+        android:layout_alignBottom="@+id/eventImg"
         android:layout_alignStart="@+id/OLIST_Title"
         android:layout_marginBottom="12dp"
         android:text="TextView" />
