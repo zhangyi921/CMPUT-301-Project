@@ -252,7 +252,7 @@ public class Online extends AppCompatActivity
             int month = cal.get(Calendar.MONTH);
             int day = cal.get(Calendar.DAY_OF_MONTH);
             dateE.setText(monthMap.get(month) + " " +day);
-            imageV.setImageBitmap(eventlist.get(position).imageToBitmap());
+            //imageV.setImageBitmap(eventlist.get(position).imageToBitmap());
             return convertView;
         }
     }

@@ -172,7 +172,7 @@ public class CreateHabitEventActivity extends AppCompatActivity {
 
         if (currentlocation != null && b64img == null)
         {
-             habitEvent = new HabitEvent(habit.getTitle(), commentE.getText().toString(), currentlocation.getLatitude(), currentlocation.getLongitude());
+            habitEvent = new HabitEvent(habit.getTitle(), commentE.getText().toString(), currentlocation.getLatitude(), currentlocation.getLongitude());
         }
         else if (b64img != null && currentlocation == null){
             habitEvent = new HabitEvent(habit.getTitle(), commentE.getText().toString(), b64img);
