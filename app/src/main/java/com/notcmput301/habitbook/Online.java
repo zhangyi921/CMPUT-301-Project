@@ -20,18 +20,30 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Online extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private User loggedInUser;
     private Gson gson = new Gson();
+    private ArrayList<HabitEvent> eventlist = new ArrayList<>();
+    private Map<Integer, String> monthMap = new HashMap<Integer, String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +54,13 @@ public class Online extends AppCompatActivity
         this.loggedInUser = gson.fromJson(u, User.class);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        //init months
+        monthMap.put(0, "Jan"); monthMap.put(1, "Feb"); monthMap.put(2, "Mar");
+        monthMap.put(3, "Apr"); monthMap.put(4, "May"); monthMap.put(5, "Jun");
+        monthMap.put(6, "Jul"); monthMap.put(7, "Aug"); monthMap.put(8, "Sept");
+        monthMap.put(9, "Oct"); monthMap.put(10, "Nov"); monthMap.put(11, "Dec");
+
 
         //follower request status button
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.Oln_viewRequestStatus);
@@ -73,6 +92,7 @@ public class Online extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        fillList();
     }
 
     //Checks if user exists
@@ -151,6 +171,89 @@ public class Online extends AppCompatActivity
                 Toast.makeText(this, "Ooops, Something went wrong on our end", Toast.LENGTH_LONG).show();
                 return;
             }
+        }
+    }
+
+    public void fillList(){
+        //get all followed users
+        ElasticSearch.getFollowerPairs followers = new ElasticSearch.getFollowerPairs();
+        followers.execute(loggedInUser.getUsername(), "requester", "1");
+        ArrayList<Followers> fArr = new ArrayList<>();
+        try{
+            fArr = followers.get();
+            //will return null if it failed to retrieve items
+            if (fArr==null){
+                fArr = new ArrayList<>();
+                Toast.makeText(this, "Ooops, Something went wrong on our end", Toast.LENGTH_SHORT).show();
+            }
+        }catch(Exception e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Failed to retrieve followers. Check connection", Toast.LENGTH_SHORT).show();
+        }
+        //for each user, cycle through all their habittypes.
+        for (Followers f: fArr){
+            String requestedUser = f.getRequestedUser();
+            ElasticSearch.getHabitTypeList gHT = new ElasticSearch.getHabitTypeList();
+            gHT.execute(requestedUser);
+            ArrayList<HabitType> habitTypes = new ArrayList<>();
+            try {
+                habitTypes = gHT.get();
+                if (habitTypes==null){
+                    habitTypes = new ArrayList<>();
+                }
+            }catch(Exception e){
+                e.printStackTrace();
+                Toast.makeText(this, "Failed to retrieve items. Check connection", Toast.LENGTH_SHORT).show();
+            }
+            //add all their events of that habit type to eventlist
+            for (HabitType h: habitTypes){
+                eventlist.addAll(h.getEvents());
+            }
+
+//            for (int i = 0; i<eventlist.size(); ++i){
+//                Toast.makeText(this, eventlist.get(i).getHabit(), Toast.LENGTH_SHORT).show();
+//            }
+        }
+        ListView eventListView = (ListView) findViewById(R.id.Oln_eventListView);
+        Online.OnlineListAdapter oAdapter = new Online.OnlineListAdapter();
+        eventListView.setAdapter(oAdapter);
+    }
+
+    class OnlineListAdapter extends BaseAdapter{
+
+        @Override
+        public int getCount() {
+            return eventlist.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return null;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+
+            convertView = getLayoutInflater().inflate(R.layout.online_list_layout, null);
+            TextView titleE = (TextView) convertView.findViewById(R.id.OLIST_Title);
+            TextView nameE = (TextView) convertView.findViewById(R.id.OLIST_Name);
+            TextView dateE = (TextView) convertView.findViewById(R.id.OLIST_Date);
+            CircleImageView imageV = (CircleImageView) convertView.findViewById(R.id.OLIST_Img);
+            titleE.setText(eventlist.get(position).getHabit());
+            nameE.setText(eventlist.get(position).getComment());
+            Date start = eventlist.get(position).getDate();
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(start);
+            int month = cal.get(Calendar.MONTH);
+            int day = cal.get(Calendar.DAY_OF_MONTH);
+            dateE.setText(monthMap.get(month) + " " +day);
+            imageV.setImageBitmap(eventlist.get(position).imageToBitmap());
+            return convertView;
         }
     }
 

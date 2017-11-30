@@ -7,6 +7,8 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.provider.MediaStore;
@@ -14,6 +16,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -23,6 +26,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -37,14 +41,11 @@ public class CreateHabitEventActivity extends AppCompatActivity {
     private static final int RESULT_LOAD_IMAGE = 6138;
     private User loggedInUser;
     private HabitType habit;
-    private EditText titleE;
     private EditText commentE;
-    private Button addPicB;
-    private Button createB;
-    private Button backB;
     private CircleImageView imageV;
     private Gson gson = new Gson();
-    private File image;
+    private Bitmap image;
+    private String b64img;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,12 +56,18 @@ public class CreateHabitEventActivity extends AppCompatActivity {
         String h = receiver.getExtras().getString("passedHabitType");
         loggedInUser = gson.fromJson(u, User.class);
         habit = gson.fromJson(h, HabitType.class);
-        titleE = (EditText) findViewById(R.id.CHE_Title);
         commentE = (EditText) findViewById(R.id.CHE_Comment);
-        addPicB = (Button) findViewById(R.id.CHE_AddPhoto);
-        createB = (Button) findViewById(R.id.CHE_Create);
-        backB = (Button) findViewById(R.id.CHE_Back);
         imageV = (CircleImageView) findViewById(R.id.CHE_Image);
+        setDefaultimg();
+    }
+
+    public void setDefaultimg(){
+        Drawable drawable = getResources().getDrawable(getResources()
+                .getIdentifier("photoicon", "drawable", getPackageName()));
+        Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
+        b64img=bmpCompToBase64(100, bitmap);
+        verifySize(b64img);
+        imageV.setImageBitmap(image);
     }
 
     public void requestPermision(){
@@ -76,7 +83,6 @@ public class CreateHabitEventActivity extends AppCompatActivity {
     }
 
     public void addImage(View view){
-
         requestPermision();
     }
 
@@ -92,24 +98,14 @@ public class CreateHabitEventActivity extends AppCompatActivity {
         startActivityForResult(gallery, RESULT_LOAD_IMAGE);
     }
 
-    public Bitmap verifySizeFromURI(Uri u) throws IOException {
+    //compresses image using zef..Not sure if its actually
+    //effective
+    public Bitmap getCompressedBitmap(Uri u) throws IOException {
         File f = new File(getRealPathFromURI(this, u));
-        long size  = f.length()/1024;
-        Toast.makeText(this, ""+size+" kb", Toast.LENGTH_LONG).show();
-        File newf = new Compressor(this).compressToFile(f);
-        size  = newf.length()/1024;
-        Toast.makeText(this, "AFTER COMPRESSION: "+size+" kb", Toast.LENGTH_LONG).show();
-        return new Compressor(this).compressToBitmap(newf);
+        return new Compressor(this).compressToBitmap(f);
     }
 
-    public void getsizebmp(Bitmap bmp){
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bmp.compress(Bitmap.CompressFormat.JPEG, 100, stream);
-        byte[] imageInByte = stream.toByteArray();
-        long lengthbmp = imageInByte.length/1024;
-        Toast.makeText(this, "bmpsize "+lengthbmp+" kb", Toast.LENGTH_LONG).show();
-    }
-
+    //get the actual file path of image file
     public String getRealPathFromURI(Context context, Uri contentUri) {
         Cursor cursor = null;
         try {
@@ -125,14 +121,38 @@ public class CreateHabitEventActivity extends AppCompatActivity {
         }
     }
 
-    public void CreateEvent(View view){
+    //Verify if it is <65kb
+    public Boolean verifySize(String base64){
+        double n = base64.length();
+        double length = 4*Math.ceil(n/3);
+        if (length > 66000){
+            Toast.makeText(this, "Image too large, " + Double.toString(length), Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        Toast.makeText(this, Double.toString(length), Toast.LENGTH_SHORT).show();
+        return true;
+    }
 
+    //returns the base64 String and sets the image
+    public String bmpCompToBase64(int compressAmnt, Bitmap img){
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        img.compress(Bitmap.CompressFormat.JPEG, compressAmnt, baos);
+        byte[] barr = baos.toByteArray();
+        image = BitmapFactory.decodeStream(new ByteArrayInputStream(baos.toByteArray()));
+        return Base64.encodeToString(barr, Base64.DEFAULT);
+    }
+
+    public void CreateEvent(View view){
+        String comment = commentE.getText().toString();
+        if (comment.length() > 20){
+            Toast.makeText(this, "Comment should be less than 20 characaters", Toast.LENGTH_LONG).show();
+            return;
+        }
         ElasticSearch.deleteHabitType delHT = new ElasticSearch.deleteHabitType();
         delHT.execute(loggedInUser.getUsername(), habit.getTitle());
         try{
             boolean result = delHT.get();
             if (result){
-                //Toast.makeText(this, "deleted item!", Toast.LENGTH_SHORT).show();
                 finish();
             }else{
                 Toast.makeText(this, "Failed to delete", Toast.LENGTH_SHORT).show();
@@ -141,8 +161,7 @@ public class CreateHabitEventActivity extends AppCompatActivity {
             e.printStackTrace();
             Toast.makeText(this, "Failed to delete", Toast.LENGTH_SHORT).show();
         }
-
-        HabitEvent habitEvent = new HabitEvent(habit.getTitle(), commentE.getText().toString());
+        HabitEvent habitEvent = new HabitEvent(habit.getTitle(), comment, b64img);
         habit.addHabitEvent(habitEvent);
         ElasticSearch.addHabitType aht = new ElasticSearch.addHabitType();
         aht.execute(habit);
@@ -169,13 +188,14 @@ public class CreateHabitEventActivity extends AppCompatActivity {
         if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && data != null){
             try {
                 Uri imageUri = data.getData();
-                InputStream imageStream = getContentResolver().openInputStream(imageUri);
-                Bitmap img = BitmapFactory.decodeStream(imageStream);
-                getsizebmp(img);
-                //getSize(img);
-                //getsizebmp(verifySizeFromURI(imageUri));
-                Toast.makeText(this, "YEYEYEYE "+(verifySizeFromURI(imageUri).getAllocationByteCount()/1024)+" kb", Toast.LENGTH_LONG).show();
-                imageV.setImageBitmap(verifySizeFromURI(imageUri));
+                Bitmap img = getCompressedBitmap(imageUri);
+                String b64 = bmpCompToBase64(25, img);
+                imageV.setImageBitmap(image);
+                if (verifySize(b64)){
+                    b64img = b64;
+                }else{
+                    setDefaultimg();
+                }
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
                 Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG).show();

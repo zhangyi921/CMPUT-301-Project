@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~  * Copyright (c) 2017 Team NOTcmput301, CMPUT301, University of Alberta - All Rights Reserved
+  ~  * You may use, distribute, or modify this code under terms and conditions of the Code of Student Behavior at University of Alberta.
+  ~  * You can find a copy of the license in the project wiki on github. Otherwise please contact miller4@ualberta.ca.
+  -->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/OLIST_Img"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/background"
+        app:civ_border_color="#FFFFFF"
+        app:civ_border_width="2dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <TextView
+        android:id="@+id/OLIST_Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="12dp"
+        android:layout_toEndOf="@+id/OLIST_Img"
+        android:text="TextView"
+        android:textColor="@color/colorAccent"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/OLIST_Name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/OLIST_Img"
+        android:layout_alignStart="@+id/OLIST_Title"
+        android:layout_marginBottom="12dp"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/OLIST_Date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/OLIST_Name"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="11dp"
+        android:text="TextView"
+        android:textSize="20sp" />
+
+</RelativeLayout>

@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/img"
+        android:id="@+id/OLIST_Img"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:src="@drawable/background"
@@ -21,7 +21,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="12dp"
         android:layout_marginTop="11dp"
-        android:layout_toEndOf="@+id/img"
+        android:layout_toEndOf="@+id/OLIST_Img"
         android:text="TextView"
         android:textColor="@color/colorAccent"
         android:textSize="20sp"

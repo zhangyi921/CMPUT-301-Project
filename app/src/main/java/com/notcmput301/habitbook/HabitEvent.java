@@ -1,8 +1,10 @@
 package com.notcmput301.habitbook;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.media.Image;
+import android.util.Base64;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -16,33 +18,13 @@ public class HabitEvent {
     //private HabitType habitType;
     private String habit;
     private String comment;
-    private Bitmap image;
+    private String image;
     private Date date;
     private int likes;
     private int dislikes;
     private Location location;
 
-    public HabitEvent(String habit, String comment){
-        this.habit = habit;
-        this.comment = comment;
-        this.image = null;
-        this.date = new Date();
-        this.likes = 0;
-        this.dislikes = 0;
-        this.location = null;
-    }
-
-    public HabitEvent(String habit,String comment, Location location){
-        this.habit = habit;
-        this.comment = comment;
-        this.image = null;
-        this.date = new Date();
-        this.likes = 0;
-        this.dislikes = 0;
-        this.location = location;
-    }
-
-    public HabitEvent(String habit,String comment, Bitmap image){
+    public HabitEvent(String habit,String comment, String image){
         this.habit = habit;
         this.comment = comment;
         this.image = image;
@@ -52,7 +34,7 @@ public class HabitEvent {
         this.location = null;
     }
 
-    public HabitEvent(String habit,String comment, Bitmap image, Location location){
+    public HabitEvent(String habit,String comment, String image, Location location){
         this.habit = habit;
         this.comment = comment;
         this.image = image;
@@ -79,11 +61,11 @@ public class HabitEvent {
         this.comment = comment;
     }
 
-    public Bitmap getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(Bitmap image) {
+    public void setImage(String image) {
         this.image = image;
     }
 
@@ -117,6 +99,11 @@ public class HabitEvent {
 
     public void setLocation(Location location) {
         this.location = location;
+    }
+
+    public Bitmap imageToBitmap(){
+        byte[] decodedString = Base64.decode(image, Base64.DEFAULT);
+        return  BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
     }
 
 /*    @Override
