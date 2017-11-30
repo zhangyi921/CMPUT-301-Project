@@ -70,6 +70,13 @@ public class HabitEvent {
     public Double getLongitude(){
         return longitude;
     }
+    public void setLatitude(Double latitude){
+        this.latitude = latitude;
+    }
+
+    public void setLongitude(Double longitude){
+        this.longitude = longitude;
+    }
 
     public void setHabit(String habit){
         this.habit = habit;
