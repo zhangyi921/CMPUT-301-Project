@@ -16,7 +16,7 @@ public class HabitEvent {
     //private HabitType habitType;
     private String habit;
     private String comment;
-    private Bitmap image;
+    private String image;
     private Date date;
     private int likes;
     private int dislikes;
@@ -43,7 +43,7 @@ public class HabitEvent {
         this.longitude = longitude;
     }
 
-    public HabitEvent(String habit,String comment, Bitmap image){
+    public HabitEvent(String habit,String comment, String image){
         this.habit = habit;
         this.comment = comment;
         this.image = image;
@@ -52,7 +52,7 @@ public class HabitEvent {
         this.dislikes = 0;
     }
 
-    public HabitEvent(String habit,String comment, Bitmap image, Double latitude, Double longitude){
+    public HabitEvent(String habit,String comment, String image, Double latitude, Double longitude){
         this.habit = habit;
         this.comment = comment;
         this.image = image;
@@ -94,11 +94,11 @@ public class HabitEvent {
         this.comment = comment;
     }
 
-    public Bitmap getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(Bitmap image) {
+    public void setImage(String image) {
         this.image = image;
     }
 

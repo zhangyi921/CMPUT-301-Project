@@ -7,6 +7,8 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -20,6 +22,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -29,6 +32,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -51,10 +55,11 @@ public class CreateHabitEventActivity extends AppCompatActivity {
     private CircleImageView imageV;
     private Gson gson = new Gson();
     private Button location;
-    private File image;
     private LocationManager locationManager;
     private LocationListener listener;
     private Location currentlocation = null;
+    private Bitmap image = null;
+    private String b64img = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,68 +146,9 @@ public class CreateHabitEventActivity extends AppCompatActivity {
     }
 
 
-    public void requestPermision(){
-        if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            // Should we show an explanation?
-            if (shouldShowRequestPermissionRationale(Manifest.permission.READ_EXTERNAL_STORAGE)) {
-                // Explain to the user why we need to read the contacts
-            }
-            requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);            //1 = MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE is an app-defined int constant that should be quite unique
-        } else {
-            loadImage();
-        }
-    }
 
-    public void addImage(View view){
 
-        requestPermision();
-    }
 
-    public void back(View view){
-        /*Intent habittypelist = new Intent(CreateHabitEventActivity.this, HabitTypeList2.class);
-        habittypelist.putExtra("passedUser", gson.toJson(loggedInUser));
-        finish();
-        startActivity(habittypelist);*/
-        finish();
-    }
-
-    public void loadImage(){
-        Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(gallery, RESULT_LOAD_IMAGE);
-    }
-
-    public Bitmap verifySizeFromURI(Uri u) throws IOException {
-        File f = new File(getRealPathFromURI(this, u));
-        long size  = f.length()/1024;
-        Toast.makeText(this, ""+size+" kb", Toast.LENGTH_LONG).show();
-        File newf = new Compressor(this).compressToFile(f);
-        size  = newf.length()/1024;
-        Toast.makeText(this, "AFTER COMPRESSION: "+size+" kb", Toast.LENGTH_LONG).show();
-        return new Compressor(this).compressToBitmap(newf);
-    }
-
-    public void getsizebmp(Bitmap bmp){
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bmp.compress(Bitmap.CompressFormat.JPEG, 100, stream);
-        byte[] imageInByte = stream.toByteArray();
-        long lengthbmp = imageInByte.length/1024;
-        Toast.makeText(this, "bmpsize "+lengthbmp+" kb", Toast.LENGTH_LONG).show();
-    }
-
-    public String getRealPathFromURI(Context context, Uri contentUri) {
-        Cursor cursor = null;
-        try {
-            String[] proj = { MediaStore.Images.Media.DATA };
-            cursor = context.getContentResolver().query(contentUri,  proj, null, null, null);
-            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-            cursor.moveToFirst();
-            return cursor.getString(column_index);
-        } finally {
-            if (cursor != null) {
-                cursor.close();
-            }
-        }
-    }
 
 
     public void CreateEvent(View view){
@@ -224,9 +170,16 @@ public class CreateHabitEventActivity extends AppCompatActivity {
 
         HabitEvent habitEvent = new HabitEvent(habit.getTitle(), commentE.getText().toString());
 
-        if (currentlocation != null)
+        if (currentlocation != null && b64img == null)
         {
              habitEvent = new HabitEvent(habit.getTitle(), commentE.getText().toString(), currentlocation.getLatitude(), currentlocation.getLongitude());
+        }
+        else if (b64img != null && currentlocation == null){
+            habitEvent = new HabitEvent(habit.getTitle(), commentE.getText().toString(), b64img);
+
+        }
+        else if (currentlocation != null && b64img != null){
+            habitEvent = new HabitEvent(habit.getTitle(), commentE.getText().toString(), b64img,currentlocation.getLatitude(), currentlocation.getLongitude());
         }
         habit.addHabitEvent(habitEvent);
         ElasticSearch.addHabitType aht = new ElasticSearch.addHabitType();
@@ -248,19 +201,103 @@ public class CreateHabitEventActivity extends AppCompatActivity {
         finish();
     }
 
+    public void setDefaultimg(){
+        Drawable drawable = getResources().getDrawable(getResources()
+                .getIdentifier("photoicon", "drawable", getPackageName()));
+        Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
+        b64img=bmpCompToBase64(100, bitmap);
+        verifySize(b64img);
+        imageV.setImageBitmap(image);
+    }
+
+    public void requestPermision(){
+        if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            // Should we show an explanation?
+            if (shouldShowRequestPermissionRationale(Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                // Explain to the user why we need to read the contacts
+            }
+            requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);            //1 = MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE is an app-defined int constant that should be quite unique
+        } else {
+            loadImage();
+        }
+    }
+
+    public void addImage(View view){
+        requestPermision();
+    }
+
+    public void back(View view){
+        Intent habittypelist = new Intent(CreateHabitEventActivity.this, HabitTypeList2.class);
+        habittypelist.putExtra("passedUser", gson.toJson(loggedInUser));
+        finish();
+        startActivity(habittypelist);
+    }
+
+    public void loadImage(){
+        Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(gallery, RESULT_LOAD_IMAGE);
+    }
+
+    //compresses image using zef..Not sure if its actually
+    //effective
+    public Bitmap getCompressedBitmap(Uri u) throws IOException {
+        File f = new File(getRealPathFromURI(this, u));
+        return new Compressor(this).compressToBitmap(f);
+    }
+
+    //get the actual file path of image file
+    public String getRealPathFromURI(Context context, Uri contentUri) {
+        Cursor cursor = null;
+        try {
+            String[] proj = { MediaStore.Images.Media.DATA };
+            cursor = context.getContentResolver().query(contentUri,  proj, null, null, null);
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            cursor.moveToFirst();
+            return cursor.getString(column_index);
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+    }
+
+    //Verify if it is <65kb
+    public Boolean verifySize(String base64){
+        double n = base64.length();
+        double length = 4*Math.ceil(n/3);
+        if (length > 66000){
+            Toast.makeText(this, "Image too large, " + Double.toString(length), Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        Toast.makeText(this, Double.toString(length), Toast.LENGTH_SHORT).show();
+        return true;
+    }
+
+    //returns the base64 String and sets the image
+    public String bmpCompToBase64(int compressAmnt, Bitmap img){
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        img.compress(Bitmap.CompressFormat.JPEG, compressAmnt, baos);
+        byte[] barr = baos.toByteArray();
+        image = BitmapFactory.decodeStream(new ByteArrayInputStream(baos.toByteArray()));
+        return Base64.encodeToString(barr, Base64.DEFAULT);
+    }
+
+
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && data != null){
             try {
                 Uri imageUri = data.getData();
-                InputStream imageStream = getContentResolver().openInputStream(imageUri);
-                Bitmap img = BitmapFactory.decodeStream(imageStream);
-                getsizebmp(img);
-                //getSize(img);
-                //getsizebmp(verifySizeFromURI(imageUri));
-                Toast.makeText(this, "YEYEYEYE "+(verifySizeFromURI(imageUri).getAllocationByteCount()/1024)+" kb", Toast.LENGTH_LONG).show();
-                imageV.setImageBitmap(verifySizeFromURI(imageUri));
+                Bitmap img = getCompressedBitmap(imageUri);
+                String b64 = bmpCompToBase64(25, img);
+                imageV.setImageBitmap(image);
+                if (verifySize(b64)){
+                    b64img = b64;
+                }else{
+                    setDefaultimg();
+                }
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
                 Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG).show();
@@ -290,4 +327,5 @@ public class CreateHabitEventActivity extends AppCompatActivity {
             return;
         }
     }
+
 }
