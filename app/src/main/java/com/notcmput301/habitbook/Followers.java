@@ -4,22 +4,22 @@ package com.notcmput301.habitbook;
  * Created by Cole on 2017-10-20.
  */
 
-public class FollowerRequest {
-    private User requester;
-    private User requestedUser;
+public class Followers {
+    private String requester;
+    private String requestedUser;
     private int requestAccepted;
 
-    public FollowerRequest(User requester, User requestedUser) {
+    public Followers(String requester, String requestedUser) {
         this.requester = requester;
         this.requestedUser = requestedUser;
-        this.requestAccepted = 0;
+        this.requestAccepted = 0;       //denotes unknown state
     }
 
-    public User getRequester() {
+    public String getRequester() {
         return requester;
     }
 
-    public User getRequestedUser() {
+    public String getRequestedUser() {
         return requestedUser;
     }
 
@@ -27,6 +27,7 @@ public class FollowerRequest {
         this.requestAccepted = 1; // 1 denotes success
     }
 
+    //Not needed
     public void revokePrivilege() {
         this.requestAccepted = 2;
     } // 2 denotes fail
@@ -37,8 +38,8 @@ public class FollowerRequest {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        if (o instanceof FollowerRequest){
-            FollowerRequest test = (FollowerRequest) o;
+        if (o instanceof Followers){
+            Followers test = (Followers) o;
             if (this.requester.equals(test.getRequester()) && this.requestedUser.equals(test.getRequestedUser())
                     && this.requestAccepted==test.viewStatus()) return true;
         }

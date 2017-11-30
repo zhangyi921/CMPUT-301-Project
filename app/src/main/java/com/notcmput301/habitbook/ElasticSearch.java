@@ -64,7 +64,8 @@ public class ElasticSearch {
     }
 
     /**
-     * Used to check if username exists, -1 denotes fault
+     * Used to check if username exists, -1 denotes fault, 1 denotes username exists, 0 denotes
+     * does not exist
      */
     public static class userExists extends AsyncTask<String, Void, Integer>{
 
@@ -193,6 +194,107 @@ public class ElasticSearch {
         }
     }
 
+    /**
+     * adds a follower  NOTE* I think
+     */
+    public static class addFollowerPair extends AsyncTask<Followers, Void, Boolean>{
+
+        @Override
+        public Boolean doInBackground(Followers... f){
+            verifySettings();
+            Index fitem = new Index.Builder(f[0]).index(db).type("followers").build();
+            try{
+                DocumentResult result = client.execute(fitem);
+                if (result.isSucceeded()) return true;
+            }catch (Exception e){
+                e.printStackTrace();
+                Log.e("failed add", "Failed to add followerPair");
+                return false;
+            }
+            return false;
+        }
+    }
+
+    /**
+     * Deletes request type
+     *
+     */
+    public static class deleteFollowerPair extends AsyncTask<String, Void, Boolean>{
+
+        @Override
+        public Boolean doInBackground(String... s){
+            String requester = s[0];
+            String requested = s[1];
+            String jsonQuery = "{\"query\": {\"bool\": {\"must\": [{\"match\": {\"requester\": \"" + requester + "\"}},{\"match\": {\"requestedUser\": \"" +requested+"\"}}]}}}";
+            String jestId = getJestId(jsonQuery, "followers");
+            if (deleteItem(jestId, "followers")) return true;
+            return false;
+        }
+    }
+
+    /**
+     * Gets a list of all followers
+     * NOTE that it requires a perspective argument (String) as the second argument
+     * and also requries a success argument as the third argument
+     * set success arg as 0 to view all pending request
+     * set success arg as 1 to view all confirmed request
+     * if perspective = "requester" get the list of follower obj where requester=username
+     * if perspective = "requested" get the list of follower obj where requestedUser=username
+     */
+    public static class getFollowerPairs extends AsyncTask<String, Void, ArrayList<Followers>>{
+
+        @Override
+        public ArrayList<Followers> doInBackground(String...s){
+            verifySettings();
+            ArrayList<Followers> resultArr = new ArrayList<>();
+            String username=s[0];
+            String perspective=s[1];
+            String success=s[2];
+            String jsonQuery;
+            //2 means we just want to check if its such records exist, without caring if
+            //it was successful or not
+            if (success.equals("2")){
+                if (perspective.equals("requester")){
+                    //jsonQuery = "{\"size\": 10000, \"query\": {\"bool\": {\"must\": [{\"match\": {\"requester\": \"" + username + "\"}},{\"match\": {\"requestAccepted\": \"" +success+"\"}}]}}}";
+                    jsonQuery = "{ \"size\": 10000, \"query\": {\"match\": {\"requester\": \"" + username + "\"}}}";
+                }else if (perspective.equals("requested")){
+                    //jsonQuery = "{\"size\": 10000, \"query\": {\"bool\": {\"must\": [{\"match\": {\"requestedUser\": \"" + username + "\"}},{\"match\": {\"requestAccepted\": \"" +success+"\"}}]}}}";
+                    jsonQuery = "{ \"size\": 10000, \"query\": {\"match\": {\"requestedUser\": \"" + username + "\"}}}";
+                }
+                else{
+                    Log.e("Bad input", "undefined perspective");
+                    return null;
+                }
+            //we expect 0 or 1
+            }else{
+                if (perspective.equals("requester")){
+                    jsonQuery = "{\"size\": 10000, \"query\": {\"bool\": {\"must\": [{\"match\": {\"requester\": \"" + username + "\"}},{\"match\": {\"requestAccepted\": \"" +success+"\"}}]}}}";
+                    //jsonQuery = "{ \"size\": 10000, \"query\": {\"match\": {\"requester\": \"" + username + "\"}}}";
+                }else if (perspective.equals("requested")){
+                    jsonQuery = "{\"size\": 10000, \"query\": {\"bool\": {\"must\": [{\"match\": {\"requestedUser\": \"" + username + "\"}},{\"match\": {\"requestAccepted\": \"" +success+"\"}}]}}}";
+                    //jsonQuery = "{ \"size\": 10000, \"query\": {\"match\": {\"requestedUser\": \"" + username + "\"}}}";
+                }
+                else{
+                    Log.e("Bad input", "undefined perspective");
+                    return null;
+                }
+            }
+
+            Search search = new Search.Builder(jsonQuery).addIndex(db).addType("followers").build();
+            try {
+                SearchResult result = client.execute(search);
+                if (result.isSucceeded()) {
+                    List<Followers> found = result.getSourceAsObjectList(Followers.class);
+                    resultArr.addAll(found);
+                    return resultArr;
+                }
+            } catch (Exception e) {
+                Log.e("Failed Q", "Search broke");
+                return null;
+            }
+            return null;
+        }
+    }
 
     /**
      * Used to return list of habitTypes
@@ -242,6 +344,7 @@ public class ElasticSearch {
             return false;
         }
     }
+
 
     /**
      * Method retrieves the jestId provided seary query is correct
