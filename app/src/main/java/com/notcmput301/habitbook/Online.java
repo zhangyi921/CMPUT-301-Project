@@ -60,6 +60,8 @@ public class Online extends AppCompatActivity
         fab2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent map = new Intent(Online.this, MapsActivity.class);
+                startActivity(map);
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
