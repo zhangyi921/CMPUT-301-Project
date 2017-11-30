@@ -62,8 +62,6 @@ public class Online extends AppCompatActivity
             public void onClick(View view) {
                 Intent map = new Intent(Online.this, MapsActivity.class);
                 startActivity(map);
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
             }
         });
 

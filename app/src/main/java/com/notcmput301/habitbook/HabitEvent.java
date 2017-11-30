@@ -20,7 +20,8 @@ public class HabitEvent {
     private Date date;
     private int likes;
     private int dislikes;
-    private Location location;
+    private Double latitude = null;
+    private Double longitude = null;
 
     public HabitEvent(String habit, String comment){
         this.habit = habit;
@@ -29,17 +30,17 @@ public class HabitEvent {
         this.date = new Date();
         this.likes = 0;
         this.dislikes = 0;
-        this.location = null;
     }
 
-    public HabitEvent(String habit,String comment, Location location){
+    public HabitEvent(String habit,String comment, Double latitude, Double longitude){
         this.habit = habit;
         this.comment = comment;
         this.image = null;
         this.date = new Date();
         this.likes = 0;
         this.dislikes = 0;
-        this.location = location;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     public HabitEvent(String habit,String comment, Bitmap image){
@@ -49,19 +50,26 @@ public class HabitEvent {
         this.date = new Date();
         this.likes = 0;
         this.dislikes = 0;
-        this.location = null;
     }
 
-    public HabitEvent(String habit,String comment, Bitmap image, Location location){
+    public HabitEvent(String habit,String comment, Bitmap image, Double latitude, Double longitude){
         this.habit = habit;
         this.comment = comment;
         this.image = image;
         this.date = new Date();
         this.likes = 0;
         this.dislikes = 0;
-        this.location = location;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
+    public Double getLatitude(){
+        return latitude;
+    }
+
+    public Double getLongitude(){
+        return longitude;
+    }
 
     public void setHabit(String habit){
         this.habit = habit;
@@ -111,13 +119,6 @@ public class HabitEvent {
         this.dislikes = dislikes;
     }
 
-    public Location getLocation() {
-        return location;
-    }
-
-    public void setLocation(Location location) {
-        this.location = location;
-    }
 
 /*    @Override
     public boolean equals(Object o) {

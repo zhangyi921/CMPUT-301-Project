@@ -60,6 +60,18 @@ public class HabitEventHistory2 extends AppCompatActivity
             }
         });
 
+        FloatingActionButton fab2 = (FloatingActionButton) findViewById(R.id.eventmap);
+        fab2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                //Toast.makeText(HabitEventHistory2.this, "------", Toast.LENGTH_SHORT).show();
+
+                Intent map = new Intent(HabitEventHistory2.this, MapsActivity.class);
+                map.putExtra("events", gson.toJson(habitEvents));
+                startActivity(map);
+            }
+        });
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);

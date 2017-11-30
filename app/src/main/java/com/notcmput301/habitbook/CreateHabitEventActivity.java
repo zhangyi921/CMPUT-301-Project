@@ -54,7 +54,7 @@ public class CreateHabitEventActivity extends AppCompatActivity {
     private File image;
     private LocationManager locationManager;
     private LocationListener listener;
-    private Location currentlocation;
+    private Location currentlocation = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -159,10 +159,11 @@ public class CreateHabitEventActivity extends AppCompatActivity {
     }
 
     public void back(View view){
-        Intent habittypelist = new Intent(CreateHabitEventActivity.this, HabitTypeList2.class);
+        /*Intent habittypelist = new Intent(CreateHabitEventActivity.this, HabitTypeList2.class);
         habittypelist.putExtra("passedUser", gson.toJson(loggedInUser));
         finish();
-        startActivity(habittypelist);
+        startActivity(habittypelist);*/
+        finish();
     }
 
     public void loadImage(){
@@ -221,7 +222,12 @@ public class CreateHabitEventActivity extends AppCompatActivity {
             Toast.makeText(this, "Failed to delete", Toast.LENGTH_SHORT).show();
         }
 
-        HabitEvent habitEvent = new HabitEvent(habit.getTitle(), commentE.getText().toString(), currentlocation);
+        HabitEvent habitEvent = new HabitEvent(habit.getTitle(), commentE.getText().toString());
+
+        if (currentlocation != null)
+        {
+             habitEvent = new HabitEvent(habit.getTitle(), commentE.getText().toString(), currentlocation.getLatitude(), currentlocation.getLongitude());
+        }
         habit.addHabitEvent(habitEvent);
         ElasticSearch.addHabitType aht = new ElasticSearch.addHabitType();
         aht.execute(habit);

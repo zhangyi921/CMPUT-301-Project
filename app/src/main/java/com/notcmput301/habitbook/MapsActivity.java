@@ -6,9 +6,11 @@
 
 package com.notcmput301.habitbook;
 
+import android.content.Intent;
 import android.location.Location;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -18,9 +20,16 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.ArrayList;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
+    private ArrayList<HabitEvent> habitEvents;
+    private Gson gson = new Gson();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +39,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        Intent receiver = getIntent();
+        String e = receiver.getExtras().getString("events");
+
+
+        try{
+            habitEvents = gson.fromJson(e, new TypeToken<ArrayList<HabitEvent>>(){}.getType());
+
+        } catch (Exception e1){
+            Log.e("error", e1.toString() );
+        }
+        Integer i = habitEvents.size();
+        Log.e("error", i.toString() );
+        //finish();
     }
 
 
@@ -47,15 +69,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
 
         // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(53.5230896, -113.5037247);
-        LatLng UOFA = new LatLng(53.5230894, -113.5037247);
-        LatLng m = new LatLng(53.5250890, -113.5027247);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.addMarker(new MarkerOptions().position(UOFA).anchor(0.5f, 0.5f).title("Marker in U of A"));
-        mMap.addMarker(new MarkerOptions().position(m).anchor(0.5f, 0.5f).title("Marker"));
+        if (habitEvents.size()>0){
+            for (HabitEvent e : habitEvents){
+                Log.e("error", e.getComment());
+                if (e.getLatitude() != null){
+                    Log.e("error", e.getLatitude().toString());
+                }
+                if (e.getLatitude() != null) {
 
+                    LatLng event = new LatLng(e.getLatitude(), e.getLongitude());
+                    mMap.addMarker(new MarkerOptions().position(event).title(e.getComment()));
+                    mMap.moveCamera(CameraUpdateFactory.newLatLng(event));
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-        //mMap.moveCamera(CameraUpdateFactory.newLatLng(UOFA));
+                }
+            }
+        }
     }
 }
