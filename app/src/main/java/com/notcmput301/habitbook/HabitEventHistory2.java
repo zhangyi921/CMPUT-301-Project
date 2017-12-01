@@ -210,6 +210,7 @@ public class HabitEventHistory2 extends AppCompatActivity
             convertView = getLayoutInflater().inflate(R.layout.habit_event_list_layout, null);
             TextView titleL = (TextView) convertView.findViewById(R.id.HTLIST_Title);
             TextView descriptionL = (TextView) convertView.findViewById(R.id.HTLIST_Description);
+            TextView likes = (TextView) convertView.findViewById(R.id.likes);
             CircleImageView imageV = (CircleImageView) convertView.findViewById(R.id.eventImg);
 
             try {
@@ -217,6 +218,8 @@ public class HabitEventHistory2 extends AppCompatActivity
             }catch (Exception e){
 
             }
+            Integer i = habitEvents.get(position).getLikes();
+            likes.setText("Likes: "+i.toString());
             titleL.setText(habitEvents.get(position).getComment());
             descriptionL.setText("hbit type:"+habitEvents.get(position).getHabit());
             return convertView;

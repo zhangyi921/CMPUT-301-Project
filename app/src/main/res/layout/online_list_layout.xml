@@ -45,10 +45,20 @@
         android:id="@+id/OLIST_Date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/OLIST_Name"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="11dp"
+        android:layout_marginEnd="16dp"
         android:text="TextView"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:layout_alignBaseline="@+id/OLIST_Title"
+        android:layout_alignBottom="@+id/OLIST_Title"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:id="@+id/likeButton"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/OLIST_Date"
+        android:layout_below="@+id/OLIST_Date"
+        android:text="like" />
 
 </RelativeLayout>

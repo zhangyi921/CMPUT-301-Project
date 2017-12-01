@@ -79,6 +79,7 @@ public class Online extends AppCompatActivity
             @Override
             public void onClick(View view) {
                 Intent map = new Intent(Online.this, MapsActivity.class);
+                map.putExtra("events", gson.toJson(eventlist));
                 startActivity(map);
             }
         });

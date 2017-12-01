@@ -47,7 +47,6 @@ public class CreateHabitEventActivity extends AppCompatActivity {
     private static final int RESULT_LOAD_IMAGE = 6138;
     private User loggedInUser;
     private HabitType habit;
-    private EditText titleE;
     private EditText commentE;
     private Button addPicB;
     private Button createB;
@@ -70,7 +69,6 @@ public class CreateHabitEventActivity extends AppCompatActivity {
         String h = receiver.getExtras().getString("passedHabitType");
         loggedInUser = gson.fromJson(u, User.class);
         habit = gson.fromJson(h, HabitType.class);
-        titleE = (EditText) findViewById(R.id.CHE_Title);
         commentE = (EditText) findViewById(R.id.CHE_Comment);
         addPicB = (Button) findViewById(R.id.CHE_AddPhoto);
         createB = (Button) findViewById(R.id.CHE_Create);

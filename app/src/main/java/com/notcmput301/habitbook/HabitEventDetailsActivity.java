@@ -42,6 +42,12 @@ public class HabitEventDetailsActivity extends AppCompatActivity {
         habitEvent = gson.fromJson(e, HabitEvent.class);
         commentE = (EditText) findViewById(R.id.CHE_Comment);
         commentE.setText(habitEvent.getComment());
+        try {
+            CircleImageView imageV = (CircleImageView) findViewById(R.id.CHE_Image);
+            imageV.setImageBitmap(habitEvent.imageToBitmap());
+        }catch (Exception e1){
+
+        }
     }
 
     public void update(View view){
