@@ -90,7 +90,14 @@ public class Online extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
+        //navigation view
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        //enables us to put our own icon and not show up as greys
+        navigationView.setItemIconTintList(null);
+        //change the headerviews name, and image
+        View headerview = navigationView.getHeaderView(0);
+        TextView navName = (TextView) headerview.findViewById(R.id.MNavH_Name);
+        navName.setText(loggedInUser.getUsername());
         navigationView.setNavigationItemSelectedListener(this);
         fillList();
     }
@@ -320,9 +327,6 @@ public class Online extends AppCompatActivity
             finish();
             startActivity(online);
         } else if (id == R.id.online) {
-
-
-        } else if (id == R.id.setting) {
 
         } else if (id == R.id.logout) {
             finish();

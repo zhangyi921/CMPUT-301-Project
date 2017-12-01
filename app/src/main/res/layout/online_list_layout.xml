@@ -14,7 +14,7 @@
         android:id="@+id/eventImg"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:src="@drawable/background"
+        android:src="@drawable/photoicon"
         app:civ_border_color="#FFFFFF"
         app:civ_border_width="2dp"
         app:layout_constraintLeft_toLeftOf="parent"
