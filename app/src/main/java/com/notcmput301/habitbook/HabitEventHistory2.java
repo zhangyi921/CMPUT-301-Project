@@ -77,7 +77,14 @@ public class HabitEventHistory2 extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
+        //navigation view
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        //enables us to put our own icon and not show up as greys
+        navigationView.setItemIconTintList(null);
+        //change the headerviews name, and image
+        View headerview = navigationView.getHeaderView(0);
+        TextView navName = (TextView) headerview.findViewById(R.id.MNavH_Name);
+        navName.setText(loggedInUser.getUsername());
         navigationView.setNavigationItemSelectedListener(this);
     }
 
@@ -139,7 +146,6 @@ public class HabitEventHistory2 extends AppCompatActivity
             online.putExtra("passedUser", gson.toJson(loggedInUser));
             finish();
             startActivity(online);
-        } else if (id == R.id.setting) {
 
         } else if (id == R.id.logout) {
             finish();

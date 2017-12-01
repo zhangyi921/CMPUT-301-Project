@@ -1,11 +1,15 @@
 package com.notcmput301.habitbook;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -15,15 +19,17 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 public class CreateHabitActivity extends AppCompatActivity {
     private User loggedInUser;
     private ArrayList<Boolean> weekdays;
-    private Date startdate;
+    private Date startdate = new Date();
     private String title;
     private String reason;
     private Gson gson = new Gson();
+    private DatePickerDialog.OnDateSetListener dlistener;
 
 
     @Override
@@ -33,13 +39,25 @@ public class CreateHabitActivity extends AppCompatActivity {
         Intent receiver = getIntent();
         String u = receiver.getExtras().getString("passedUser");
         this.loggedInUser = gson.fromJson(u, User.class);
+        dlistener = new DatePickerDialog.OnDateSetListener(){
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                month++;
+                DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+                try {
+                    startdate = formatter.parse(year+"-"+month+"-"+dayOfMonth);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                Log.e("MONTH", month+"");
+            }
+        };
     }
 
     public void CHTCreate(View view){
 
         EditText titleE = (EditText) findViewById(R.id.HTD_TitleE);
         EditText reasonE = (EditText) findViewById(R.id.HTD_ReasonE);
-        EditText startdateE = (EditText) findViewById(R.id.HTD_Startdate);
         CheckBox mE = (CheckBox) findViewById(R.id.HTD_M);
         CheckBox tE = (CheckBox) findViewById(R.id.HTD_T);
         CheckBox wE = (CheckBox) findViewById(R.id.HTD_W);
@@ -50,14 +68,14 @@ public class CreateHabitActivity extends AppCompatActivity {
 
         title = titleE.getText().toString().trim().replaceAll("\\s+", " ");
         reason = reasonE.getText().toString();
-        String startdate = startdateE.getText().toString();
+//        String startdate = startdateE.getText().toString();
 
         weekdays = new ArrayList<>();
         weekdays.add(mE.isChecked()); weekdays.add(tE.isChecked()); weekdays.add(wE.isChecked());
         weekdays.add(trE.isChecked()); weekdays.add(fE.isChecked()); weekdays.add(saE.isChecked());
         weekdays.add(suE.isChecked());
 
-        if (title.isEmpty() || reason.isEmpty() || startdate.isEmpty()){
+        if (title.isEmpty() || reason.isEmpty() ){
             Toast.makeText(this, "Some fields are not filled out!", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -67,20 +85,6 @@ public class CreateHabitActivity extends AppCompatActivity {
             return;
         }
 
-        try {
-            DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-            this.startdate = formatter.parse(startdate);
-            Date today = new Date();
-            if (this.startdate.before(today)){
-                Toast.makeText(this, "Start date cannot be in the past", Toast.LENGTH_SHORT).show();
-                return;
-            }
-        }catch (ParseException e){
-            Toast.makeText(this, "Incorrect Date formatting", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        //habit title can not be more than 20 char
         if (title.length() > 20){
             Toast.makeText(this, "Habit Title can't be longer than 20 characters", Toast.LENGTH_SHORT).show();
             return;
@@ -90,9 +94,6 @@ public class CreateHabitActivity extends AppCompatActivity {
             Toast.makeText(this, "Habit Reason can't be longer than 30 characters", Toast.LENGTH_SHORT).show();
             return;
         }
-
-
-        //habit reason can not be more than 30 char
 
         ElasticSearch.habitTypeExists hte = new ElasticSearch.habitTypeExists();
         hte.execute(loggedInUser.getUsername(), title);
@@ -109,7 +110,6 @@ public class CreateHabitActivity extends AppCompatActivity {
             Log.e("get failure", "Failed to retrieve");
             e.printStackTrace();
         }
-
 
         HabitType newHabit = new HabitType(loggedInUser, title, reason, this.startdate, this.weekdays);
         ElasticSearch.addHabitType aht = new ElasticSearch.addHabitType();
@@ -128,7 +128,15 @@ public class CreateHabitActivity extends AppCompatActivity {
         }
     }
 
-    public void CHTBack(View view){
-        finish();
+    public void CHTCalendar(View view){
+        Calendar cal = Calendar.getInstance();
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH);
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+        DatePickerDialog dialog = new DatePickerDialog(this, android.R.style.Theme_Holo_Dialog,
+                                                        dlistener, year, month, day);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.show();
     }
+
 }

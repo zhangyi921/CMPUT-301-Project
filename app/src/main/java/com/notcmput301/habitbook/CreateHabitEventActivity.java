@@ -75,7 +75,7 @@ public class CreateHabitEventActivity extends AppCompatActivity {
         backB = (Button) findViewById(R.id.CHE_Back);
         location = (Button) findViewById(R.id.location);
         imageV = (CircleImageView) findViewById(R.id.CHE_Image);
-
+        setDefaultimg();
 
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
