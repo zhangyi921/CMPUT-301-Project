@@ -62,6 +62,7 @@ public class HabitType{
             return 0;
         }
         Log.e(";", d.toString());
+        d = d*100;
         return d.intValue();
     }
 
