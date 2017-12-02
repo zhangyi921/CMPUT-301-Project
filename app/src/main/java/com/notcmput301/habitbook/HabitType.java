@@ -3,6 +3,7 @@ package com.notcmput301.habitbook;
 import android.content.Intent;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -45,6 +46,33 @@ public class HabitType{
     public void setOwner(User owner) {
         this.owner = owner;
     }*/
+
+    public int getProgress(){
+        Date today = new Date();
+        Long diff = today.getTime()-startDate.getTime();
+        diff = diff/1000/60/60/24;
+        if (diff<0){
+            return 0;
+        }
+        Integer e = events.size();
+        Float l = e.floatValue();
+        Float d = diff.floatValue();
+        Integer i  =0;
+        for (Boolean b : weekdays){
+            if (b){
+                i += 1;
+            }
+        }
+        d = d*i.floatValue()/7;
+        Log.e(";", d.toString());
+
+        d = l/d;
+        if (d == null){
+            return 0;
+        }
+        d = d*100;
+        return d.intValue();
+    }
 
     public String getTitle() {
         return title;

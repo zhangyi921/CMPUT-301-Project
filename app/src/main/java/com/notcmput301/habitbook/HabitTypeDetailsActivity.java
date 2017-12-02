@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,6 +41,8 @@ public class HabitTypeDetailsActivity extends AppCompatActivity {
         this.loggedInUser = gson.fromJson(u, User.class);
         this.habit = gson.fromJson(h, HabitType.class);
         loadData();
+        SeekBar seekBar = (SeekBar) findViewById(R.id.seekBar);
+        seekBar.setProgress(habit.getProgress());
     }
 
     public void loadData(){
