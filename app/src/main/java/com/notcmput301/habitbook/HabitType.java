@@ -46,6 +46,10 @@ public class HabitType{
         this.owner = owner;
     }*/
 
+    public int getProgress(){
+        return 40;
+    }
+
     public String getTitle() {
         return title;
     }
