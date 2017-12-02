@@ -52,7 +52,7 @@ public class HabitType{
         Long diff = today.getTime()-startDate.getTime();
         diff = diff/1000/60/60/24;
         if (diff<0){
-            diff = -diff;
+            return 0;
         }
         Integer e = events.size();
         Float l = e.floatValue();

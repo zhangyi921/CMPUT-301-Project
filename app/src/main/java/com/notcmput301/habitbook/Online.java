@@ -244,13 +244,84 @@ public class Online extends AppCompatActivity
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(final int position, View convertView, ViewGroup parent) {
 
             convertView = getLayoutInflater().inflate(R.layout.online_list_layout, null);
             TextView titleE = (TextView) convertView.findViewById(R.id.OLIST_Title);
             TextView nameE = (TextView) convertView.findViewById(R.id.OLIST_Name);
             TextView dateE = (TextView) convertView.findViewById(R.id.OLIST_Date);
             CircleImageView imageV = (CircleImageView) convertView.findViewById(R.id.eventImg);
+            Button like = (Button) convertView.findViewById(R.id.likeButton);
+            like.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View view){
+
+                    HabitEvent habitEvent = eventlist.get(position);
+                    habitEvent.setLikes(habitEvent.getLikes()+1);
+                    ArrayList<HabitType> habitTypes = new ArrayList<HabitType>();
+                    ElasticSearch.getHabitTypeList ghtl = new ElasticSearch.getHabitTypeList();
+                    ghtl.execute(loggedInUser.getUsername());
+                    try {
+                        habitTypes = ghtl.get();
+                        if (habitTypes==null){
+                            habitTypes = new ArrayList<>();
+                        }
+                        //loggedInUser.setHabitTypes(habitTypes);       //causes program to crash
+                    }catch(Exception e){
+                        e.printStackTrace();
+                        Toast.makeText(Online.this, "Failed to retrieve items. Check connection", Toast.LENGTH_SHORT).show();
+                    }
+
+                    for (HabitType h : habitTypes){
+                        //Toast.makeText(Online.this, h.getTitle().toString(), Toast.LENGTH_SHORT).show();
+                        ArrayList<HabitEvent> he = h.getEvents();
+                        for (HabitEvent eve : he){
+                            //Toast.makeText(Online.this, eve.getComment().toString()+"--"+habitEvent.getComment().toString(), Toast.LENGTH_SHORT).show();
+
+
+
+                            if (eve.getComment().equals(habitEvent.getComment())){
+
+                                ElasticSearch.deleteHabitType delHT = new ElasticSearch.deleteHabitType();
+                                delHT.execute(loggedInUser.getUsername(), h.getTitle());
+                                try{
+                                    boolean result = delHT.get();
+                                    if (result){
+                                        //Toast.makeText(this, "deleted item!", Toast.LENGTH_SHORT).show();
+                                        finish();
+                                    }else{
+                                        Toast.makeText(Online.this, "Failed to delete", Toast.LENGTH_SHORT).show();
+                                    }
+                                }catch (Exception e){
+                                    e.printStackTrace();
+                                    Toast.makeText(Online.this, "Failed to delete", Toast.LENGTH_SHORT).show();
+                                }
+                                h.getEvents().remove(eve);
+                                h.getEvents().add(habitEvent);
+                                ElasticSearch.addHabitType aht = new ElasticSearch.addHabitType();
+                                aht.execute(h);
+                                try{
+                                    boolean success = aht.get();
+                                    if (!success){
+                                        Toast.makeText(Online.this, "Opps, Something went wrong on our end", Toast.LENGTH_SHORT).show();
+                                    }else{
+
+                                        Toast.makeText(Online.this, "liked!", Toast.LENGTH_SHORT).show();
+
+                                        return;
+                                    }
+                                }catch(Exception e){
+                                    Log.e("get failure", "Failed to retrieve");
+                                    e.printStackTrace();
+                                }
+                                break;
+                            }
+                        }
+                    }
+
+
+                }
+            });
             titleE.setText(eventlist.get(position).getHabit());
             nameE.setText(eventlist.get(position).getComment());
             Date start = eventlist.get(position).getDate();
