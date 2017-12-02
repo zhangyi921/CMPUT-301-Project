@@ -57,11 +57,19 @@ public class HabitType{
         Integer e = events.size();
         Float l = e.floatValue();
         Float d = diff.floatValue();
-        d = l/7/d;
+        Integer i  =0;
+        for (Boolean b : weekdays){
+            if (b){
+                i += 1;
+            }
+        }
+        d = d*i.floatValue()/7;
+        Log.e(";", d.toString());
+
+        d = l/d;
         if (d == null){
             return 0;
         }
-        Log.e(";", d.toString());
         d = d*100;
         return d.intValue();
     }
