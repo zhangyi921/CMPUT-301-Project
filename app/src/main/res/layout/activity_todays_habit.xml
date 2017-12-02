@@ -4,15 +4,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.notcmput301.habitbook.TodaysHabitActivity">
+    tools:context="com.notcmput301.habitbook.MainActivity"
+    android:background="@drawable/background">
+
+    <ListView
+        android:id="@+id/TodayHabitList"
+        style="@android:style/Widget.DeviceDefault.ExpandableListView"
+        android:layout_width="0dp"
+        android:layout_height="420dp"
+        android:layout_marginBottom="95dp"
+        android:background="#FFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="67dp"
-        android:layout_marginTop="67dp"
-        android:text="Today habit"
+        android:layout_marginTop="80dp"
+        android:text="Today's Habits"
+        android:textSize="30sp"
+        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 </android.support.constraint.ConstraintLayout>
