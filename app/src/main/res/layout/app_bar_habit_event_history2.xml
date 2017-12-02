@@ -51,14 +51,10 @@
 
     </android.support.design.widget.AppBarLayout>
 
-<<<<<<< HEAD
-    <include layout="@layout/content_habit_event_history2"
-        android:id="@+id/include3" />
-=======
+
     <include
         android:id="@+id/include3"
         layout="@layout/content_habit_event_history2" />
->>>>>>> matteoFinal
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/refresh"
