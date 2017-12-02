@@ -17,6 +17,31 @@
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
 
+        <Button
+            android:id="@+id/heFilterButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Filter" />
+
+        <EditText
+            android:id="@+id/heHabitTypeFilter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="Filter by habit type"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/heCommentFilter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="Filter by comment"
+            android:inputType="textPersonName" />
+
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
@@ -26,8 +51,14 @@
 
     </android.support.design.widget.AppBarLayout>
 
+<<<<<<< HEAD
     <include layout="@layout/content_habit_event_history2"
         android:id="@+id/include3" />
+=======
+    <include
+        android:id="@+id/include3"
+        layout="@layout/content_habit_event_history2" />
+>>>>>>> matteoFinal
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/refresh"
@@ -49,3 +80,4 @@
         app:srcCompat="@android:drawable/ic_dialog_map" />
 
 </android.support.design.widget.CoordinatorLayout>
+

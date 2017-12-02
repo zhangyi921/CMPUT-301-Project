@@ -21,12 +21,14 @@ import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -157,6 +159,14 @@ public class HabitEventHistory2 extends AppCompatActivity
         return true;
     }
 
+    public void onFilterClick(View view) {
+        EditText htBar = (EditText) findViewById(R.id.heHabitTypeFilter);
+        EditText commentBar = (EditText) findViewById(R.id.heCommentFilter);
+
+        String htString = htBar.getText().toString().trim().replaceAll("\\s+", " ");
+        String commentString = commentBar.getText().toString().trim().replaceAll("\\s+", " ");
+
+    }
 
 
     public void FillList(){
@@ -191,6 +201,84 @@ public class HabitEventHistory2 extends AppCompatActivity
                 startActivity(habitdetail);
             }
         });
+    }
+
+    // filterFillList coded by Matteo
+    // Updates list after filter is clicked
+    public void filterFillList(String hType, String comment) {
+        ListView heList = (ListView) findViewById(R.id.eventList); // Get listView
+
+
+        // Declare booleans to determine whether variables are empty
+        boolean hTypeEmpty = (hType.isEmpty());
+        boolean commentEmpty = (comment.isEmpty());
+
+
+        // Set up temperary listviews to be used in future loops
+        ArrayList<HabitType> tempHt = new ArrayList<HabitType>();
+        ArrayList<HabitEvent> tempEvent = new ArrayList<>();
+
+
+        // Return list to normal if both fields are empty
+        if (hTypeEmpty && commentEmpty) {
+            FillList();
+            return;
+        }
+
+        // if Habit type isn't empty (means there isn't a habit type filter)
+        // iterate through habit types, and put ones with matching title into tempHt ArrayList
+        if ( ! hTypeEmpty)  {
+            for (HabitType ht: habitTypes) {
+                if ( ht.getTitle().equals(hType) ) tempHt.add(ht);
+            }
+        }
+        // Or add everything if habit type not filtered for
+        else {
+            tempHt.addAll(habitTypes);
+        }
+
+        // If comment type is filtered, iterate through tempHt, get it's habit events, put them
+        // into temp, and add events with comments that include a substring of comment parameter
+        // is added into tempEvent
+        if (! commentEmpty) {
+            for (HabitType ht : tempHt) {
+                ArrayList<HabitEvent> temp;
+                temp = ht.getEvents();
+                for (HabitEvent he : temp) {
+                    String tempCom = he.getComment();
+                    int boolIndex = tempCom.indexOf(comment);
+
+                    if (boolIndex != -1) tempEvent.add(he);
+
+                }
+            }
+
+        }
+        // If comment type is not filtered, add all events for each habitType in tempHt
+        else {
+            for (HabitType ht : tempHt) {
+                ArrayList<HabitEvent> temp;
+                temp = ht.getEvents();
+                tempEvent.addAll(temp);
+            }
+        }
+
+        // Set habitEvents field variable to tempEvent (so i can reuse this adapter)
+        habitEvents = tempEvent;
+
+        // Resetet adapter to habitEvents, and reset list click listener
+        HabitEventHistory2.EventHistoryAdapter eventHistoryAdapter = new HabitEventHistory2.EventHistoryAdapter();
+        heList.setAdapter(eventHistoryAdapter);
+        heList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent habitdetail = new Intent(HabitEventHistory2.this, HabitEventDetailsActivity.class);
+                habitdetail.putExtra("passedUser", gson.toJson(loggedInUser));
+                habitdetail.putExtra("passedHabitEvent", gson.toJson(habitEvents.get(position)));
+                startActivity(habitdetail);
+            }
+        });
+
     }
 
 
@@ -232,3 +320,4 @@ public class HabitEventHistory2 extends AppCompatActivity
         }
     }
 }
+
