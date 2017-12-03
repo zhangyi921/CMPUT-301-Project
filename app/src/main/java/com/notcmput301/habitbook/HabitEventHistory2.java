@@ -192,6 +192,7 @@ public class HabitEventHistory2 extends AppCompatActivity implements NavigationV
         
         filterFillList(htString, commentString);
 
+        filterFillList(htString, commentString);
     }
 
 

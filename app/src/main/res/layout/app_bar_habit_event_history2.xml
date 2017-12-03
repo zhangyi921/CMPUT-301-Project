@@ -17,31 +17,6 @@
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
 
-        <Button
-            android:id="@+id/heFilterButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Filter" />
-
-        <EditText
-            android:id="@+id/heHabitTypeFilter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:hint="Filter by habit type"
-            android:inputType="textPersonName" />
-
-        <EditText
-            android:id="@+id/heCommentFilter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:hint="Filter by comment"
-            android:inputType="textPersonName" />
-
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
