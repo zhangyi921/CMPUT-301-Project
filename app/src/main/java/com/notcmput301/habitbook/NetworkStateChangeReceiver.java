@@ -27,14 +27,12 @@ public class NetworkStateChangeReceiver extends BroadcastReceiver{
         //synchronizing
         if(nH.isNetworkAvailable() && !nH.isEditorEmpty()){
             Log.e("UPDATING", "Begin");
-            Toast.makeText(context, "updating items...", Toast.LENGTH_LONG).show();
             Log.e("UPDATING", "Toast");
             try {
                 nH.doAllTasks();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            Toast.makeText(context, "done", Toast.LENGTH_LONG).show();
         }
     }
 }

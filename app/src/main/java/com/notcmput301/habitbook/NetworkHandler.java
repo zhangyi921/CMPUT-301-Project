@@ -50,9 +50,6 @@ public class NetworkHandler {
     public String username;
     private String[] k;
     private String[] v;
-    private String db = "t28test11";
-    private String type = "habittype";
-    //private ElasticSearch es = new ElasticSearch();
 
 
     public NetworkHandler(Context cont){
@@ -158,17 +155,6 @@ public class NetworkHandler {
      */
 
 
-    //a-habittype: gson representation of habittype
-    //d-habit
-    //u-habitytpye: new gson -->
-    //a-habittype: gson representation of habittype
-    //d-habit
-
-    /*
-    gson -> habit types
-    delete the old habit types
-     */
-
     /**
      * Verifies if the habitType if given title exists
      * @param title
@@ -243,36 +229,6 @@ public class NetworkHandler {
         }
     }
 
-    public String getJestId(String q){
-        ElasticSearch.getJestIdAsync gJA = new ElasticSearch.getJestIdAsync();
-        gJA.execute(q, "habittype");
-        try{
-            String result = gJA.get();
-            if (result==null){
-                Log.e("ES FAIL", "ID returned null");
-                return null;
-            }else{
-               return result;
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-            Log.e("ES FAIL", "Could not get Jest ID");
-            return null;
-        }
-    }
-
-    public Boolean buildBulk(Bulk b){
-        ElasticSearch.bulkBuild bB = new ElasticSearch.bulkBuild();
-        bB.execute(b);
-        try{
-            return bB.get();
-        }catch (Exception e){
-            e.printStackTrace();
-            Log.e("ES FAIL", "Could not build bulk");
-            return false;
-        }
-    }
-
 
     /**
      *The process of update HabitType is delete the old, and add new
@@ -316,7 +272,7 @@ public class NetworkHandler {
     public void waitOnAdd(HabitType hT){
         while (verifyExistance(hT.getTitle())){ //want to find it exists
             try {
-                Thread.sleep(500);
+                Thread.sleep(1500);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -328,7 +284,7 @@ public class NetworkHandler {
     public void waitOnDelete(HabitType hT){
         while (!verifyExistance(hT.getTitle())){
             try {
-                Thread.sleep(500);
+                Thread.sleep(1500);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -366,84 +322,79 @@ public class NetworkHandler {
      */
     public boolean doAllTasks() throws InterruptedException {
 
+        Toast.makeText(context, "Synchronizing...", Toast.LENGTH_LONG).show();
+
         getOrder();
         //Bulk.Builder bulkB = new Bulk.Builder().defaultIndex(db).defaultType("habittype");
 
         String previousAction = "start";
+        HabitType previousHabit = null;
         for (int i=0; i<k.length; i++){
 
             String gsonObject = v[i];
             HabitType hT = gson.fromJson(gsonObject, HabitType.class);
 
-//            String jsonQuery = "{\"query\": {\"bool\": {\"must\": [{\"match\": {\"ownername\": \"" + username + "\"}},{\"match\": {\"title\": \"" +hT.getTitle()+"\"}}]}}}";
-//
-//            if(k[i].equals("a")){
-//
-//                if(verifyExistance(hT.getTitle())==false){continue;}
-//                bulkB.addAction(new Index.Builder(hT).build());
-//
-//            }else if(k[i].equals("d")){
-//
-//                String jID = getJestId(jsonQuery);
-//                bulkB.addAction(new Delete.Builder(jID).index(db).type(type).build());
-//
-//            }else if(k[i].equals("au")){
-//
-//                bulkB.addAction(new Index.Builder(hT).build());
-//            }
-
 
             if(k[i].equals("a")){
 
 
-                if (previousAction.equals("a")){
-                    //waitOnAdd(hT);
-                    Thread.sleep(1000);
-                }else if (previousAction.equals("d")){
-                    //waitOnDelete(hT);
-                    Thread.sleep(1000);
+                if (previousAction.equals("a") && previousHabit != null){
+                    waitOnAdd(previousHabit);
+                }else if (previousAction.equals("d") && previousHabit != null){
+                    waitOnDelete(previousHabit);
                 }
 
-                Log.e("adding", hT.getTitle() + i);
+                Log.e("adding", hT.getTitle() + " " + i + " 406");
+
                 if(verifyExistance(hT.getTitle())==false){continue;}
+
                 addHabitType(hT);
 
                 previousAction="a";
 
+                previousHabit = hT;
+
             }else if(k[i].equals("d")){
 
-                if (previousAction.equals("a")){
-                    //waitOnAdd(hT);
-                    Thread.sleep(1000);
-                }else if (previousAction.equals("d")){
-                    //waitOnDelete(hT);
-                    Thread.sleep(1000);
+                if (previousAction.equals("a") && previousHabit != null){
+                    waitOnAdd(previousHabit);
+                    //Thread.sleep(1000);
+                }else if (previousAction.equals("d") && previousHabit != null){
+                    waitOnDelete(previousHabit);
+                    //Thread.sleep(1000);
                 }
 
-                Log.e("deleting", hT.getTitle() + i);
+                Log.e("deleting", hT.getTitle() + i + " 428");
+
                 deleteHabitType(hT);
 
                 previousAction="d";
 
+                previousHabit = hT;
+
             }else if(k[i].equals("au")){ //au ignores the verificaiton rpocess
 
-                if (previousAction.equals("a")){
-                    //waitOnAdd(hT);
-                    Thread.sleep(1000);
-                }else if (previousAction.equals("d")){
-                    //waitOnDelete(hT);
-                    Thread.sleep(1000);
+                if (previousAction.equals("a") && previousHabit != null){
+                    waitOnAdd(previousHabit);
+                    //Thread.sleep(1000);
+
+                }else if (previousAction.equals("d") && previousHabit != null){
+                    waitOnDelete(previousHabit);
+                    //Thread.sleep(1000);
                 }
 
-                Log.e("adding NO DELETE", hT.getTitle() + " "+ i);
+                Log.e("adding NO DELETE", hT.getTitle() + " "+ i + "449");
+
                 addHabitType(hT);
+
                 previousAction="a";
+
+                previousHabit = hT;
             }
         }
 
-//        Bulk bulk = bulkB.build();
-//        buildBulk(bulk);
         resetPref();
+        Toast.makeText(context, "complete!", Toast.LENGTH_LONG).show();
         return true;
     }
 
