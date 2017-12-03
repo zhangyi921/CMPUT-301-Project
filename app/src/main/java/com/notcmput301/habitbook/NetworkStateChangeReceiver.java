@@ -29,7 +29,11 @@ public class NetworkStateChangeReceiver extends BroadcastReceiver{
             Log.e("UPDATING", "Begin");
             Toast.makeText(context, "updating items...", Toast.LENGTH_LONG).show();
             Log.e("UPDATING", "Toast");
-            nH.doAllTasks();
+            try {
+                nH.doAllTasks();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             Toast.makeText(context, "done", Toast.LENGTH_LONG).show();
         }
     }

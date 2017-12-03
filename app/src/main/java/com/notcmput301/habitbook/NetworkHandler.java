@@ -364,7 +364,7 @@ public class NetworkHandler {
     /**
      * looks through all the tasks and perfroms the appropriate actions
      */
-    public boolean doAllTasks(){
+    public boolean doAllTasks() throws InterruptedException {
 
         getOrder();
         //Bulk.Builder bulkB = new Bulk.Builder().defaultIndex(db).defaultType("habittype");
@@ -397,9 +397,11 @@ public class NetworkHandler {
 
 
                 if (previousAction.equals("a")){
-                    waitOnAdd(hT);
+                    //waitOnAdd(hT);
+                    Thread.sleep(1000);
                 }else if (previousAction.equals("d")){
-                    waitOnDelete(hT);
+                    //waitOnDelete(hT);
+                    Thread.sleep(1000);
                 }
 
                 Log.e("adding", hT.getTitle() + i);
@@ -411,9 +413,11 @@ public class NetworkHandler {
             }else if(k[i].equals("d")){
 
                 if (previousAction.equals("a")){
-                    waitOnAdd(hT);
+                    //waitOnAdd(hT);
+                    Thread.sleep(1000);
                 }else if (previousAction.equals("d")){
-                    waitOnDelete(hT);
+                    //waitOnDelete(hT);
+                    Thread.sleep(1000);
                 }
 
                 Log.e("deleting", hT.getTitle() + i);
@@ -424,9 +428,11 @@ public class NetworkHandler {
             }else if(k[i].equals("au")){ //au ignores the verificaiton rpocess
 
                 if (previousAction.equals("a")){
-                    waitOnAdd(hT);
+                    //waitOnAdd(hT);
+                    Thread.sleep(1000);
                 }else if (previousAction.equals("d")){
-                    waitOnDelete(hT);
+                    //waitOnDelete(hT);
+                    Thread.sleep(1000);
                 }
 
                 Log.e("adding NO DELETE", hT.getTitle() + " "+ i);
