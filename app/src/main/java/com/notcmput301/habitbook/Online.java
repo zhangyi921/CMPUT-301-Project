@@ -308,13 +308,12 @@ public class Online extends AppCompatActivity
 
                                         Toast.makeText(Online.this, "liked!", Toast.LENGTH_SHORT).show();
 
-                                        return;
+
                                     }
                                 }catch(Exception e){
                                     Log.e("get failure", "Failed to retrieve");
                                     e.printStackTrace();
                                 }
-                                break;
                             }
                         }
                     }
