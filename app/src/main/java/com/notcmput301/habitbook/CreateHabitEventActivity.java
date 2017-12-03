@@ -164,17 +164,17 @@ public class CreateHabitEventActivity extends AppCompatActivity {
             return;
         }
 
-        HabitEvent habitEvent = new HabitEvent(habit.getTitle(),comment);
+        HabitEvent habitEvent = new HabitEvent(habit.getOwnername(), habit.getTitle(),comment);
         if (currentlocation != null && b64img == null)
         {
-            habitEvent = new HabitEvent(habit.getTitle(), comment, currentlocation.getLatitude(), currentlocation.getLongitude());
+            habitEvent = new HabitEvent(habit.getOwnername(), habit.getTitle(), comment, currentlocation.getLatitude(), currentlocation.getLongitude());
         }
         else if (b64img != null && currentlocation == null){
-            habitEvent = new HabitEvent(habit.getTitle(), comment, b64img);
+            habitEvent = new HabitEvent(habit.getOwnername(), habit.getTitle(), comment, b64img);
 
         }
         else if (currentlocation != null && b64img != null){
-            habitEvent = new HabitEvent(habit.getTitle(), comment, b64img,currentlocation.getLatitude(), currentlocation.getLongitude());
+            habitEvent = new HabitEvent(habit.getOwnername(), habit.getTitle(), comment, b64img,currentlocation.getLatitude(), currentlocation.getLongitude());
         }
 
         if (nH.isNetworkAvailable()){

@@ -73,6 +73,10 @@ public class HabitType{
         return d.intValue();
     }
 
+    public String getOwnername(){
+        return this.ownername;
+    }
+
     public String getTitle() {
         return title;
     }

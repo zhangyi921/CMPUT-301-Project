@@ -17,6 +17,7 @@ import java.util.Date;
 public class HabitEvent {
 
     //private HabitType habitType;
+    private String user;
     private String habit;
     private String comment;
     private String image;
@@ -26,7 +27,8 @@ public class HabitEvent {
     private Double latitude = null;
     private Double longitude = null;
 
-    public HabitEvent(String habit, String comment){
+    public HabitEvent(String user, String habit, String comment){
+        this.user = user;
         this.habit = habit;
         this.comment = comment;
         this.image = null;
@@ -35,7 +37,8 @@ public class HabitEvent {
         this.dislikes = 0;
     }
 
-    public HabitEvent(String habit,String comment, Double latitude, Double longitude){
+    public HabitEvent(String user, String habit,String comment, Double latitude, Double longitude){
+        this.user = user;
         this.habit = habit;
         this.comment = comment;
         this.image = null;
@@ -46,7 +49,8 @@ public class HabitEvent {
         this.longitude = longitude;
     }
 
-    public HabitEvent(String habit,String comment, String image){
+    public HabitEvent(String user, String habit,String comment, String image){
+        this.user = user;
         this.habit = habit;
         this.comment = comment;
         this.image = image;
@@ -55,7 +59,8 @@ public class HabitEvent {
         this.dislikes = 0;
     }
 
-    public HabitEvent(String habit,String comment, String image, Double latitude, Double longitude){
+    public HabitEvent(String user, String habit,String comment, String image, Double latitude, Double longitude){
+        this.user = user;
         this.habit = habit;
         this.comment = comment;
         this.image = image;
@@ -66,6 +71,9 @@ public class HabitEvent {
         this.longitude = longitude;
     }
 
+    public String getUser(){
+        return user;
+    }
     public Double getLatitude(){
         return latitude;
     }

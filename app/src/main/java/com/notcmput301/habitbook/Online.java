@@ -260,7 +260,7 @@ public class Online extends AppCompatActivity
                     habitEvent.setLikes(habitEvent.getLikes()+1);
                     ArrayList<HabitType> habitTypes = new ArrayList<HabitType>();
                     ElasticSearch.getHabitTypeList ghtl = new ElasticSearch.getHabitTypeList();
-                    ghtl.execute(loggedInUser.getUsername());
+                    ghtl.execute(eventlist.get(position).getUser());
                     try {
                         habitTypes = ghtl.get();
                         if (habitTypes==null){
@@ -301,15 +301,15 @@ public class Online extends AppCompatActivity
                                 ElasticSearch.addHabitType aht = new ElasticSearch.addHabitType();
                                 aht.execute(h);
                                 try{
-                                    /*boolean success = aht.get();
-                                    if (!success){
+                                    String success = aht.get();
+                                    if (success == null){
                                         Toast.makeText(Online.this, "Opps, Something went wrong on our end", Toast.LENGTH_SHORT).show();
                                     }else{
 
                                         Toast.makeText(Online.this, "liked!", Toast.LENGTH_SHORT).show();
 
                                         return;
-                                    }*/
+                                    }
                                 }catch(Exception e){
                                     Log.e("get failure", "Failed to retrieve");
                                     e.printStackTrace();
