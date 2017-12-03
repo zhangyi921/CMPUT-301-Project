@@ -165,6 +165,8 @@ public class HabitEventHistory2 extends AppCompatActivity
 
         String htString = htBar.getText().toString().trim().replaceAll("\\s+", " ");
         String commentString = commentBar.getText().toString().trim().replaceAll("\\s+", " ");
+        
+        filterFillList(htString, commentString);
 
     }
 
