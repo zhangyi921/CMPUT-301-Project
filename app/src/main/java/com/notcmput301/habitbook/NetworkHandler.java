@@ -33,6 +33,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import io.searchbox.core.Bulk;
+import io.searchbox.core.Delete;
+import io.searchbox.core.Index;
+
 /**
  * Created by shangchen on 2017-12-01.
  */
@@ -46,6 +50,9 @@ public class NetworkHandler {
     public String username;
     private String[] k;
     private String[] v;
+    private String db = "t28test11";
+    private String type = "habittype";
+    //private ElasticSearch es = new ElasticSearch();
 
 
     public NetworkHandler(Context cont){
@@ -175,9 +182,8 @@ public class NetworkHandler {
             if (success < 0){
                 Toast.makeText(context, "Opps, Something went wrong on our end", Toast.LENGTH_SHORT).show();
                 return false;
-            }if (success > 0){
-                Toast.makeText(context, "Habit Type Title has to be unique!", Toast.LENGTH_SHORT).show();
-                return false;
+            }if (success > 0){ //0 means it could not find anytihing
+                return false; //false = foudn something
             }
         }catch(Exception e){
             Log.e("get failure", "Failed to retrieve");
@@ -193,23 +199,23 @@ public class NetworkHandler {
      * @param newHabit
      * @return
      */
-    public boolean addHabitType(HabitType newHabit){
+    public String addHabitType(HabitType newHabit){
 
         ElasticSearch.addHabitType aht = new ElasticSearch.addHabitType();
         aht.execute(newHabit);
         try{
-            boolean success = aht.get();
-            if (!success){
+            String id = aht.get();
+            if (id==null){
                 Toast.makeText(context, "Opps, Something went wrong on our end", Toast.LENGTH_SHORT).show();
-                return false;
+                return null;
             }else{
                 Toast.makeText(context, "Added Habit Type!", Toast.LENGTH_SHORT).show();
-                return true;
+                return id;
             }
         }catch(Exception e){
             Log.e("get failure", "Failed to retrieve");
             e.printStackTrace();
-            return false;
+            return null;
         }
     }
 
@@ -237,6 +243,37 @@ public class NetworkHandler {
         }
     }
 
+    public String getJestId(String q){
+        ElasticSearch.getJestIdAsync gJA = new ElasticSearch.getJestIdAsync();
+        gJA.execute(q, "habittype");
+        try{
+            String result = gJA.get();
+            if (result==null){
+                Log.e("ES FAIL", "ID returned null");
+                return null;
+            }else{
+               return result;
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            Log.e("ES FAIL", "Could not get Jest ID");
+            return null;
+        }
+    }
+
+    public Boolean buildBulk(Bulk b){
+        ElasticSearch.bulkBuild bB = new ElasticSearch.bulkBuild();
+        bB.execute(b);
+        try{
+            return bB.get();
+        }catch (Exception e){
+            e.printStackTrace();
+            Log.e("ES FAIL", "Could not build bulk");
+            return false;
+        }
+    }
+
+
     /**
      *The process of update HabitType is delete the old, and add new
      * 1. call delete old
@@ -245,38 +282,6 @@ public class NetworkHandler {
 
     //------------------------------------------------------------------------------------
 
-//    /**
-//     * get habit type. (we can get the title from this)
-//     * @param title
-//     * @return
-//     */
-//    public HabitType getHabitType(String title){
-//        ElasticSearch.getHabitType gHT = new ElasticSearch.getHabitType();
-//        gHT.execute(username, title);
-//        try{
-//            HabitType result = gHT.get();
-//            return result;
-//        }catch (Exception e){
-//            e.printStackTrace();
-//            Log.e("ES", "Failed to get Habit type of name "+title);
-//            return null;
-//        }
-//    }
-//
-//    /**
-//     * Set HabitType
-//     */
-//    public void setHabitType(HabitType h){
-//        this.habitType = h;
-//    }
-//
-//
-//    /**
-//     * set HabitEvent
-//     */
-//    public void setHabitEvent(HabitEvent h){
-//        this.habitEvent = h;
-//    }
 
     /**
      * add habit event is a composition of deleting old habit type, and
@@ -307,7 +312,34 @@ public class NetworkHandler {
      * This is bad news as the order of operations does indeed matter.
      * This function aims to order the hashmap
      */
+
+    public void waitOnAdd(HabitType hT){
+        while (verifyExistance(hT.getTitle())){ //want to find it exists
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            Toast.makeText(context, "waiting..", Toast.LENGTH_SHORT).show();
+            Log.e("WAITING ON", hT.getTitle());
+        }     //this is bad...
+    }
+
+    public void waitOnDelete(HabitType hT){
+        while (!verifyExistance(hT.getTitle())){
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            Toast.makeText(context, "waiting..", Toast.LENGTH_SHORT).show();
+            Log.e("WAITING ON", hT.getTitle());
+        }    //this is bad...
+    }
+
+
     public void getOrder(){
+
         int length = sharedPref.getAll().size() - 1; //get size of the thing
         k = new String[length];
         v = new String[length];
@@ -324,6 +356,8 @@ public class NetworkHandler {
             k[index] = action;
             v[index] = gsonObject;
         }
+
+        Log.e("ARRAY", Arrays.toString(k));
     }
 
 
@@ -333,23 +367,76 @@ public class NetworkHandler {
     public boolean doAllTasks(){
 
         getOrder();
+        //Bulk.Builder bulkB = new Bulk.Builder().defaultIndex(db).defaultType("habittype");
 
+        String previousAction = "start";
         for (int i=0; i<k.length; i++){
 
             String gsonObject = v[i];
+            HabitType hT = gson.fromJson(gsonObject, HabitType.class);
+
+//            String jsonQuery = "{\"query\": {\"bool\": {\"must\": [{\"match\": {\"ownername\": \"" + username + "\"}},{\"match\": {\"title\": \"" +hT.getTitle()+"\"}}]}}}";
+//
+//            if(k[i].equals("a")){
+//
+//                if(verifyExistance(hT.getTitle())==false){continue;}
+//                bulkB.addAction(new Index.Builder(hT).build());
+//
+//            }else if(k[i].equals("d")){
+//
+//                String jID = getJestId(jsonQuery);
+//                bulkB.addAction(new Delete.Builder(jID).index(db).type(type).build());
+//
+//            }else if(k[i].equals("au")){
+//
+//                bulkB.addAction(new Index.Builder(hT).build());
+//            }
+
 
             if(k[i].equals("a")){
-                HabitType hT = gson.fromJson(gsonObject, HabitType.class);
+
+
+                if (previousAction.equals("a")){
+                    waitOnAdd(hT);
+                }else if (previousAction.equals("d")){
+                    waitOnDelete(hT);
+                }
+
+                Log.e("adding", hT.getTitle() + i);
                 if(verifyExistance(hT.getTitle())==false){continue;}
                 addHabitType(hT);
+
+                previousAction="a";
+
             }else if(k[i].equals("d")){
-                HabitType hT = gson.fromJson(gsonObject, HabitType.class);
+
+                if (previousAction.equals("a")){
+                    waitOnAdd(hT);
+                }else if (previousAction.equals("d")){
+                    waitOnDelete(hT);
+                }
+
+                Log.e("deleting", hT.getTitle() + i);
                 deleteHabitType(hT);
+
+                previousAction="d";
+
             }else if(k[i].equals("au")){ //au ignores the verificaiton rpocess
-                HabitType hT = gson.fromJson(gsonObject, HabitType.class);
+
+                if (previousAction.equals("a")){
+                    waitOnAdd(hT);
+                }else if (previousAction.equals("d")){
+                    waitOnDelete(hT);
+                }
+
+                Log.e("adding NO DELETE", hT.getTitle() + " "+ i);
                 addHabitType(hT);
+                previousAction="a";
             }
         }
+
+//        Bulk bulk = bulkB.build();
+//        buildBulk(bulk);
         resetPref();
         return true;
     }

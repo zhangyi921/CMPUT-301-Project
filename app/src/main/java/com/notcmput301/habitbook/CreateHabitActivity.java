@@ -30,7 +30,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-import static com.notcmput301.habitbook.NetworkStateChangeReceiver.IS_NETWORK_AVAILABLE;
 
 public class CreateHabitActivity extends AppCompatActivity {
     private User loggedInUser;
@@ -81,7 +80,6 @@ public class CreateHabitActivity extends AppCompatActivity {
         //Checks if Network Connection is detected.
         BroadcastReceiver br = new NetworkStateChangeReceiver();
         IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
-        filter.addAction(IS_NETWORK_AVAILABLE);
         this.registerReceiver(br, filter);
     }
 
@@ -124,20 +122,27 @@ public class CreateHabitActivity extends AppCompatActivity {
         }
 
         HabitType newHabit = new HabitType(loggedInUser.getUsername(), title, reason, this.startdate, this.weekdays);
-        habitTypes.add(newHabit);
-        HLS.setList(habitTypes);
-
         //check network availability
         if(nH.isNetworkAvailable()){
-            if(nH.verifyExistance(title)==false){ back(); return;}
+            if(!nH.verifyExistance(title)) {Toast.makeText(this, "title exists", Toast.LENGTH_SHORT).show(); return;};
             nH.addHabitType(newHabit);
-            finish();
+
         }else{
+            if (!verifyTitleOk(newHabit.getTitle())) {Toast.makeText(this, "Title exists", Toast.LENGTH_SHORT).show(); return;}
             nH.putString("a", gson.toJson(newHabit));
-            finish();
         }
+        habitTypes.add(newHabit);
+        HLS.setList(habitTypes);
+        finish();
         back();
     }
+
+    public boolean verifyTitleOk(String title){
+        for(HabitType h: habitTypes){
+            if(title.equals(h.getTitle())) return false;
+        }
+        return true;
+    };
 
     public void back(){
         Intent habitList = new Intent(CreateHabitActivity.this, HabitTypeList2.class);

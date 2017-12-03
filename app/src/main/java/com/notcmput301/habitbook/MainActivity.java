@@ -26,8 +26,6 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
-import static com.notcmput301.habitbook.NetworkStateChangeReceiver.IS_NETWORK_AVAILABLE;
-
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private User loggedInUser;
@@ -85,7 +83,6 @@ public class MainActivity extends AppCompatActivity
         //Checks if Network Connection is detected.
         BroadcastReceiver br = new NetworkStateChangeReceiver();
         IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
-        filter.addAction(IS_NETWORK_AVAILABLE);
         this.registerReceiver(br, filter);
     }
 

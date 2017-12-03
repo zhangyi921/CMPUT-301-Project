@@ -9,6 +9,7 @@ package com.notcmput301.habitbook;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.widget.Toast;
 
 /**
@@ -16,8 +17,6 @@ import android.widget.Toast;
  */
 
 public class NetworkStateChangeReceiver extends BroadcastReceiver{
-
-    public static final String IS_NETWORK_AVAILABLE = "isNetworkAvailable";
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -27,7 +26,9 @@ public class NetworkStateChangeReceiver extends BroadcastReceiver{
         //if there is a network and there are items in the editor, start
         //synchronizing
         if(nH.isNetworkAvailable() && !nH.isEditorEmpty()){
+            Log.e("UPDATING", "Begin");
             Toast.makeText(context, "updating items...", Toast.LENGTH_LONG).show();
+            Log.e("UPDATING", "Toast");
             nH.doAllTasks();
             Toast.makeText(context, "done", Toast.LENGTH_LONG).show();
         }

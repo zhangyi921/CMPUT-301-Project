@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 import io.searchbox.client.JestResult;
+import io.searchbox.core.Bulk;
 import io.searchbox.core.Delete;
 import io.searchbox.core.DeleteByQuery;
 import io.searchbox.core.DocumentResult;
@@ -25,7 +26,7 @@ import io.searchbox.core.SearchResult;
 
 public class ElasticSearch {
     private static JestDroidClient client;
-    protected static String db = "t28test9";    //DATABASE
+    protected static String db = "t28test11";    //DATABASE
 
     //-------------------_FOR USERS_-------------------------------
 
@@ -157,10 +158,10 @@ public class ElasticSearch {
                         return 0;
                     }
                     if (test.getTitle().toLowerCase().trim().replaceAll("\\s+", " ").equals(title.toLowerCase().trim().replaceAll("\\s+", " "))){
-                        return 1;
+                        return 1; //found a match
                     }
                 }else{
-                    return -1;
+                    return -1; //error
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -205,29 +206,33 @@ public class ElasticSearch {
     /**
      * Used to add HabitType to database. Returns false on fail
      */
-    public static class addHabitType extends AsyncTask<HabitType, Void, Boolean>{
+    public static class addHabitType extends AsyncTask<HabitType, Void, String>{
 
         @Override
-        public Boolean doInBackground(HabitType... ht){
+        public String doInBackground(HabitType... ht){
             verifySettings();
             if (ht.length != 1){
                 Log.e("Bad input", "expected 1 Habit type");
-                return false;
+                return null;
             }
             Index htitem = new Index.Builder(ht[0]).index(db).type("habittype").build();
             try{
                 DocumentResult result = client.execute(htitem);
                 if (result.isSucceeded()){
-                    return true;
+                    return result.getId();
                 }
             }catch (Exception e){
                 e.printStackTrace();
                 Log.e("failed add", "Failed to add HabitType");
-                return false;
+                return null;
             }
-            return false;
+            return null;
         }
     }
+
+
+
+
 
     /**
      * Used to return list of habitTypes
@@ -383,7 +388,38 @@ public class ElasticSearch {
     }
 
 
+
     //-------------------------------HELPERS---------------------------------------
+    /**
+     * Bulk builder
+     */
+    public static class bulkBuild extends AsyncTask<Bulk, Void, Boolean>{
+
+        @Override
+        public Boolean doInBackground(Bulk... b){
+            verifySettings();
+            try{
+                client.execute(b[0]);
+                return true;
+            }catch (Exception e){
+                e.printStackTrace();
+                Log.e("ES FAIL", "Bulk Fail");
+                return false;
+            }
+        }
+    }
+
+    /**
+     * Method for getting jesId asyncrhonously
+     */
+
+    public static class getJestIdAsync extends AsyncTask<String, Void, String>{
+        @Override
+        public String doInBackground(String... s){
+            verifySettings();
+            return getJestId(s[0], s[1]);
+        }
+    }
 
     /**
      * Method retrieves the jestId provided seary query is correct

@@ -22,8 +22,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import static com.notcmput301.habitbook.NetworkStateChangeReceiver.IS_NETWORK_AVAILABLE;
-
 public class HabitTypeDetailsActivity extends AppCompatActivity {
     private HabitType habit;
     private User loggedInUser;
@@ -60,7 +58,6 @@ public class HabitTypeDetailsActivity extends AppCompatActivity {
         //Checks if Network Connection is detected.
         BroadcastReceiver br = new NetworkStateChangeReceiver();
         IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
-        filter.addAction(IS_NETWORK_AVAILABLE);
         this.registerReceiver(br, filter);
 
         loadData();

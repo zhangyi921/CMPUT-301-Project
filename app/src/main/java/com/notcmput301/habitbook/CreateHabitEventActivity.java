@@ -42,7 +42,6 @@ import java.util.ArrayList;
 import de.hdodenhof.circleimageview.CircleImageView;
 import id.zelory.compressor.Compressor;
 
-import static com.notcmput301.habitbook.NetworkStateChangeReceiver.IS_NETWORK_AVAILABLE;
 
 public class CreateHabitEventActivity extends AppCompatActivity {
     private static final int RESULT_LOAD_IMAGE = 6138;
@@ -127,7 +126,6 @@ public class CreateHabitEventActivity extends AppCompatActivity {
         //Checks if Network Connection is detected.
         BroadcastReceiver br = new NetworkStateChangeReceiver();
         IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
-        filter.addAction(IS_NETWORK_AVAILABLE);
         this.registerReceiver(br, filter);
 
         configure_button();

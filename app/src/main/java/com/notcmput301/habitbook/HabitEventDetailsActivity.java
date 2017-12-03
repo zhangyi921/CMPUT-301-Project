@@ -18,7 +18,6 @@ import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-import static com.notcmput301.habitbook.NetworkStateChangeReceiver.IS_NETWORK_AVAILABLE;
 
 public class HabitEventDetailsActivity extends AppCompatActivity {
 
@@ -62,7 +61,6 @@ public class HabitEventDetailsActivity extends AppCompatActivity {
         //Checks if Network Connection is detected.
         BroadcastReceiver br = new NetworkStateChangeReceiver();
         IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
-        filter.addAction(IS_NETWORK_AVAILABLE);
         this.registerReceiver(br, filter);
     }
 
