@@ -6,7 +6,10 @@
 
 package com.notcmput301.habitbook;
 
+import android.content.BroadcastReceiver;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.view.View;
@@ -33,10 +36,16 @@ import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class HabitEventHistory2 extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+
+public class HabitEventHistory2 extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
+
+    private HabitType habit;
     private User loggedInUser;
+    private HabitListStore HLS;
     private ArrayList<HabitType> habitTypes;
+    private NetworkHandler nH;
+
     private ArrayList<HabitEvent> habitEvents = new ArrayList<>();
     private Gson gson = new Gson();
 
@@ -46,8 +55,14 @@ public class HabitEventHistory2 extends AppCompatActivity
         setContentView(R.layout.activity_habit_event_history2);
 
         Intent receiver = getIntent();
+
         String u = receiver.getExtras().getString("passedUser");
+        String l = receiver.getExtras().getString("passedHList");
         loggedInUser = gson.fromJson(u, User.class);
+        HLS = gson.fromJson(l, HabitListStore.class);
+        habitTypes = HLS.getList();
+        nH = new NetworkHandler(this);
+
         FillList();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -88,6 +103,11 @@ public class HabitEventHistory2 extends AppCompatActivity
         TextView navName = (TextView) headerview.findViewById(R.id.MNavH_Name);
         navName.setText(loggedInUser.getUsername());
         navigationView.setNavigationItemSelectedListener(this);
+
+        //Checks if Network Connection is detected.
+        BroadcastReceiver br = new NetworkStateChangeReceiver();
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        this.registerReceiver(br, filter);
     }
 
     @Override
@@ -131,24 +151,28 @@ public class HabitEventHistory2 extends AppCompatActivity
         if (id == R.id.habit_type) {
             Intent habitType = new Intent(HabitEventHistory2.this, HabitTypeList2.class);
             habitType.putExtra("passedUser", gson.toJson(loggedInUser));
+            habitType.putExtra("passedHList", gson.toJson(HLS));
             finish();
             startActivity(habitType);
 
         } else if (id == R.id.today_habit) {
 
-            Intent habitType = new Intent(HabitEventHistory2.this, MainActivity.class);
-            habitType.putExtra("passedUser", gson.toJson(loggedInUser));
+            Intent todayHabit = new Intent(HabitEventHistory2.this, TodaysHabitActivity.class);
+            todayHabit.putExtra("passedUser", gson.toJson(loggedInUser));
             finish();
-            startActivity(habitType);
+            startActivity(todayHabit);
         } else if (id == R.id.habit_event_history) {
 
         } else if (id == R.id.online) {
 
-            Intent online = new Intent(HabitEventHistory2.this, Online.class);
-            online.putExtra("passedUser", gson.toJson(loggedInUser));
-            finish();
-            startActivity(online);
-
+            if(!nH.isNetworkAvailable()){
+                Toast.makeText(this, "Content Not accessible without internet", Toast.LENGTH_LONG).show();
+            }else{
+                Intent online = new Intent(HabitEventHistory2.this, Online.class);
+                online.putExtra("passedUser", gson.toJson(loggedInUser));
+                finish();
+                startActivity(online);
+            }
         } else if (id == R.id.logout) {
             finish();
 
@@ -173,33 +197,39 @@ public class HabitEventHistory2 extends AppCompatActivity
 
     public void FillList(){
         ListView EventHistoryList = (ListView) findViewById(R.id.eventList);
-        ElasticSearch.getHabitTypeList ghtl = new ElasticSearch.getHabitTypeList();
-        ghtl.execute(loggedInUser.getUsername());
-        try {
-            habitTypes = ghtl.get();
-            if (habitTypes==null){
-                habitTypes = new ArrayList<>();
-            }
-            //loggedInUser.setHabitTypes(habitTypes);       //causes program to crash
-        }catch(Exception e){
-            e.printStackTrace();
-            Toast.makeText(this, "Failed to retrieve items. Check connection", Toast.LENGTH_SHORT).show();
-        }
+
+//        if (nH.isNetworkAvailable()){
+//            ElasticSearch.getHabitTypeList ghtl = new ElasticSearch.getHabitTypeList();
+//            ghtl.execute(loggedInUser.getUsername());
+//            try {
+//                habitTypes = ghtl.get();
+//                if (habitTypes==null){
+//                    habitTypes = new ArrayList<>();
+//                }
+//                //loggedInUser.setHabitTypes(habitTypes);       //causes program to crash
+//            }catch(Exception e){
+//                e.printStackTrace();
+//                Toast.makeText(this, "Failed to retrieve items. Check connection", Toast.LENGTH_SHORT).show();
+//            }
+//        }
 
         habitEvents.clear();
         for (HabitType h :habitTypes){
             ArrayList<HabitEvent> events = h.getEvents();
             habitEvents.addAll(events);
-
         }
+
         HabitEventHistory2.EventHistoryAdapter eventHistoryAdapter = new HabitEventHistory2.EventHistoryAdapter();
         EventHistoryList.setAdapter(eventHistoryAdapter);
         EventHistoryList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent habitdetail = new Intent(HabitEventHistory2.this, HabitEventDetailsActivity.class);
+
                 habitdetail.putExtra("passedUser", gson.toJson(loggedInUser));
+                habitdetail.putExtra("passedHList", gson.toJson(HLS));
                 habitdetail.putExtra("passedHabitEvent", gson.toJson(habitEvents.get(position)));
+
                 startActivity(habitdetail);
             }
         });

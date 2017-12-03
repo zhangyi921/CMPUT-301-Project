@@ -55,7 +55,6 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMyLoca
         Intent receiver = getIntent();
         String e = receiver.getExtras().getString("events");
 
-
         try{
             habitEvents = gson.fromJson(e, new TypeToken<ArrayList<HabitEvent>>(){}.getType());
 
