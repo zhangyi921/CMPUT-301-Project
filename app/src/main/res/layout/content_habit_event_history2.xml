@@ -4,7 +4,6 @@
   ~  * You may use, distribute, or modify this code under terms and conditions of the Code of Student Behavior at University of Alberta.
   ~  * You can find a copy of the license in the project wiki on github. Otherwise please contact miller4@ualberta.ca.
   -->
-
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -12,28 +11,82 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.notcmput301.habitbook.HabitEventHistory2"
-    tools:showIn="@layout/app_bar_habit_event_history2">
+    tools:showIn="@layout/app_bar_habit_event_history2"
+    android:background="@drawable/background">
 
     <TextView
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="113dp"
-        android:layout_marginTop="16dp"
-        android:text="Habit Event History"
+        android:layout_marginTop="24dp"
+        android:text="Event History"
+        android:textSize="30sp"
         app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginStart="113dp" />
+        app:layout_constraintHorizontal_bias="0.502" />
 
     <ListView
         android:id="@+id/eventList"
-        android:layout_width="365dp"
-        android:layout_height="461dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="34dp"
-        app:layout_constraintHorizontal_bias="0.666"
+        android:layout_width="match_parent"
+        android:layout_height="395dp"
+        android:layout_marginBottom="180dp"
+        android:layout_marginTop="8dp"
+        android:background="#FFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/textView4"
+        app:layout_constraintVertical_bias="0.584" />
+
+    <EditText
+        android:id="@+id/heHabitTypeFilter"
+        android:layout_width="196dp"
+        android:layout_height="28dp"
+        android:layout_marginBottom="80dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@android:color/background_light"
+        android:ems="10"
+        android:hint="Filter by Habit"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.39"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/eventList"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <EditText
+        android:id="@+id/heCommentFilter"
+        android:layout_width="199dp"
+        android:layout_height="32dp"
+        android:layout_marginBottom="32dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:background="@android:color/background_light"
+        android:ems="10"
+        android:hint="Filter by Comment"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.39"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/heFilterButton"
+        android:layout_width="73dp"
+        android:layout_height="44dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="12dp"
+        android:background="@color/colorAccent"
+        android:onClick="onFilterClick"
+        android:text="filter"
+        android:textColor="@android:color/background_light"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/heHabitTypeFilter"
+        app:layout_constraintTop_toBottomOf="@+id/eventList" />
 </android.support.constraint.ConstraintLayout>
