@@ -105,7 +105,46 @@ public class HabitEvent {
         byte[] decodedString = Base64.decode(image, Base64.DEFAULT);
         return  BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
     }
+    
+    // Sort by date coded by Matteo
+    // returns HabitEvent with dates sorted from most recent to least recent
+    public ArrayList<HabitEvent> sortByDate(ArrayList<HabitEvent> inputEvents) {
+        if (inputEvents.isEmpty() ) return inputEvents; // No sorting necessary if param is empty
 
+        ArrayList<HabitEvent> outputEvents = new ArrayList<HabitEvent>(); // Initialize output list
+
+        // Puts first element in output list
+        HabitEvent temp = inputEvents.get(0);
+        outputEvents.add(temp);
+
+        // Iterates through inputList
+        for (int i = 1; i < inputEvents.size(); i++) {
+            // Get date for element from input list
+            temp = inputEvents.get(i);
+            Date inputDate = temp.getDate();
+
+            // Iterates through outputList
+            for (int j = 0; j < outputEvents.size(); j++ ) {
+                // Get date for output list
+                temp = outputEvents.get(j);
+                Date outputDate = temp.getDate();
+
+                // If input date is more recent than output element, put element in output
+                // list, then break
+                if (inputDate.after(outputDate) ) {
+                    outputEvents.add(j, inputEvents.get(i) );
+                    break;
+                }
+
+                // If on last output list iteration, append current input list element
+                if (j == (outputEvents.size() - 1) ) outputEvents.add(inputEvents.get(i) );
+            }
+        }
+
+        // Returns eventlist, sorted by dates
+        return outputEvents;
+    }
+    
 /*    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
