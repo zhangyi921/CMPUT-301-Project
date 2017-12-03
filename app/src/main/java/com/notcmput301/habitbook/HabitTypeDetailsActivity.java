@@ -94,11 +94,11 @@ public class HabitTypeDetailsActivity extends AppCompatActivity {
         try {
             DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             startdateD = formatter.parse(startdate);
-            Date today = new Date();
+            /*Date today = new Date();
             if (startdateD.before(today)){
                 Toast.makeText(this, "Start date cannot be in the past", Toast.LENGTH_SHORT).show();
                 return;
-            }
+            }*/
         }catch (ParseException e){
             Toast.makeText(this, "Incorrect Date formatting", Toast.LENGTH_SHORT).show();
             return;
