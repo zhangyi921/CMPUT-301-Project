@@ -1,6 +1,9 @@
 package com.notcmput301.habitbook;
 
+import android.content.BroadcastReceiver;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,9 +22,16 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import static com.notcmput301.habitbook.NetworkStateChangeReceiver.IS_NETWORK_AVAILABLE;
+
 public class HabitTypeDetailsActivity extends AppCompatActivity {
     private HabitType habit;
     private User loggedInUser;
+    private HabitListStore HLS;
+    private ArrayList<HabitType> habitTypes;
+    private int position;
+    private NetworkHandler nH;
+
     private EditText titleE;
     private EditText reasonE;
     private EditText startDateE;
@@ -34,11 +44,25 @@ public class HabitTypeDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_habit_type_details);
+
         Intent receiver = getIntent();
         String u = receiver.getExtras().getString("passedUser");
-        String h = receiver.getExtras().getString("passedHabitType");
+        String l = receiver.getExtras().getString("passedHList");
+
+        position = Integer.parseInt(receiver.getExtras().getString("passedPos"));
+
         this.loggedInUser = gson.fromJson(u, User.class);
-        this.habit = gson.fromJson(h, HabitType.class);
+        this.HLS = gson.fromJson(l, HabitListStore.class);
+        this.habitTypes = HLS.getList();
+        this.habit = habitTypes.get(position);
+        nH = new NetworkHandler(this);
+
+        //Checks if Network Connection is detected.
+        BroadcastReceiver br = new NetworkStateChangeReceiver();
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        filter.addAction(IS_NETWORK_AVAILABLE);
+        this.registerReceiver(br, filter);
+
         loadData();
     }
 
@@ -65,9 +89,17 @@ public class HabitTypeDetailsActivity extends AppCompatActivity {
         startDateE.setText(df.format(habit.getStartDate()));
     }
 
-    public void HTDback(View view){
-        finish();
+    public void back(){
+        Intent habitList = new Intent(HabitTypeDetailsActivity.this, HabitTypeList2.class);
+        habitList.putExtra("passedUser", gson.toJson(loggedInUser));
+        habitList.putExtra("passedHList", gson.toJson(HLS));
+        startActivity(habitList);
     }
+
+    public void HTDback(View view){
+        back();
+    }
+
 
     public void HTDUpdate(View view){
         String title = titleE.getText().toString().trim().replaceAll("\\s+", " ");
@@ -92,10 +124,6 @@ public class HabitTypeDetailsActivity extends AppCompatActivity {
             DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             startdateD = formatter.parse(startdate);
             Date today = new Date();
-            if (startdateD.before(today)){
-                Toast.makeText(this, "Start date cannot be in the past", Toast.LENGTH_SHORT).show();
-                return;
-            }
         }catch (ParseException e){
             Toast.makeText(this, "Incorrect Date formatting", Toast.LENGTH_SHORT).show();
             return;
@@ -111,63 +139,45 @@ public class HabitTypeDetailsActivity extends AppCompatActivity {
             return;
         }
 
-        ElasticSearch.deleteHabitType dht = new ElasticSearch.deleteHabitType();
-        dht.execute(loggedInUser.getUsername(), habit.getTitle());
-        try{
-            boolean success = dht.get();
-            if (!success) {
-                Toast.makeText(this, "Opps, Something went wrong on our end", Toast.LENGTH_SHORT).show();
-                return;
-            }
-        }catch(Exception e){
-            Log.e("Error", "Failed to delete");
-            e.printStackTrace();
-            return;
-        }
-        HabitType newHabit = new HabitType(loggedInUser, title, reason, startdateD, checked);
-        for (HabitEvent event : habit.getEvents()){
+        //------------------------------------------
+
+        HabitType newHabitType = new HabitType(loggedInUser.getUsername(), title, reason, startdateD, checked);
+        for (HabitEvent event : habit.getEvents()){ //make sure habit events are updated too
             event.setHabit(title);
-            newHabit.addHabitEvent(event);
+            newHabitType.addHabitEvent(event);
         }
-        ElasticSearch.addHabitType aht = new ElasticSearch.addHabitType();
-        aht.execute(newHabit);
-        try{
-            boolean success = aht.get();
-            if (!success){
-                Toast.makeText(this, "Opps, Something went wrong on our end", Toast.LENGTH_SHORT).show();
-            }else{
-                habit = newHabit;
-                Toast.makeText(this, "Updated Habit Type!", Toast.LENGTH_SHORT).show();
-                finish();
-                return;
-            }
-        }catch(Exception e){
-            Log.e("get failure", "Failed to retrieve");
-            e.printStackTrace();
+
+        if (nH.isNetworkAvailable()){
+            nH.deleteHabitType(habit);
+            nH.addHabitType(newHabitType);
+            //replace update our list
+        }else{
+            nH.putString("d", gson.toJson(habit));
+            nH.putString("au", gson.toJson(newHabitType));
+            //update our list
         }
+        habitTypes.set(position, newHabitType);
+        HLS.setList(habitTypes);
+        back();
     }
 
     public void HTDDelete(View view){
-        ElasticSearch.deleteHabitType delHT = new ElasticSearch.deleteHabitType();
-        delHT.execute(loggedInUser.getUsername(), habit.getTitle());
-        try{
-            boolean result = delHT.get();
-            if (result){
-                Toast.makeText(this, "deleted item!", Toast.LENGTH_SHORT).show();
-                finish();
-            }else{
-                Toast.makeText(this, "Failed to delete", Toast.LENGTH_SHORT).show();
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-            Toast.makeText(this, "Failed to delete", Toast.LENGTH_SHORT).show();
+
+        if(nH.isNetworkAvailable()){
+            nH.deleteHabitType(habit);
+        }else{
+            nH.putString("d", gson.toJson(habit));
         }
+        habitTypes.remove(position);
+        back();
     }
 
     public void HTDAddEvent(View view){
+        HLS.setList(habitTypes);
         Intent createHabitEvent = new Intent(HabitTypeDetailsActivity.this, CreateHabitEventActivity.class);
         createHabitEvent.putExtra("passedUser", gson.toJson(loggedInUser));
-        createHabitEvent.putExtra("passedHabitType", gson.toJson(habit));
+        createHabitEvent.putExtra("passedPos", Integer.toString(position));
+        createHabitEvent.putExtra("passedHList", gson.toJson(HLS));
         finish();
         startActivity(createHabitEvent);
     }

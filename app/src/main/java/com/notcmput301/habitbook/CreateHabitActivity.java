@@ -1,9 +1,15 @@
 package com.notcmput301.habitbook;
 
 import android.app.DatePickerDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.ConnectivityManager;
+import android.support.design.widget.Snackbar;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,7 +20,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -22,23 +30,37 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import static com.notcmput301.habitbook.NetworkStateChangeReceiver.IS_NETWORK_AVAILABLE;
+
 public class CreateHabitActivity extends AppCompatActivity {
     private User loggedInUser;
+    private HabitListStore HLS;
+    private ArrayList<HabitType> habitTypes;
+
+
     private ArrayList<Boolean> weekdays;
     private Date startdate = new Date();
     private String title;
     private String reason;
     private Gson gson = new Gson();
     private DatePickerDialog.OnDateSetListener dlistener;
-
+    private NetworkHandler nH;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_habit);
         Intent receiver = getIntent();
+
         String u = receiver.getExtras().getString("passedUser");
+        String l = receiver.getExtras().getString("passedHList");
+
         this.loggedInUser = gson.fromJson(u, User.class);
+        this.HLS = gson.fromJson(l, HabitListStore.class);
+        this.habitTypes=HLS.getList();
+
+
+
         dlistener = new DatePickerDialog.OnDateSetListener(){
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
@@ -52,7 +74,17 @@ public class CreateHabitActivity extends AppCompatActivity {
                 Log.e("MONTH", month+"");
             }
         };
+
+        //get our network handler
+        nH = new NetworkHandler(this);
+
+        //Checks if Network Connection is detected.
+        BroadcastReceiver br = new NetworkStateChangeReceiver();
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        filter.addAction(IS_NETWORK_AVAILABLE);
+        this.registerReceiver(br, filter);
     }
+
 
     public void CHTCreate(View view){
 
@@ -68,7 +100,6 @@ public class CreateHabitActivity extends AppCompatActivity {
 
         title = titleE.getText().toString().trim().replaceAll("\\s+", " ");
         reason = reasonE.getText().toString();
-//        String startdate = startdateE.getText().toString();
 
         weekdays = new ArrayList<>();
         weekdays.add(mE.isChecked()); weekdays.add(tE.isChecked()); weekdays.add(wE.isChecked());
@@ -79,53 +110,41 @@ public class CreateHabitActivity extends AppCompatActivity {
             Toast.makeText(this, "Some fields are not filled out!", Toast.LENGTH_SHORT).show();
             return;
         }
-
         if (!weekdays.contains(true)){
             Toast.makeText(this, "At least one day has to be checked", Toast.LENGTH_SHORT).show();
             return;
         }
-
         if (title.length() > 20){
             Toast.makeText(this, "Habit Title can't be longer than 20 characters", Toast.LENGTH_SHORT).show();
             return;
         }
-
         if (reason.length() > 20){
             Toast.makeText(this, "Habit Reason can't be longer than 30 characters", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        ElasticSearch.habitTypeExists hte = new ElasticSearch.habitTypeExists();
-        hte.execute(loggedInUser.getUsername(), title);
-        try{
-            int success = hte.get();
-            if (success < 0){
-                Toast.makeText(this, "Opps, Something went wrong on our end", Toast.LENGTH_SHORT).show();
-                return;
-            }if (success > 0){
-                Toast.makeText(this, "Habit Type Title has to be unique!", Toast.LENGTH_SHORT).show();
-                return;
-            }
-        }catch(Exception e){
-            Log.e("get failure", "Failed to retrieve");
-            e.printStackTrace();
-        }
+        HabitType newHabit = new HabitType(loggedInUser.getUsername(), title, reason, this.startdate, this.weekdays);
+        habitTypes.add(newHabit);
+        HLS.setList(habitTypes);
 
-        HabitType newHabit = new HabitType(loggedInUser, title, reason, this.startdate, this.weekdays);
-        ElasticSearch.addHabitType aht = new ElasticSearch.addHabitType();
-        aht.execute(newHabit);
-        try{
-            boolean success = aht.get();
-            if (!success){
-                Toast.makeText(this, "Opps, Something went wrong on our end", Toast.LENGTH_SHORT).show();
-            }else{
-                Toast.makeText(this, "Added Habit Type!", Toast.LENGTH_SHORT).show();
-                finish();
-            }
-        }catch(Exception e){
-            Log.e("get failure", "Failed to retrieve");
-            e.printStackTrace();
+        //check network availability
+        if(nH.isNetworkAvailable()){
+            if(nH.verifyExistance(title)==false){ back(); return;}
+            nH.addHabitType(newHabit);
+            finish();
+        }else{
+            nH.putString("a", gson.toJson(newHabit));
+            finish();
         }
+        back();
+    }
+
+    public void back(){
+        Intent habitList = new Intent(CreateHabitActivity.this, HabitTypeList2.class);
+
+        habitList.putExtra("passedUser", gson.toJson(loggedInUser));
+        habitList.putExtra("passedHList", gson.toJson(HLS));
+        startActivity(habitList);
     }
 
     public void CHTCalendar(View view){

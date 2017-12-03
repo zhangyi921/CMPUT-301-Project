@@ -1,7 +1,11 @@
 package com.notcmput301.habitbook;
 
+import android.content.BroadcastReceiver;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.support.design.widget.BaseTransientBottomBar;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.view.View;
@@ -14,21 +18,39 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+
+import static com.notcmput301.habitbook.NetworkStateChangeReceiver.IS_NETWORK_AVAILABLE;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private User loggedInUser;
+    private HabitListStore HLS;
+    private ArrayList<HabitType> habitTypes;
+
     private Gson gson = new Gson();
+    private NetworkHandler nH;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Intent receiver = getIntent();
+
         String u = receiver.getExtras().getString("passedUser");
+        String l = receiver.getExtras().getString("passedHList");
+
         this.loggedInUser = gson.fromJson(u, User.class);
+        this.HLS = gson.fromJson(l, HabitListStore.class);
+        this.habitTypes = HLS.getList();
+
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -56,6 +78,15 @@ public class MainActivity extends AppCompatActivity
         TextView navName = (TextView) headerview.findViewById(R.id.MNavH_Name);
         navName.setText(loggedInUser.getUsername());
         navigationView.setNavigationItemSelectedListener(this);
+
+        //get our network handler
+        nH = new NetworkHandler(this);
+
+        //Checks if Network Connection is detected.
+        BroadcastReceiver br = new NetworkStateChangeReceiver();
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        filter.addAction(IS_NETWORK_AVAILABLE);
+        this.registerReceiver(br, filter);
     }
 
     @Override
@@ -99,22 +130,31 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.habit_type) {
             // Handle the camera action
             Intent habitType = new Intent(MainActivity.this, HabitTypeList2.class);
+
             habitType.putExtra("passedUser", gson.toJson(loggedInUser));
+            habitType.putExtra("passedHList", gson.toJson(HLS));
+
             finish();
             startActivity(habitType);
         } else if (id == R.id.today_habit) {
 
         } else if (id == R.id.habit_event_history) {
             Intent habitEventHistory = new Intent(MainActivity.this, HabitEventHistory2.class);
+
             habitEventHistory.putExtra("passedUser", gson.toJson(loggedInUser));
+            habitEventHistory.putExtra("passedHList", gson.toJson(HLS));
+
             finish();
             startActivity(habitEventHistory);
         } else if (id == R.id.online) {
-            Intent online = new Intent(MainActivity.this, Online.class);
-            online.putExtra("passedUser", gson.toJson(loggedInUser));
-            finish();
-            startActivity(online);
-
+            if(!nH.isNetworkAvailable()){
+                Toast.makeText(this, "Content Not accessible without internet", Toast.LENGTH_LONG).show();
+            }else{
+                Intent online = new Intent(MainActivity.this, Online.class);
+                online.putExtra("passedUser", gson.toJson(loggedInUser));
+                finish();
+                startActivity(online);
+            }
         } else if (id == R.id.logout) {
             finish();
 

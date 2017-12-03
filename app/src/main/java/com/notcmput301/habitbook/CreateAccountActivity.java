@@ -12,16 +12,26 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
+
 public class CreateAccountActivity extends AppCompatActivity {
     private Gson gson = new Gson();
+    private HabitListStore HLS;
+    private NetworkHandler nH;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_account);
+        nH = new NetworkHandler(this);
+        HLS = new HabitListStore(new ArrayList<HabitType>());
     }
 
     public void caCreate(View view){
+        if (!nH.isNetworkAvailable()){
+            Toast.makeText(this, "Internet Connection needed", Toast.LENGTH_LONG).show();
+            return;
+        }
         EditText usernameEt = (EditText) findViewById(R.id.createAccount_Username);
         EditText passwordEt = (EditText) findViewById(R.id.createAccount_password);
         EditText passwordREt = (EditText) findViewById(R.id.createAccount_passwordR);
@@ -75,8 +85,12 @@ public class CreateAccountActivity extends AppCompatActivity {
                 return;
             }else {
                 Toast.makeText(this, "Welcome!", Toast.LENGTH_LONG).show();
+
+                nH.resetPref(); //I clear on purpose. This means if the user logged out...gg
+
                 Intent mainmenu = new Intent(CreateAccountActivity.this, MainActivity.class);
                 mainmenu.putExtra("passedUser", gson.toJson(u));
+                mainmenu.putExtra("passedHList", gson.toJson(HLS));
                 startActivity(mainmenu);
                 return;
             }

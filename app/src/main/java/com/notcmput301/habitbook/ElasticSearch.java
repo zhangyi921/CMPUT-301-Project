@@ -27,6 +27,8 @@ public class ElasticSearch {
     private static JestDroidClient client;
     protected static String db = "t28test9";    //DATABASE
 
+    //-------------------_FOR USERS_-------------------------------
+
     /**
      * Used for verifying login, returns 2 if fault
      */
@@ -128,6 +130,8 @@ public class ElasticSearch {
         }
     }
 
+    //----------------------------FOR HABIT TYPES------------------------------------
+
     /**
      * Check if habit type NAME is unique
      */
@@ -168,6 +172,37 @@ public class ElasticSearch {
     }
 
     /**
+     * Gets a habit type
+     */
+    /**
+     * Check if habit type NAME is unique
+     */
+    public static class getHabitType extends  AsyncTask<String, Void, HabitType>{
+
+        @Override
+        public HabitType doInBackground(String... s) {
+            verifySettings();
+            String ownername = s[0];
+            String title = s[1];
+            String jsonQuery = "{ \"query\": {\"bool\": {\"must\": [{\"match\": {\"ownername\": \"" + ownername + "\"}},{\"match\": {\"title\": \"" +title+"\"}}]}}}";
+            Search search = new Search.Builder(jsonQuery).addIndex(db).addType("habittype").build();
+            try {
+                SearchResult result = client.execute(search);
+                if (result.isSucceeded()) {
+                    HabitType test = result.getSourceAsObject(HabitType.class);
+                    return test;
+                }else{
+                    return null;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.e("Failed Q", "Search broke");
+                return null;
+            }
+        }
+    }
+
+    /**
      * Used to add HabitType to database. Returns false on fail
      */
     public static class addHabitType extends AsyncTask<HabitType, Void, Boolean>{
@@ -193,6 +228,57 @@ public class ElasticSearch {
             return false;
         }
     }
+
+    /**
+     * Used to return list of habitTypes
+     */
+    public static class getHabitTypeList extends AsyncTask<String, Void, ArrayList<HabitType>>{
+
+        @Override
+        public ArrayList<HabitType> doInBackground(String... s) {
+            verifySettings();
+            ArrayList<HabitType> resultArr = new ArrayList<>();
+            if (s.length != 1) {
+                Log.e("Bad input", "expected 1 String");
+                return null;
+            }
+            String username = s[0];
+            String jsonQuery = "{ \"size\": 10000, \"query\": {\"match\": {\"ownername\": \"" + username + "\"}}}";
+            Search search = new Search.Builder(jsonQuery).addIndex(db).addType("habittype").build();            //potential issue here where match will amtch other owner name.
+
+            try {
+                SearchResult result = client.execute(search);
+                if (result.isSucceeded()) {
+                    List<HabitType> found = result.getSourceAsObjectList(HabitType.class);
+                    resultArr.addAll(found);
+                    return resultArr;
+                }
+            } catch (Exception e) {
+                Log.e("Failed Q", "Search broke");
+                return null;
+            }
+            return null;
+        }
+    }
+
+    /**
+     * Deletes a habit type
+     */
+    public static class deleteHabitType extends AsyncTask<String, Void, Boolean>{
+
+        @Override
+        public Boolean doInBackground(String... s){
+            String ownername = s[0];
+            String title = s[1];
+            String jsonQuery = "{\"query\": {\"bool\": {\"must\": [{\"match\": {\"ownername\": \"" + ownername + "\"}},{\"match\": {\"title\": \"" +title+"\"}}]}}}";
+            String jestId = getJestId(jsonQuery, "habittype");
+            if (deleteItem(jestId, "habittype")) return true;
+            return false;
+        }
+    }
+
+    //-------------------------FOR FOLLOWERS-------------------------------------------
+
 
     /**
      * adds a follower  NOTE* I think
@@ -296,55 +382,8 @@ public class ElasticSearch {
         }
     }
 
-    /**
-     * Used to return list of habitTypes
-     */
-    public static class getHabitTypeList extends AsyncTask<String, Void, ArrayList<HabitType>>{
 
-        @Override
-        public ArrayList<HabitType> doInBackground(String... s) {
-            verifySettings();
-            ArrayList<HabitType> resultArr = new ArrayList<>();
-            if (s.length != 1) {
-                Log.e("Bad input", "expected 1 String");
-                return null;
-            }
-            String username = s[0];
-            String jsonQuery = "{ \"size\": 10000, \"query\": {\"match\": {\"ownername\": \"" + username + "\"}}}";
-            Search search = new Search.Builder(jsonQuery).addIndex(db).addType("habittype").build();            //potential issue here where match will amtch other owner name.
-
-            try {
-                SearchResult result = client.execute(search);
-                if (result.isSucceeded()) {
-                    List<HabitType> found = result.getSourceAsObjectList(HabitType.class);
-                    resultArr.addAll(found);
-                    return resultArr;
-                }
-            } catch (Exception e) {
-                Log.e("Failed Q", "Search broke");
-                return null;
-            }
-            return null;
-        }
-    }
-
-
-    /**
-     * Deletes a habit type
-     */
-    public static class deleteHabitType extends AsyncTask<String, Void, Boolean>{
-
-        @Override
-        public Boolean doInBackground(String... s){
-            String ownername = s[0];
-            String title = s[1];
-            String jsonQuery = "{\"query\": {\"bool\": {\"must\": [{\"match\": {\"ownername\": \"" + ownername + "\"}},{\"match\": {\"title\": \"" +title+"\"}}]}}}";
-            String jestId = getJestId(jsonQuery, "habittype");
-            if (deleteItem(jestId, "habittype")) return true;
-            return false;
-        }
-    }
-
+    //-------------------------------HELPERS---------------------------------------
 
     /**
      * Method retrieves the jestId provided seary query is correct

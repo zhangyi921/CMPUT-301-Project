@@ -1,8 +1,10 @@
 package com.notcmput301.habitbook;
 
 import android.Manifest;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -12,8 +14,8 @@ import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.ConnectivityManager;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.provider.MediaStore;
 import android.provider.Settings;
@@ -23,11 +25,9 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -36,17 +36,25 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
+import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import id.zelory.compressor.Compressor;
 
+import static com.notcmput301.habitbook.NetworkStateChangeReceiver.IS_NETWORK_AVAILABLE;
+
 public class CreateHabitEventActivity extends AppCompatActivity {
     private static final int RESULT_LOAD_IMAGE = 6138;
-    private User loggedInUser;
+
     private HabitType habit;
+    private User loggedInUser;
+    private HabitListStore HLS;
+    private ArrayList<HabitType> habitTypes;
+    private int position;
+    private NetworkHandler nH;
+
+
     private EditText commentE;
     private Button addPicB;
     private Button createB;
@@ -64,17 +72,24 @@ public class CreateHabitEventActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_habit_event);
+
+
         Intent receiver = getIntent();
         String u = receiver.getExtras().getString("passedUser");
-        String h = receiver.getExtras().getString("passedHabitType");
-        loggedInUser = gson.fromJson(u, User.class);
-        habit = gson.fromJson(h, HabitType.class);
-        commentE = (EditText) findViewById(R.id.CHE_Comment);
+        String l = receiver.getExtras().getString("passedHList");
+        this. position = Integer.parseInt(receiver.getExtras().getString("passedPos"));
+        this.loggedInUser = gson.fromJson(u, User.class);
+        this.HLS = gson.fromJson(l, HabitListStore.class);
+        this.habitTypes = HLS.getList();
+        this.habit = habitTypes.get(position);
+        nH = new NetworkHandler(this);
+
+        commentE = (EditText) findViewById(R.id.HED_Comment);
         addPicB = (Button) findViewById(R.id.CHE_AddPhoto);
         createB = (Button) findViewById(R.id.CHE_Create);
         backB = (Button) findViewById(R.id.CHE_Back);
         location = (Button) findViewById(R.id.location);
-        imageV = (CircleImageView) findViewById(R.id.CHE_Image);
+        imageV = (CircleImageView) findViewById(R.id.HED_Image);
         setDefaultimg();
 
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
@@ -109,19 +124,15 @@ public class CreateHabitEventActivity extends AppCompatActivity {
             }
         };
 
+        //Checks if Network Connection is detected.
+        BroadcastReceiver br = new NetworkStateChangeReceiver();
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        filter.addAction(IS_NETWORK_AVAILABLE);
+        this.registerReceiver(br, filter);
+
         configure_button();
     }
 
-/*    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode){
-            case 10:
-                configure_button();
-                break;
-            default:
-                break;
-        }
-    }*/
 
 
     void configure_button(){
@@ -147,55 +158,39 @@ public class CreateHabitEventActivity extends AppCompatActivity {
 
 
 
-
-
     public void CreateEvent(View view){
 
-        ElasticSearch.deleteHabitType delHT = new ElasticSearch.deleteHabitType();
-        delHT.execute(loggedInUser.getUsername(), habit.getTitle());
-        try{
-            boolean result = delHT.get();
-            if (result){
-                //Toast.makeText(this, "deleted item!", Toast.LENGTH_SHORT).show();
-                finish();
-            }else{
-                Toast.makeText(this, "Failed to delete", Toast.LENGTH_SHORT).show();
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-            Toast.makeText(this, "Failed to delete", Toast.LENGTH_SHORT).show();
+        String comment = commentE.getText().toString();
+        if (comment.length() > 20){
+            Toast.makeText(this, "comment should be less than 20 characters", Toast.LENGTH_SHORT).show();
+            return;
         }
 
-        HabitEvent habitEvent = new HabitEvent(habit.getTitle(), commentE.getText().toString());
-
+        HabitEvent habitEvent = new HabitEvent(habit.getTitle(),comment);
         if (currentlocation != null && b64img == null)
         {
-            habitEvent = new HabitEvent(habit.getTitle(), commentE.getText().toString(), currentlocation.getLatitude(), currentlocation.getLongitude());
+            habitEvent = new HabitEvent(habit.getTitle(), comment, currentlocation.getLatitude(), currentlocation.getLongitude());
         }
         else if (b64img != null && currentlocation == null){
-            habitEvent = new HabitEvent(habit.getTitle(), commentE.getText().toString(), b64img);
+            habitEvent = new HabitEvent(habit.getTitle(), comment, b64img);
 
         }
         else if (currentlocation != null && b64img != null){
-            habitEvent = new HabitEvent(habit.getTitle(), commentE.getText().toString(), b64img,currentlocation.getLatitude(), currentlocation.getLongitude());
+            habitEvent = new HabitEvent(habit.getTitle(), comment, b64img,currentlocation.getLatitude(), currentlocation.getLongitude());
         }
-        habit.addHabitEvent(habitEvent);
-        ElasticSearch.addHabitType aht = new ElasticSearch.addHabitType();
-        aht.execute(habit);
-        try{
-            boolean success = aht.get();
-            if (!success){
-                Toast.makeText(this, "Opps, Something went wrong on our end", Toast.LENGTH_SHORT).show();
-            }else{
 
-                Toast.makeText(this, "habit event added! ", Toast.LENGTH_SHORT).show();
-                finish();
-                return;
-            }
-        }catch(Exception e){
-            Log.e("get failure", "Failed to retrieve");
-            e.printStackTrace();
+        if (nH.isNetworkAvailable()){
+            nH.deleteHabitType(habit);
+            habit.addHabitEvent(habitEvent);
+            nH.addHabitType(habit);
+        }else{
+            nH.putString("d", gson.toJson(habit));
+            habit.addHabitEvent(habitEvent);
+            nH.putString("au", gson.toJson(habit));
         }
+        habitTypes.set(position, habit);
+        HLS.setList(habitTypes);
+        back();
         finish();
     }
 
@@ -224,11 +219,18 @@ public class CreateHabitEventActivity extends AppCompatActivity {
         requestPermision();
     }
 
+
+    public void back(){
+        Intent habitTypeDetail = new Intent(CreateHabitEventActivity.this, HabitTypeDetailsActivity.class);
+        habitTypeDetail.putExtra("passedUser", gson.toJson(loggedInUser));
+        habitTypeDetail.putExtra("passedHList", gson.toJson(HLS));
+        habitTypeDetail.putExtra("passedPos", Integer.toString(position));
+        startActivity(habitTypeDetail);
+    }
+
     public void back(View view){
-        Intent habittypelist = new Intent(CreateHabitEventActivity.this, HabitTypeList2.class);
-        habittypelist.putExtra("passedUser", gson.toJson(loggedInUser));
+        back();
         finish();
-        startActivity(habittypelist);
     }
 
     public void loadImage(){
