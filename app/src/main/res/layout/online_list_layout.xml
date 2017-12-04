@@ -10,27 +10,39 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:background="@drawable/softedge"
+        android:layout_marginTop="15dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/eventImg"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:src="@drawable/photoicon"
         app:civ_border_color="#FFFFFF"
         app:civ_border_width="2dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginStart="17dp"
+        android:layout_alignBottom="@+id/textView3"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="16dp" />
 
     <TextView
         android:id="@+id/OLIST_Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="12dp"
-        android:layout_toEndOf="@+id/eventImg"
+        android:layout_marginStart="20dp"
         android:text="TextView"
         android:textColor="@color/colorAccent"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:layout_alignTop="@+id/eventImg"
+        android:layout_toEndOf="@+id/eventImg" />
 
     <TextView
         android:id="@+id/OLIST_Name"
@@ -45,7 +57,7 @@
         android:id="@+id/OLIST_Date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="17dp"
         android:text="TextView"
         android:textSize="20sp"
         android:layout_alignBaseline="@+id/OLIST_Title"
@@ -55,10 +67,11 @@
     <Button
         android:id="@+id/likeButton"
         style="@style/Widget.AppCompat.Button.Borderless.Colored"
-        android:layout_width="wrap_content"
+        android:layout_width="50sp"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/OLIST_Date"
+        android:text="like"
+        android:textSize="10sp"
         android:layout_below="@+id/OLIST_Date"
-        android:text="like" />
+        android:layout_alignEnd="@+id/OLIST_Date" />
 
 </RelativeLayout>

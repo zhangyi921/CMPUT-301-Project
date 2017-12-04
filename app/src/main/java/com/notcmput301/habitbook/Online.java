@@ -40,6 +40,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class Online extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private User loggedInUser;
+    private HabitListStore HLS;
+
     private Gson gson = new Gson();
     private ArrayList<HabitEvent> eventlist = new ArrayList<>();
     private Map<Integer, String> monthMap = new HashMap<Integer, String>();
@@ -50,7 +52,9 @@ public class Online extends AppCompatActivity
         setContentView(R.layout.activity_online);
         Intent receiver = getIntent();
         String u = receiver.getExtras().getString("passedUser");
+        String l = receiver.getExtras().getString("passedHList");
         this.loggedInUser = gson.fromJson(u, User.class);
+        this.HLS = gson.fromJson(l, HabitListStore.class);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -70,6 +74,7 @@ public class Online extends AppCompatActivity
 //                        .setAction("Action", null).show();
                 Intent followerRequestActivity = new Intent(Online.this, FollowerRequestsActivity.class);
                 followerRequestActivity.putExtra("passedUser", gson.toJson(loggedInUser));
+                followerRequestActivity.putExtra("passedHList", gson.toJson(HLS));
                 startActivity(followerRequestActivity);
             }
         });
@@ -80,6 +85,7 @@ public class Online extends AppCompatActivity
             public void onClick(View view) {
                 Intent map = new Intent(Online.this, MapsActivity.class);
                 map.putExtra("events", gson.toJson(eventlist));
+                map.putExtra("passedHList", gson.toJson(HLS));
                 startActivity(map);
             }
         });
@@ -382,26 +388,31 @@ public class Online extends AppCompatActivity
         if (id == R.id.habit_type) {
             Intent habitType = new Intent(Online.this, HabitTypeList2.class);
             habitType.putExtra("passedUser", gson.toJson(loggedInUser));
-            finish();
+            habitType.putExtra("passedHList", gson.toJson(HLS));
             startActivity(habitType);
+            finish();
 
         } else if (id == R.id.today_habit) {
 
             Intent habitType = new Intent(Online.this, MainActivity.class);
             habitType.putExtra("passedUser", gson.toJson(loggedInUser));
+            habitType.putExtra("passedHList", gson.toJson(HLS));
             finish();
             startActivity(habitType);
+
         } else if (id == R.id.habit_event_history) {
 
-            Intent online = new Intent(Online.this, HabitEventHistory2.class);
-            online.putExtra("passedUser", gson.toJson(loggedInUser));
+            Intent history = new Intent(Online.this, HabitEventHistory2.class);
+            history.putExtra("passedUser", gson.toJson(loggedInUser));
+            history.putExtra("passedHList", gson.toJson(HLS));
             finish();
-            startActivity(online);
+            startActivity(history);
         } else if (id == R.id.online) {
 
         } else if (id == R.id.logout) {
+            Intent logout = new Intent(Online.this, LoginActivity.class);
+            startActivity(logout);
             finish();
-
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

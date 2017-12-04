@@ -229,6 +229,28 @@ public class NetworkHandler {
         }
     }
 
+    /**
+     * Gets a list of habit types
+     * @param owner
+     * @return
+     */
+    public ArrayList<HabitType> getHabitList(String owner){
+        ArrayList<HabitType> habitTypes;
+        ElasticSearch.getHabitTypeList ghtl = new ElasticSearch.getHabitTypeList();
+        ghtl.execute(owner);
+        try {
+            habitTypes = ghtl.get();
+            if (habitTypes==null){
+                return new ArrayList<>();
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+            Toast.makeText(context, "Failed to retrieve items. Check connection", Toast.LENGTH_SHORT).show();
+            return new ArrayList<>();
+        }
+        return habitTypes;
+    }
+
 
     /**
      *The process of update HabitType is delete the old, and add new

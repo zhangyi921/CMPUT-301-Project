@@ -29,11 +29,14 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -42,6 +45,10 @@ public class MainActivity extends AppCompatActivity
     private ArrayAdapter<HabitType> Adapter;
     private HabitListStore HLS;
     private ArrayList<HabitType> habitTypes;
+
+    //position map
+    private ArrayList<HabitType> todayHabits;
+    private Map<String, Integer> positionMap = new HashMap<>();
 
     private Gson gson = new Gson();
     private NetworkHandler nH;
@@ -56,8 +63,6 @@ public class MainActivity extends AppCompatActivity
         String l = receiver.getExtras().getString("passedHList");
 
         this.loggedInUser = gson.fromJson(u, User.class);
-        fillList();
-
         this.HLS = gson.fromJson(l, HabitListStore.class);
         this.habitTypes = HLS.getList();
 
@@ -96,6 +101,8 @@ public class MainActivity extends AppCompatActivity
         BroadcastReceiver br = new NetworkStateChangeReceiver();
         IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
         this.registerReceiver(br, filter);
+
+        fillList();
     }
 
     @Override
@@ -161,12 +168,13 @@ public class MainActivity extends AppCompatActivity
             }else{
                 Intent online = new Intent(MainActivity.this, Online.class);
                 online.putExtra("passedUser", gson.toJson(loggedInUser));
+                online.putExtra("passedHList", gson.toJson(HLS));
                 finish();
                 startActivity(online);
             }
         } else if (id == R.id.logout) {
-            finish();
-
+            Intent logout = new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(logout);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -175,53 +183,83 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void fillList(){
+        this.todayHabits = new ArrayList<>();
+
         ListView habitlist = (ListView) findViewById(R.id.TodayHabitList);
-        ElasticSearch.getHabitTypeList ghtl = new ElasticSearch.getHabitTypeList();
-        ghtl.execute(loggedInUser.getUsername());
-        try {
-            habitTypes = ghtl.get();
-            if (habitTypes==null){
-                habitTypes = new ArrayList<>();
-            }
 
-            Calendar calendar = Calendar.getInstance();
-            int day = calendar.get(Calendar.DAY_OF_WEEK);
-            Date currentDate = new Date();
-
-            for(int i = 0; i<habitTypes.size(); i++){
-                HabitType habit = habitTypes.get(i);
-                ArrayList<Boolean> days = habit.getWeekdays();
-                Date startDate = habit.getStartDate();
-                if(!days.get(day-1)){
-                    habitTypes.remove(habit);
-                    i--;
-                }
-                else if(startDate.after(currentDate)){
-                    habitTypes.remove(habit);
-                    i--;
-                }
-                else {
-                    ArrayList<HabitEvent> events = habit.getEvents();
-                    for(int j = 0; j < events.size(); j++) {
-                        HabitEvent event = events.get(j);
-                        Date eventDate = event.getDate();
-                        Calendar cal1 = Calendar.getInstance();
-                        Calendar cal2 = Calendar.getInstance();
-                        cal1.setTime(currentDate);
-                        cal2.setTime(eventDate);
-                        if (cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) &&
-                                cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR)) {
-                            habitTypes.remove(habit);
-                            i--;
-                        }
-                    }
-                }
-            }
-            //loggedInUser.setHabitTypes(habitTypes);       //causes program to crash
-        }catch(Exception e){
-            e.printStackTrace();
-            Toast.makeText(this, "Failed to retrieve items. Check connection", Toast.LENGTH_SHORT).show();
+        if (nH.isNetworkAvailable() && habitTypes.size() == 0){
+            habitTypes = nH.getHabitList(loggedInUser.getUsername());
+            HLS.setList(habitTypes);
         }
+
+        for (int i = 0; i < habitTypes.size(); i++){
+            HabitType hT = habitTypes.get(i);
+
+            //calculate if it is the days is before today
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+            Date today = new Date();
+            if(sdf.format(hT.getStartDate()).compareTo(sdf.format(today)) <= 0){
+                //if habit type date is today or before today. We need the weekdayws
+                Calendar cal = Calendar.getInstance();
+//                Toast.makeText(this, cal.get(Calendar.DAY_OF_WEEK) + " ", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, hT.getWeekdays().toString() + " ", Toast.LENGTH_SHORT).show();=
+                int index = (cal.get(Calendar.DAY_OF_WEEK)+5)%7;
+                //if there is no habit event today and no week day == today is checked off
+                boolean isComleted = false;
+                for (HabitEvent hE: hT.getEvents()){
+                    if(sdf.format(hE.getDate()).equals(sdf.format(today))) {isComleted = true; break;}
+                }
+                if (hT.getWeekdays().get(index) && !isComleted){
+                    todayHabits.add(hT);
+                    positionMap.put(hT.getTitle(), i);
+                }
+            }
+        }
+
+//        try {
+//            habitTypes = ghtl.get();
+//            if (habitTypes==null){
+//                habitTypes = new ArrayList<>();
+//            }
+//
+//            Calendar calendar = Calendar.getInstance();
+//            int day = calendar.get(Calendar.DAY_OF_WEEK);
+//            Date currentDate = new Date();
+//
+//            for(int i = 0; i<habitTypes.size(); i++){
+//                HabitType habit = habitTypes.get(i);
+//                ArrayList<Boolean> days = habit.getWeekdays();
+//                Date startDate = habit.getStartDate();
+//                if(!days.get(day-1)){
+//                    habitTypes.remove(habit);
+//                    i--;
+//                }
+//                else if(startDate.after(currentDate)){
+//                    habitTypes.remove(habit);
+//                    i--;
+//                }
+//                else {
+//                    ArrayList<HabitEvent> events = habit.getEvents();
+//                    for(int j = 0; j < events.size(); j++) {
+//                        HabitEvent event = events.get(j);
+//                        Date eventDate = event.getDate();
+//                        Calendar cal1 = Calendar.getInstance();
+//                        Calendar cal2 = Calendar.getInstance();
+//                        cal1.setTime(currentDate);
+//                        cal2.setTime(eventDate);
+//                        if (cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) &&
+//                                cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR)) {
+//                            habitTypes.remove(habit);
+//                            i--;
+//                        }
+//                    }
+//                }
+//            }
+//            //loggedInUser.setHabitTypes(habitTypes);       //causes program to crash
+//        }catch(Exception e){
+//            e.printStackTrace();
+//            Toast.makeText(this, "Failed to retrieve items. Check connection", Toast.LENGTH_SHORT).show();
+//        }
         
         MainActivity.HabitTypeAdapter hAdapter = new MainActivity.HabitTypeAdapter();
         habitlist.setAdapter(hAdapter);
@@ -229,9 +267,11 @@ public class MainActivity extends AppCompatActivity
         habitlist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                int hListPos = positionMap.get(todayHabits.get(position).getTitle());
                 Intent habitdetail = new Intent(MainActivity.this, HabitTypeDetailsActivity.class);
                 habitdetail.putExtra("passedUser", gson.toJson(loggedInUser));
-                habitdetail.putExtra("passedHabitType", gson.toJson(habitTypes.get(position)));
+                habitdetail.putExtra("passedPos", hListPos+"");
+                habitdetail.putExtra("passedHList", gson.toJson(HLS));
                 startActivity(habitdetail);
             }
         });
@@ -258,7 +298,7 @@ public class MainActivity extends AppCompatActivity
 
         @Override
         public int getCount() {
-            return habitTypes.size();
+            return todayHabits.size();
         }
 
         @Override
@@ -273,14 +313,12 @@ public class MainActivity extends AppCompatActivity
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            convertView = getLayoutInflater().inflate(R.layout.habit_type_list_layout, null);
-            TextView titleL = (TextView) convertView.findViewById(R.id.HTLIST_Title);
-            TextView descriptionL = (TextView) convertView.findViewById(R.id.HTLIST_Description);
-            TextView NumEvents = (TextView) convertView.findViewById(R.id.NumEvents);
+            convertView = getLayoutInflater().inflate(R.layout.todays_habit_layout, null);
+            TextView titleL = (TextView) convertView.findViewById(R.id.THL_Title);
+            TextView descriptionL = (TextView) convertView.findViewById(R.id.THL_Comment);
 
-            NumEvents.setText("Number of total events: "+habitTypes.get(position).getTotalEvents().toString());
-            titleL.setText(habitTypes.get(position).getTitle());
-            descriptionL.setText(habitTypes.get(position).getReason());
+            titleL.setText(todayHabits.get(position).getTitle());
+            descriptionL.setText(todayHabits.get(position).getReason());
             return convertView;
         }
     }

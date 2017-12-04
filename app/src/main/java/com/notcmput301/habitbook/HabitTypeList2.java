@@ -141,12 +141,11 @@ public class HabitTypeList2 extends AppCompatActivity
         if (id == R.id.habit_type) {
 
         } else if (id == R.id.today_habit) {
-
-            Intent todayHabit = new Intent(HabitTypeList2.this, TodaysHabitActivity.class);
+            HLS.setList(habitTypes);
+            Intent todayHabit = new Intent(HabitTypeList2.this, MainActivity.class);
             todayHabit.putExtra("passedUser", gson.toJson(loggedInUser));
-            finish();
+            todayHabit.putExtra("passedHList", gson.toJson(HLS));
             startActivity(todayHabit);
-
 
         } else if (id == R.id.habit_event_history) {
 
@@ -161,13 +160,16 @@ public class HabitTypeList2 extends AppCompatActivity
             if(!nH.isNetworkAvailable()){
                 Toast.makeText(this, "Content Not accessible without internet", Toast.LENGTH_LONG).show();
             }else{
+                HLS.setList(habitTypes);
                 Intent online = new Intent(HabitTypeList2.this, Online.class);
                 online.putExtra("passedUser", gson.toJson(loggedInUser));
+                online.putExtra("passedHList", gson.toJson(HLS));
                 finish();
                 startActivity(online);
             }
         } else if (id == R.id.logout) {
-            finish();
+            Intent logout = new Intent(HabitTypeList2.this, LoginActivity.class);
+            startActivity(logout);
 
         }
 
@@ -178,24 +180,12 @@ public class HabitTypeList2 extends AppCompatActivity
 
     public void fillList(){
         ListView habitlist = (ListView) findViewById(R.id.HabitList);
-        if(nH.isNetworkAvailable()){
-            ElasticSearch.getHabitTypeList ghtl = new ElasticSearch.getHabitTypeList();
-            ghtl.execute(loggedInUser.getUsername());
-            try {
-                habitTypes = ghtl.get();
-                if (habitTypes==null){
-                    habitTypes = new ArrayList<>();
-                }
-
-            }catch(Exception e){
-                e.printStackTrace();
-                Toast.makeText(this, "Failed to retrieve items. Check connection", Toast.LENGTH_SHORT).show();
-            }
-        }else{
+        if(nH.isNetworkAvailable() && habitTypes.size()==0){
+            habitTypes = nH.getHabitList(loggedInUser.getUsername());
+            HLS.setList(habitTypes);
+        }else if (!nH.isNetworkAvailable()){
             Toast.makeText(this, "You are Offline", Toast.LENGTH_SHORT).show();
         }
-
-        HLS.setList(habitTypes);
 
         //TODO implement list
         HabitTypeList2.HabitTypeAdapter hAdapter = new HabitTypeList2.HabitTypeAdapter();

@@ -157,9 +157,12 @@ public class HabitEventHistory2 extends AppCompatActivity implements NavigationV
 
         } else if (id == R.id.today_habit) {
 
-            Intent todayHabit = new Intent(HabitEventHistory2.this, TodaysHabitActivity.class);
+
+
+            Intent todayHabit = new Intent(HabitEventHistory2.this, MainActivity.class);
             todayHabit.putExtra("passedUser", gson.toJson(loggedInUser));
-            finish();
+            todayHabit.putExtra("passedHList", gson.toJson(HLS));
+            //finish();
             startActivity(todayHabit);
         } else if (id == R.id.habit_event_history) {
 
@@ -168,14 +171,16 @@ public class HabitEventHistory2 extends AppCompatActivity implements NavigationV
             if(!nH.isNetworkAvailable()){
                 Toast.makeText(this, "Content Not accessible without internet", Toast.LENGTH_LONG).show();
             }else{
+                HLS.setList(habitTypes);
                 Intent online = new Intent(HabitEventHistory2.this, Online.class);
                 online.putExtra("passedUser", gson.toJson(loggedInUser));
+                online.putExtra("passedUser", gson.toJson(HLS));
                 finish();
                 startActivity(online);
             }
         } else if (id == R.id.logout) {
-            finish();
-
+            Intent logout = new Intent(HabitEventHistory2.this, LoginActivity.class);
+            startActivity(logout);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -199,21 +204,21 @@ public class HabitEventHistory2 extends AppCompatActivity implements NavigationV
     public void FillList(){
         ListView EventHistoryList = (ListView) findViewById(R.id.eventList);
 
-//        if (nH.isNetworkAvailable()){
-//            ElasticSearch.getHabitTypeList ghtl = new ElasticSearch.getHabitTypeList();
-//            ghtl.execute(loggedInUser.getUsername());
-//            try {
-//                habitTypes = ghtl.get();
-//                if (habitTypes==null){
-//                    habitTypes = new ArrayList<>();
-//                }
-//                //loggedInUser.setHabitTypes(habitTypes);       //causes program to crash
-//            }catch(Exception e){
-//                e.printStackTrace();
-//                Toast.makeText(this, "Failed to retrieve items. Check connection", Toast.LENGTH_SHORT).show();
-//            }
-//        }
-
+        if (habitTypes.size() < 1){
+            ElasticSearch.getHabitTypeList ghtl = new ElasticSearch.getHabitTypeList();
+            ghtl.execute(loggedInUser.getUsername());
+            try {
+                habitTypes = ghtl.get();
+                if (habitTypes==null){
+                    habitTypes = new ArrayList<>();
+                }
+                //loggedInUser.setHabitTypes(habitTypes);       //causes program to crash
+            }catch(Exception e){
+                e.printStackTrace();
+                Toast.makeText(this, "Failed to retrieve items. Check connection", Toast.LENGTH_SHORT).show();
+            }
+        }
+        HLS.setList(habitTypes);
         habitEvents.clear();
         for (HabitType h :habitTypes){
             ArrayList<HabitEvent> events = h.getEvents();
@@ -282,11 +287,11 @@ public class HabitEventHistory2 extends AppCompatActivity implements NavigationV
                     int boolIndex = tempCom.indexOf(comment);
 
                     if (boolIndex != -1) tempEvent.add(he);
-
                 }
             }
-
         }
+
+
         // If comment type is not filtered, add all events for each habitType in tempHt
         else {
             for (HabitType ht : tempHt) {
@@ -348,7 +353,7 @@ public class HabitEventHistory2 extends AppCompatActivity implements NavigationV
             Integer i = habitEvents.get(position).getLikes();
             likes.setText("Likes: "+i.toString());
             titleL.setText(habitEvents.get(position).getComment());
-            descriptionL.setText("hbit type:"+habitEvents.get(position).getHabit());
+            descriptionL.setText("habit type: "+habitEvents.get(position).getHabit());
             return convertView;
         }
     }

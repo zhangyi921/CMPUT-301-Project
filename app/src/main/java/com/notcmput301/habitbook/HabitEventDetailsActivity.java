@@ -72,21 +72,10 @@ public class HabitEventDetailsActivity extends AppCompatActivity {
             return;
         }
 
-//        if (nH.isNetworkAvailable()){
-//            ElasticSearch.getHabitTypeList ghtl = new ElasticSearch.getHabitTypeList();
-//            ghtl.execute(loggedInUser.getUsername());
-//            try {
-//                habitTypes = ghtl.get();
-//                if (habitTypes==null){
-//                    habitTypes = new ArrayList<>();
-//                }
-//                //loggedInUser.setHabitTypes(habitTypes);       //causes program to crash
-//            }catch(Exception e){
-//                e.printStackTrace();
-//                Toast.makeText(this, "Failed to retrieve items. Check connection", Toast.LENGTH_SHORT).show();
-//            }
-//        }
-//        HLS.setList(habitTypes);
+        if (nH.isNetworkAvailable() && habitTypes.size() == 0){
+            habitTypes = nH.getHabitList(loggedInUser.getUsername());
+            HLS.setList(habitTypes);
+        }
 
         for(int i=0; i < habitTypes.size(); i++){
 
@@ -122,20 +111,10 @@ public class HabitEventDetailsActivity extends AppCompatActivity {
 
     public void delete(View view){
 
-//        if (nH.isNetworkAvailable()){
-//            ElasticSearch.getHabitTypeList ghtl = new ElasticSearch.getHabitTypeList();
-//            ghtl.execute(loggedInUser.getUsername());
-//            try {
-//                habitTypes = ghtl.get();
-//                if (habitTypes==null){
-//                    habitTypes = new ArrayList<>();
-//                }
-//            }catch(Exception e){
-//                e.printStackTrace();
-//                Toast.makeText(this, "Failed to retrieve items. Check connection", Toast.LENGTH_SHORT).show();
-//            }
-//        }
-//        HLS.setList(habitTypes);
+        if (nH.isNetworkAvailable() && habitTypes.size() == 0){
+            habitTypes=nH.getHabitList(loggedInUser.getUsername());
+            HLS.setList(habitTypes);
+        }
 
         for(int i=0; i < habitTypes.size(); i++){
 
