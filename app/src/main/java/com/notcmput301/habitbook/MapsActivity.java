@@ -40,7 +40,6 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMyLoca
         OnMapReadyCallback{
 
     private GoogleMap mMap;
-    private HabitListStore HLS;
     private ArrayList<HabitEvent> habitEvents;
     private Gson gson = new Gson();
 
@@ -55,8 +54,6 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMyLoca
         mapFragment.getMapAsync(this);
         Intent receiver = getIntent();
         String e = receiver.getExtras().getString("events");
-        String l = receiver.getExtras().getString("passedHList");
-        HLS = gson.fromJson(l, HabitListStore.class);
 
         try{
             habitEvents = gson.fromJson(e, new TypeToken<ArrayList<HabitEvent>>(){}.getType());

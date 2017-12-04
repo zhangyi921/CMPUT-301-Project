@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.notcmput301.habitbook.LoginActivity"
-    android:background="@drawable/background">
+    android:background="@drawable/dynamic_background"
+    android:id="@+id/loginbackground">
 
     <EditText
         android:id="@+id/login_username"
@@ -51,6 +52,7 @@
         android:layout_marginTop="50dp"
         android:onClick="login"
         android:text="@string/login_lbtn"
+        android:textColor="#FFF"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/login_password" />
 
@@ -63,6 +65,7 @@
         android:layout_marginTop="50dp"
         android:onClick="createAccount"
         android:text="@string/login_sbtn"
+        android:textColor="#FFF"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/login_password" />
 

@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
@@ -20,6 +21,7 @@ import android.os.Build;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -48,7 +50,7 @@ public class CreateHabitEventActivity extends AppCompatActivity {
 
     private HabitType habit;
     private User loggedInUser;
-    private HabitListStore HLS;
+    private HabitTypeSingleton HTS;
     private ArrayList<HabitType> habitTypes;
     private int position;
     private NetworkHandler nH;
@@ -75,11 +77,12 @@ public class CreateHabitEventActivity extends AppCompatActivity {
 
         Intent receiver = getIntent();
         String u = receiver.getExtras().getString("passedUser");
-        String l = receiver.getExtras().getString("passedHList");
+
         this. position = Integer.parseInt(receiver.getExtras().getString("passedPos"));
         this.loggedInUser = gson.fromJson(u, User.class);
-        this.HLS = gson.fromJson(l, HabitListStore.class);
-        this.habitTypes = HLS.getList();
+        this.HTS = HabitTypeSingleton.getInstance();
+        this.habitTypes = HTS.getHabitTypes();
+
         this.habit = habitTypes.get(position);
         nH = new NetworkHandler(this);
 
@@ -187,7 +190,7 @@ public class CreateHabitEventActivity extends AppCompatActivity {
             nH.putString("au", gson.toJson(habit));
         }
         habitTypes.set(position, habit);
-        HLS.setList(habitTypes);
+        HTS.setHabitTypes(habitTypes);
         back();
         finish();
     }
@@ -221,7 +224,6 @@ public class CreateHabitEventActivity extends AppCompatActivity {
     public void back(){
         Intent habitTypeDetail = new Intent(CreateHabitEventActivity.this, HabitTypeDetailsActivity.class);
         habitTypeDetail.putExtra("passedUser", gson.toJson(loggedInUser));
-        habitTypeDetail.putExtra("passedHList", gson.toJson(HLS));
         habitTypeDetail.putExtra("passedPos", Integer.toString(position));
         startActivity(habitTypeDetail);
     }

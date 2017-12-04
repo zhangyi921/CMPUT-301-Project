@@ -1,6 +1,8 @@
 package com.notcmput301.habitbook;
 
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -19,7 +21,6 @@ import java.util.concurrent.ExecutionException;
 
 public class FollowerRequestsActivity extends AppCompatActivity {
     private User loggedInUser;
-    private HabitListStore HLS;
     private Gson gson = new Gson();
     private ArrayList<Followers> reqArr;
 
@@ -29,9 +30,8 @@ public class FollowerRequestsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_follower_requests);
         Intent receiver = getIntent();
         String u = receiver.getExtras().getString("passedUser");
-        String l = receiver.getExtras().getString("passedHList");
         this.loggedInUser = gson.fromJson(u, User.class);
-        this.HLS = gson.fromJson(l, HabitListStore.class);
+
         fillList();
     }
 

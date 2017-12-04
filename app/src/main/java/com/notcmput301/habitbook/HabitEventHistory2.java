@@ -9,8 +9,10 @@ package com.notcmput301.habitbook;
 import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.drawable.AnimationDrawable;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -33,6 +35,8 @@ import com.google.gson.Gson;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -40,9 +44,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class HabitEventHistory2 extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
 
-    private HabitType habit;
     private User loggedInUser;
-    private HabitListStore HLS;
+    private HabitTypeSingleton HTS;
     private ArrayList<HabitType> habitTypes;
     private NetworkHandler nH;
 
@@ -57,10 +60,9 @@ public class HabitEventHistory2 extends AppCompatActivity implements NavigationV
         Intent receiver = getIntent();
 
         String u = receiver.getExtras().getString("passedUser");
-        String l = receiver.getExtras().getString("passedHList");
         loggedInUser = gson.fromJson(u, User.class);
-        HLS = gson.fromJson(l, HabitListStore.class);
-        habitTypes = HLS.getList();
+        HTS=HabitTypeSingleton.getInstance();
+        habitTypes = HTS.getHabitTypes();
         nH = new NetworkHandler(this);
 
         FillList();
@@ -80,8 +82,6 @@ public class HabitEventHistory2 extends AppCompatActivity implements NavigationV
         fab2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                //Toast.makeText(HabitEventHistory2.this, "------", Toast.LENGTH_SHORT).show();
 
                 Intent map = new Intent(HabitEventHistory2.this, MapsActivity.class);
                 map.putExtra("events", gson.toJson(habitEvents));
@@ -151,18 +151,14 @@ public class HabitEventHistory2 extends AppCompatActivity implements NavigationV
         if (id == R.id.habit_type) {
             Intent habitType = new Intent(HabitEventHistory2.this, HabitTypeList2.class);
             habitType.putExtra("passedUser", gson.toJson(loggedInUser));
-            habitType.putExtra("passedHList", gson.toJson(HLS));
             finish();
             startActivity(habitType);
 
         } else if (id == R.id.today_habit) {
 
-
-
             Intent todayHabit = new Intent(HabitEventHistory2.this, MainActivity.class);
             todayHabit.putExtra("passedUser", gson.toJson(loggedInUser));
-            todayHabit.putExtra("passedHList", gson.toJson(HLS));
-            //finish();
+            finish();
             startActivity(todayHabit);
         } else if (id == R.id.habit_event_history) {
 
@@ -171,10 +167,10 @@ public class HabitEventHistory2 extends AppCompatActivity implements NavigationV
             if(!nH.isNetworkAvailable()){
                 Toast.makeText(this, "Content Not accessible without internet", Toast.LENGTH_LONG).show();
             }else{
-                HLS.setList(habitTypes);
+                //HLS.setList(habitTypes);
+                HTS.setHabitTypes(habitTypes);
                 Intent online = new Intent(HabitEventHistory2.this, Online.class);
                 online.putExtra("passedUser", gson.toJson(loggedInUser));
-                online.putExtra("passedUser", gson.toJson(HLS));
                 finish();
                 startActivity(online);
             }
@@ -197,7 +193,7 @@ public class HabitEventHistory2 extends AppCompatActivity implements NavigationV
         
         filterFillList(htString, commentString);
 
-        filterFillList(htString, commentString);
+        //filterFillList(htString, commentString);
     }
 
 
@@ -205,35 +201,28 @@ public class HabitEventHistory2 extends AppCompatActivity implements NavigationV
         ListView EventHistoryList = (ListView) findViewById(R.id.eventList);
 
         if (habitTypes.size() < 1){
-            ElasticSearch.getHabitTypeList ghtl = new ElasticSearch.getHabitTypeList();
-            ghtl.execute(loggedInUser.getUsername());
-            try {
-                habitTypes = ghtl.get();
-                if (habitTypes==null){
-                    habitTypes = new ArrayList<>();
-                }
-                //loggedInUser.setHabitTypes(habitTypes);       //causes program to crash
-            }catch(Exception e){
-                e.printStackTrace();
-                Toast.makeText(this, "Failed to retrieve items. Check connection", Toast.LENGTH_SHORT).show();
-            }
+            habitTypes = nH.getHabitList(loggedInUser.getUsername());
+            HTS.setHabitTypes(habitTypes);
         }
-        HLS.setList(habitTypes);
         habitEvents.clear();
-        for (HabitType h :habitTypes){
+
+        for (int i = 0; i<habitTypes.size(); i++){
+            HabitType h = habitTypes.get(i);
+
             ArrayList<HabitEvent> events = h.getEvents();
             habitEvents.addAll(events);
         }
+
 
         HabitEventHistory2.EventHistoryAdapter eventHistoryAdapter = new HabitEventHistory2.EventHistoryAdapter();
         EventHistoryList.setAdapter(eventHistoryAdapter);
         EventHistoryList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
                 Intent habitdetail = new Intent(HabitEventHistory2.this, HabitEventDetailsActivity.class);
 
                 habitdetail.putExtra("passedUser", gson.toJson(loggedInUser));
-                habitdetail.putExtra("passedHList", gson.toJson(HLS));
                 habitdetail.putExtra("passedHabitEvent", gson.toJson(habitEvents.get(position)));
 
                 startActivity(habitdetail);
@@ -291,7 +280,6 @@ public class HabitEventHistory2 extends AppCompatActivity implements NavigationV
             }
         }
 
-
         // If comment type is not filtered, add all events for each habitType in tempHt
         else {
             for (HabitType ht : tempHt) {
@@ -310,9 +298,12 @@ public class HabitEventHistory2 extends AppCompatActivity implements NavigationV
         heList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
                 Intent habitdetail = new Intent(HabitEventHistory2.this, HabitEventDetailsActivity.class);
+
                 habitdetail.putExtra("passedUser", gson.toJson(loggedInUser));
                 habitdetail.putExtra("passedHabitEvent", gson.toJson(habitEvents.get(position)));
+
                 startActivity(habitdetail);
             }
         });
@@ -344,7 +335,6 @@ public class HabitEventHistory2 extends AppCompatActivity implements NavigationV
             TextView descriptionL = (TextView) convertView.findViewById(R.id.HTLIST_Description);
             TextView likes = (TextView) convertView.findViewById(R.id.likes);
             CircleImageView imageV = (CircleImageView) convertView.findViewById(R.id.eventImg);
-
             try {
                 imageV.setImageBitmap(habitEvents.get(position).imageToBitmap());
             }catch (Exception e){

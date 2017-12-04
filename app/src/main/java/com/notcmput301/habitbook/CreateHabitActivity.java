@@ -6,8 +6,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
+import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
@@ -33,9 +35,8 @@ import java.util.Date;
 
 public class CreateHabitActivity extends AppCompatActivity {
     private User loggedInUser;
-    private HabitListStore HLS;
     private ArrayList<HabitType> habitTypes;
-
+    private HabitTypeSingleton HTS;
 
     private ArrayList<Boolean> weekdays;
     private Date startdate = new Date();
@@ -52,11 +53,10 @@ public class CreateHabitActivity extends AppCompatActivity {
         Intent receiver = getIntent();
 
         String u = receiver.getExtras().getString("passedUser");
-        String l = receiver.getExtras().getString("passedHList");
 
         this.loggedInUser = gson.fromJson(u, User.class);
-        this.HLS = gson.fromJson(l, HabitListStore.class);
-        this.habitTypes=HLS.getList();
+        this.HTS = HabitTypeSingleton.getInstance();
+        this.habitTypes = HTS.getHabitTypes();
 
 
 
@@ -132,7 +132,7 @@ public class CreateHabitActivity extends AppCompatActivity {
             nH.putString("a", gson.toJson(newHabit));
         }
         habitTypes.add(newHabit);
-        HLS.setList(habitTypes);
+        HTS.setHabitTypes(habitTypes);
         finish();
         back();
     }
@@ -148,7 +148,6 @@ public class CreateHabitActivity extends AppCompatActivity {
         Intent habitList = new Intent(CreateHabitActivity.this, HabitTypeList2.class);
 
         habitList.putExtra("passedUser", gson.toJson(loggedInUser));
-        habitList.putExtra("passedHList", gson.toJson(HLS));
         startActivity(habitList);
     }
 

@@ -42,8 +42,8 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private User loggedInUser;
 
-    private ArrayAdapter<HabitType> Adapter;
-    private HabitListStore HLS;
+    private HabitTypeSingleton HTS;
+
     private ArrayList<HabitType> habitTypes;
 
     //position map
@@ -60,11 +60,9 @@ public class MainActivity extends AppCompatActivity
         Intent receiver = getIntent();
 
         String u = receiver.getExtras().getString("passedUser");
-        String l = receiver.getExtras().getString("passedHList");
-
-        this.loggedInUser = gson.fromJson(u, User.class);
-        this.HLS = gson.fromJson(l, HabitListStore.class);
-        this.habitTypes = HLS.getList();
+        HTS = HabitTypeSingleton.getInstance();
+        loggedInUser = gson.fromJson(u, User.class);;
+        habitTypes = HTS.getHabitTypes();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -148,7 +146,6 @@ public class MainActivity extends AppCompatActivity
             Intent habitType = new Intent(MainActivity.this, HabitTypeList2.class);
 
             habitType.putExtra("passedUser", gson.toJson(loggedInUser));
-            habitType.putExtra("passedHList", gson.toJson(HLS));
 
             finish();
             startActivity(habitType);
@@ -158,7 +155,6 @@ public class MainActivity extends AppCompatActivity
             Intent habitEventHistory = new Intent(MainActivity.this, HabitEventHistory2.class);
 
             habitEventHistory.putExtra("passedUser", gson.toJson(loggedInUser));
-            habitEventHistory.putExtra("passedHList", gson.toJson(HLS));
 
             finish();
             startActivity(habitEventHistory);
@@ -168,7 +164,6 @@ public class MainActivity extends AppCompatActivity
             }else{
                 Intent online = new Intent(MainActivity.this, Online.class);
                 online.putExtra("passedUser", gson.toJson(loggedInUser));
-                online.putExtra("passedHList", gson.toJson(HLS));
                 finish();
                 startActivity(online);
             }
@@ -189,7 +184,9 @@ public class MainActivity extends AppCompatActivity
 
         if (nH.isNetworkAvailable() && habitTypes.size() == 0){
             habitTypes = nH.getHabitList(loggedInUser.getUsername());
-            HLS.setList(habitTypes);
+            HTS.setHabitTypes(habitTypes);
+        }else if (!nH.isNetworkAvailable()){
+            Toast.makeText(this, "Network unavailable", Toast.LENGTH_LONG).show();
         }
 
         for (int i = 0; i < habitTypes.size(); i++){
@@ -216,51 +213,6 @@ public class MainActivity extends AppCompatActivity
             }
         }
 
-//        try {
-//            habitTypes = ghtl.get();
-//            if (habitTypes==null){
-//                habitTypes = new ArrayList<>();
-//            }
-//
-//            Calendar calendar = Calendar.getInstance();
-//            int day = calendar.get(Calendar.DAY_OF_WEEK);
-//            Date currentDate = new Date();
-//
-//            for(int i = 0; i<habitTypes.size(); i++){
-//                HabitType habit = habitTypes.get(i);
-//                ArrayList<Boolean> days = habit.getWeekdays();
-//                Date startDate = habit.getStartDate();
-//                if(!days.get(day-1)){
-//                    habitTypes.remove(habit);
-//                    i--;
-//                }
-//                else if(startDate.after(currentDate)){
-//                    habitTypes.remove(habit);
-//                    i--;
-//                }
-//                else {
-//                    ArrayList<HabitEvent> events = habit.getEvents();
-//                    for(int j = 0; j < events.size(); j++) {
-//                        HabitEvent event = events.get(j);
-//                        Date eventDate = event.getDate();
-//                        Calendar cal1 = Calendar.getInstance();
-//                        Calendar cal2 = Calendar.getInstance();
-//                        cal1.setTime(currentDate);
-//                        cal2.setTime(eventDate);
-//                        if (cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) &&
-//                                cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR)) {
-//                            habitTypes.remove(habit);
-//                            i--;
-//                        }
-//                    }
-//                }
-//            }
-//            //loggedInUser.setHabitTypes(habitTypes);       //causes program to crash
-//        }catch(Exception e){
-//            e.printStackTrace();
-//            Toast.makeText(this, "Failed to retrieve items. Check connection", Toast.LENGTH_SHORT).show();
-//        }
-        
         MainActivity.HabitTypeAdapter hAdapter = new MainActivity.HabitTypeAdapter();
         habitlist.setAdapter(hAdapter);
 
@@ -271,27 +223,16 @@ public class MainActivity extends AppCompatActivity
                 Intent habitdetail = new Intent(MainActivity.this, HabitTypeDetailsActivity.class);
                 habitdetail.putExtra("passedUser", gson.toJson(loggedInUser));
                 habitdetail.putExtra("passedPos", hListPos+"");
-                habitdetail.putExtra("passedHList", gson.toJson(HLS));
                 startActivity(habitdetail);
             }
         });
     }
 
 
-    /*public void HTLnewHabitType(View view){
-
-        Intent createHabit = new Intent(HabitTypeList2.this, CreateHabitActivity.class);
-        createHabit.putExtra("passedUser", gson.toJson(loggedInUser));
-        startActivity(createHabit);
-    }*/
-
-
     public void HTLRefresh(View view){
 
         fillList();
     }
-
-
 
 
     class HabitTypeAdapter extends BaseAdapter {
@@ -322,5 +263,4 @@ public class MainActivity extends AppCompatActivity
             return convertView;
         }
     }
-
 }

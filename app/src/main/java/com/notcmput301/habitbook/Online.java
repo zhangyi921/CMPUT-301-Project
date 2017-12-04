@@ -7,7 +7,9 @@
 package com.notcmput301.habitbook;
 
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
 import android.view.View;
@@ -40,7 +42,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class Online extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private User loggedInUser;
-    private HabitListStore HLS;
+    private NetworkHandler nH;
 
     private Gson gson = new Gson();
     private ArrayList<HabitEvent> eventlist = new ArrayList<>();
@@ -52,9 +54,8 @@ public class Online extends AppCompatActivity
         setContentView(R.layout.activity_online);
         Intent receiver = getIntent();
         String u = receiver.getExtras().getString("passedUser");
-        String l = receiver.getExtras().getString("passedHList");
-        this.loggedInUser = gson.fromJson(u, User.class);
-        this.HLS = gson.fromJson(l, HabitListStore.class);
+        loggedInUser = gson.fromJson(u, User.class);
+        nH = new NetworkHandler(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -64,17 +65,13 @@ public class Online extends AppCompatActivity
         monthMap.put(6, "Jul"); monthMap.put(7, "Aug"); monthMap.put(8, "Sept");
         monthMap.put(9, "Oct"); monthMap.put(10, "Nov"); monthMap.put(11, "Dec");
 
-
         //follower request status button
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.Oln_viewRequestStatus);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
                 Intent followerRequestActivity = new Intent(Online.this, FollowerRequestsActivity.class);
                 followerRequestActivity.putExtra("passedUser", gson.toJson(loggedInUser));
-                followerRequestActivity.putExtra("passedHList", gson.toJson(HLS));
                 startActivity(followerRequestActivity);
             }
         });
@@ -85,7 +82,6 @@ public class Online extends AppCompatActivity
             public void onClick(View view) {
                 Intent map = new Intent(Online.this, MapsActivity.class);
                 map.putExtra("events", gson.toJson(eventlist));
-                map.putExtra("passedHList", gson.toJson(HLS));
                 startActivity(map);
             }
         });
@@ -206,26 +202,10 @@ public class Online extends AppCompatActivity
         //for each user, cycle through all their habittypes.
         for (Followers f: fArr){
             String requestedUser = f.getRequestedUser();
-            ElasticSearch.getHabitTypeList gHT = new ElasticSearch.getHabitTypeList();
-            gHT.execute(requestedUser);
-            ArrayList<HabitType> habitTypes = new ArrayList<>();
-            try {
-                habitTypes = gHT.get();
-                if (habitTypes==null){
-                    habitTypes = new ArrayList<>();
-                }
-            }catch(Exception e){
-                e.printStackTrace();
-                Toast.makeText(this, "Failed to retrieve items. Check connection", Toast.LENGTH_SHORT).show();
-            }
-            //add all their events of that habit type to eventlist
+            ArrayList<HabitType> habitTypes = nH.getHabitList(requestedUser);
             for (HabitType h: habitTypes){
                 eventlist.addAll(h.getEvents());
             }
-
-//            for (int i = 0; i<eventlist.size(); ++i){
-//                Toast.makeText(this, eventlist.get(i).getHabit(), Toast.LENGTH_SHORT).show();
-//            }
         }
         ListView eventListView = (ListView) findViewById(R.id.Oln_eventListView);
         Online.OnlineListAdapter oAdapter = new Online.OnlineListAdapter();
@@ -272,7 +252,6 @@ public class Online extends AppCompatActivity
                         if (habitTypes==null){
                             habitTypes = new ArrayList<>();
                         }
-                        //loggedInUser.setHabitTypes(habitTypes);       //causes program to crash
                     }catch(Exception e){
                         e.printStackTrace();
                         Toast.makeText(Online.this, "Failed to retrieve items. Check connection", Toast.LENGTH_SHORT).show();
@@ -388,7 +367,6 @@ public class Online extends AppCompatActivity
         if (id == R.id.habit_type) {
             Intent habitType = new Intent(Online.this, HabitTypeList2.class);
             habitType.putExtra("passedUser", gson.toJson(loggedInUser));
-            habitType.putExtra("passedHList", gson.toJson(HLS));
             startActivity(habitType);
             finish();
 
@@ -396,7 +374,6 @@ public class Online extends AppCompatActivity
 
             Intent habitType = new Intent(Online.this, MainActivity.class);
             habitType.putExtra("passedUser", gson.toJson(loggedInUser));
-            habitType.putExtra("passedHList", gson.toJson(HLS));
             finish();
             startActivity(habitType);
 
@@ -404,7 +381,6 @@ public class Online extends AppCompatActivity
 
             Intent history = new Intent(Online.this, HabitEventHistory2.class);
             history.putExtra("passedUser", gson.toJson(loggedInUser));
-            history.putExtra("passedHList", gson.toJson(HLS));
             finish();
             startActivity(history);
         } else if (id == R.id.online) {

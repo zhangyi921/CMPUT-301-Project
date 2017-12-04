@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.notcmput301.habitbook.CreateAccountActivity"
-    android:background="@drawable/background">
+    android:background="@drawable/dynamic_background"
+    android:id="@+id/createaccountbackground">
 
     <ImageView
         android:id="@+id/imageView2"
@@ -78,7 +79,8 @@
         android:onClick="caCreate"
         android:text="@string/createAccount_create"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/createAccount_passwordR" />
+        app:layout_constraintTop_toBottomOf="@+id/createAccount_passwordR"
+        android:textColor="#FFF"/>
 
     <Button
         android:id="@+id/createAccount_back"
@@ -89,6 +91,7 @@
         android:layout_marginTop="50dp"
         android:onClick="caBack"
         android:text="@string/createAccount_back"
+        android:textColor="#FFF"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/createAccount_passwordR" />
 </android.support.constraint.ConstraintLayout>

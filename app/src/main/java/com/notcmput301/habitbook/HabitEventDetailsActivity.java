@@ -3,7 +3,9 @@ package com.notcmput301.habitbook;
 import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.drawable.AnimationDrawable;
 import android.net.ConnectivityManager;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,7 +25,7 @@ public class HabitEventDetailsActivity extends AppCompatActivity {
 
     private User loggedInUser;
     private HabitEvent habitEvent;
-    private HabitListStore HLS;
+    private HabitTypeSingleton HTS;
     private ArrayList<HabitType> habitTypes;
     private NetworkHandler nH;
 
@@ -42,11 +44,11 @@ public class HabitEventDetailsActivity extends AppCompatActivity {
         Intent receiver = getIntent();
         String u = receiver.getExtras().getString("passedUser");
         String e = receiver.getExtras().getString("passedHabitEvent");
-        String l = receiver.getExtras().getString("passedHList");
+
         loggedInUser = gson.fromJson(u, User.class);
         habitEvent = gson.fromJson(e, HabitEvent.class);
-        HLS = gson.fromJson(l, HabitListStore.class);
-        habitTypes = HLS.getList();
+        HTS=HabitTypeSingleton.getInstance();
+        habitTypes=HTS.getHabitTypes();
         nH = new NetworkHandler(this);
 
         commentE = (EditText) findViewById(R.id.HED_Comment);
@@ -74,7 +76,7 @@ public class HabitEventDetailsActivity extends AppCompatActivity {
 
         if (nH.isNetworkAvailable() && habitTypes.size() == 0){
             habitTypes = nH.getHabitList(loggedInUser.getUsername());
-            HLS.setList(habitTypes);
+            HTS.setHabitTypes(habitTypes);
         }
 
         for(int i=0; i < habitTypes.size(); i++){
@@ -101,7 +103,7 @@ public class HabitEventDetailsActivity extends AppCompatActivity {
                         nH.putString("au", gson.toJson(h));
                     }
                     habitTypes.set(i, h);
-                    HLS.setList(habitTypes);
+                    HTS.setHabitTypes(habitTypes);
                     break;
                 }
             }
@@ -113,7 +115,7 @@ public class HabitEventDetailsActivity extends AppCompatActivity {
 
         if (nH.isNetworkAvailable() && habitTypes.size() == 0){
             habitTypes=nH.getHabitList(loggedInUser.getUsername());
-            HLS.setList(habitTypes);
+            HTS.setHabitTypes(habitTypes);
         }
 
         for(int i=0; i < habitTypes.size(); i++){
@@ -136,7 +138,7 @@ public class HabitEventDetailsActivity extends AppCompatActivity {
                         nH.putString("au", gson.toJson(h));
                     }
                     habitTypes.set(i, h);
-                    HLS.setList(habitTypes);
+                    HTS.setHabitTypes(habitTypes);
                     break;
                 }
             }
@@ -148,7 +150,6 @@ public class HabitEventDetailsActivity extends AppCompatActivity {
         Intent habitEventHistory = new Intent(HabitEventDetailsActivity.this, HabitEventHistory2.class);
 
         habitEventHistory.putExtra("passedUser", gson.toJson(loggedInUser));
-        habitEventHistory.putExtra("passedHList", gson.toJson(HLS));
 
         finish();
         startActivity(habitEventHistory);

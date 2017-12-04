@@ -3,8 +3,10 @@ package com.notcmput301.habitbook;
 import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.drawable.AnimationDrawable;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
@@ -35,7 +37,7 @@ public class HabitTypeList2 extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private User loggedInUser;
-    private HabitListStore HLS;
+    private HabitTypeSingleton HTS;
     private ArrayList<HabitType> habitTypes;
     private ArrayAdapter<HabitType> Adapter;
     private Gson gson = new Gson();
@@ -50,11 +52,10 @@ public class HabitTypeList2 extends AppCompatActivity
         Intent receiver = getIntent();
 
         String u = receiver.getExtras().getString("passedUser");
-        String l = receiver.getExtras().getString("passedHList");
 
         this.loggedInUser = gson.fromJson(u, User.class);
-        this.HLS = gson.fromJson(l, HabitListStore.class);
-        this.habitTypes = HLS.getList();
+        this.HTS = HabitTypeSingleton.getInstance();
+        this.habitTypes = HTS.getHabitTypes();
 
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -64,10 +65,9 @@ public class HabitTypeList2 extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                HLS.setList(habitTypes);
+                HTS.setHabitTypes(habitTypes);
                 Intent createHabit = new Intent(HabitTypeList2.this, CreateHabitActivity.class);
                 createHabit.putExtra("passedUser", gson.toJson(loggedInUser));
-                createHabit.putExtra("passedHList", gson.toJson(HLS));
                 startActivity(createHabit);
             }
         });
@@ -141,10 +141,9 @@ public class HabitTypeList2 extends AppCompatActivity
         if (id == R.id.habit_type) {
 
         } else if (id == R.id.today_habit) {
-            HLS.setList(habitTypes);
+            HTS.setHabitTypes(habitTypes);
             Intent todayHabit = new Intent(HabitTypeList2.this, MainActivity.class);
             todayHabit.putExtra("passedUser", gson.toJson(loggedInUser));
-            todayHabit.putExtra("passedHList", gson.toJson(HLS));
             startActivity(todayHabit);
 
         } else if (id == R.id.habit_event_history) {
@@ -152,7 +151,6 @@ public class HabitTypeList2 extends AppCompatActivity
             Intent habitType = new Intent(HabitTypeList2.this, HabitEventHistory2.class);
 
             habitType.putExtra("passedUser", gson.toJson(loggedInUser));
-            habitType.putExtra("passedHList", gson.toJson(HLS));
 
             finish();
             startActivity(habitType);
@@ -160,10 +158,9 @@ public class HabitTypeList2 extends AppCompatActivity
             if(!nH.isNetworkAvailable()){
                 Toast.makeText(this, "Content Not accessible without internet", Toast.LENGTH_LONG).show();
             }else{
-                HLS.setList(habitTypes);
+                HTS.setHabitTypes(habitTypes);
                 Intent online = new Intent(HabitTypeList2.this, Online.class);
                 online.putExtra("passedUser", gson.toJson(loggedInUser));
-                online.putExtra("passedHList", gson.toJson(HLS));
                 finish();
                 startActivity(online);
             }
@@ -182,7 +179,7 @@ public class HabitTypeList2 extends AppCompatActivity
         ListView habitlist = (ListView) findViewById(R.id.HabitList);
         if(nH.isNetworkAvailable() && habitTypes.size()==0){
             habitTypes = nH.getHabitList(loggedInUser.getUsername());
-            HLS.setList(habitTypes);
+            HTS.setHabitTypes(habitTypes);
         }else if (!nH.isNetworkAvailable()){
             Toast.makeText(this, "You are Offline", Toast.LENGTH_SHORT).show();
         }
@@ -197,7 +194,6 @@ public class HabitTypeList2 extends AppCompatActivity
                 Intent habitdetail = new Intent(HabitTypeList2.this, HabitTypeDetailsActivity.class);
                 habitdetail.putExtra("passedUser", gson.toJson(loggedInUser));
                 habitdetail.putExtra("passedPos", position+"");
-                habitdetail.putExtra("passedHList", gson.toJson(HLS));
                 startActivity(habitdetail);
             }
         });
@@ -206,7 +202,6 @@ public class HabitTypeList2 extends AppCompatActivity
 
 
     public void HTLRefresh(View view){
-
         fillList();
     }
 

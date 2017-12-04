@@ -3,7 +3,9 @@ package com.notcmput301.habitbook;
 import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.drawable.AnimationDrawable;
 import android.net.ConnectivityManager;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,7 +28,7 @@ import java.util.Date;
 public class HabitTypeDetailsActivity extends AppCompatActivity {
     private HabitType habit;
     private User loggedInUser;
-    private HabitListStore HLS;
+    private HabitTypeSingleton HTS;
     private ArrayList<HabitType> habitTypes;
     private int position;
     private NetworkHandler nH;
@@ -46,14 +48,12 @@ public class HabitTypeDetailsActivity extends AppCompatActivity {
 
         Intent receiver = getIntent();
         String u = receiver.getExtras().getString("passedUser");
-        String l = receiver.getExtras().getString("passedHList");
-
         position = Integer.parseInt(receiver.getExtras().getString("passedPos"));
 
-        this.loggedInUser = gson.fromJson(u, User.class);
-        this.HLS = gson.fromJson(l, HabitListStore.class);
-        this.habitTypes = HLS.getList();
-        this.habit = habitTypes.get(position);
+        loggedInUser = gson.fromJson(u, User.class);
+        HTS = HabitTypeSingleton.getInstance();
+        habitTypes=HTS.getHabitTypes();
+        habit = habitTypes.get(position);
         nH = new NetworkHandler(this);
 
         //Checks if Network Connection is detected.
@@ -92,7 +92,6 @@ public class HabitTypeDetailsActivity extends AppCompatActivity {
     public void back(){
         Intent habitList = new Intent(HabitTypeDetailsActivity.this, HabitTypeList2.class);
         habitList.putExtra("passedUser", gson.toJson(loggedInUser));
-        habitList.putExtra("passedHList", gson.toJson(HLS));
         startActivity(habitList);
     }
 
@@ -150,14 +149,12 @@ public class HabitTypeDetailsActivity extends AppCompatActivity {
         if (nH.isNetworkAvailable()){
             nH.deleteHabitType(habit);
             nH.addHabitType(newHabitType);
-            //replace update our list
         }else{
             nH.putString("d", gson.toJson(habit));
             nH.putString("au", gson.toJson(newHabitType));
-            //update our list
         }
         habitTypes.set(position, newHabitType);
-        HLS.setList(habitTypes);
+        HTS.setHabitTypes(habitTypes);
         back();
     }
 
@@ -169,18 +166,16 @@ public class HabitTypeDetailsActivity extends AppCompatActivity {
             nH.putString("d", gson.toJson(habit));
         }
         habitTypes.remove(position);
+        HTS.setHabitTypes(habitTypes);
         back();
     }
 
     public void HTDAddEvent(View view){
-        HLS.setList(habitTypes);
+        HTS.setHabitTypes(habitTypes);
         Intent createHabitEvent = new Intent(HabitTypeDetailsActivity.this, CreateHabitEventActivity.class);
         createHabitEvent.putExtra("passedUser", gson.toJson(loggedInUser));
         createHabitEvent.putExtra("passedPos", Integer.toString(position));
-        createHabitEvent.putExtra("passedHList", gson.toJson(HLS));
         finish();
         startActivity(createHabitEvent);
     }
-
-
 }

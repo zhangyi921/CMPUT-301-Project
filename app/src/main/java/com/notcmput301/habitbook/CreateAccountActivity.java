@@ -1,6 +1,8 @@
 package com.notcmput301.habitbook;
 
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,7 +18,6 @@ import java.util.ArrayList;
 
 public class CreateAccountActivity extends AppCompatActivity {
     private Gson gson = new Gson();
-    private HabitListStore HLS;
     private NetworkHandler nH;
 
     @Override
@@ -24,7 +25,12 @@ public class CreateAccountActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_account);
         nH = new NetworkHandler(this);
-        HLS = new HabitListStore(new ArrayList<HabitType>());
+
+        ConstraintLayout layout = (ConstraintLayout) findViewById(R.id.createaccountbackground);
+        AnimationDrawable animationDrawable = (AnimationDrawable) layout.getBackground();
+        animationDrawable.setEnterFadeDuration(4000);
+        animationDrawable.setExitFadeDuration(4000);
+        animationDrawable.start();
     }
 
     public void caCreate(View view){
@@ -88,9 +94,12 @@ public class CreateAccountActivity extends AppCompatActivity {
 
                 nH.resetPref(); //I clear on purpose. This means if the user logged out...gg
 
+                Username uname = Username.getInstance();
+                uname.setName(u.getUsername());
+                HabitTypeSingleton HTS = HabitTypeSingleton.getInstance();
+                HTS.setHabitTypes(new ArrayList<HabitType>());
                 Intent mainmenu = new Intent(CreateAccountActivity.this, MainActivity.class);
                 mainmenu.putExtra("passedUser", gson.toJson(u));
-                mainmenu.putExtra("passedHList", gson.toJson(HLS));
                 startActivity(mainmenu);
                 return;
             }
