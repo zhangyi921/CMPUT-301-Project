@@ -22,6 +22,7 @@ import com.robotium.solo.Solo;
  * -create Habit Type
  * -change Habit Type
  * -add Event
+ * -go to map
  * -delete Type
  * because this is one sequence
  * doesn't make sense to do it multiple times
@@ -130,6 +131,12 @@ public class HabitTest extends ActivityInstrumentationTestCase2 {
         assertTrue(solo.waitForActivity(HabitEventHistory2.class));
         solo.assertCurrentActivity("Not HabitEventHistory Activity",HabitEventHistory2.class);
         assertTrue(solo.waitForText("test comment"));
+
+        //go to map
+        solo.clickOnView(solo.getView(R.id.eventmap));
+        solo.assertCurrentActivity("Not in Map Page",MapsActivity.class);
+        solo.goBack();
+        solo.assertCurrentActivity("Not HabitEventHistory Activity",HabitEventHistory2.class);
 
         //delete
         solo.clickOnImageButton(0);//nav memu

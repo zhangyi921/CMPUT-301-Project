@@ -61,7 +61,7 @@ public class OnlineMenuActivityTest extends ActivityInstrumentationTestCase2 {
         solo.clickOnView(solo.getView(R.id.oln_mapButton));
         solo.assertCurrentActivity("Not in Map Page",MapsActivity.class);
     }
-    
+
     public void test_tearDown() throws Exception{
         solo.finishOpenedActivities();
     }
