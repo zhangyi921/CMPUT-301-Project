@@ -1,9 +1,14 @@
 /*
- *  * Copyright (c) 2017 Team NOTcmput301, CMPUT301, University of Alberta - All Rights Reserved
- *  * You may use, distribute, or modify this code under terms and conditions of the Code of Student Behavior at University of Alberta.
- *  * You can find a copy of the license in the project wiki on github. Otherwise please contact miller4@ualberta.ca.
+ * HabitEventHistory
+ *
+ * Version 1.0
+ *
+ * November 12, 2017
+ *
+ * Copyright (c) 2017 Team NOTcmput301, CMPUT301, University of Alberta - All Rights Reserved
+ * You may use, distribute, or modify this code under terms and conditions of the Code of Student Behavior at University of Alberta.
+ * You can find a copy of the license in the project wiki on github. Otherwise please contact miller4@ualberta.ca.
  */
-
 package com.notcmput301.habitbook;
 
 import android.content.BroadcastReceiver;
@@ -36,7 +41,13 @@ import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-
+/**
+ * Activity for displaying Habit Event History
+ *
+ * @author NOTcmput301
+ * @version 1.0
+ * @since 1.0
+ */
 public class HabitEventHistory2 extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
 
@@ -49,6 +60,11 @@ public class HabitEventHistory2 extends AppCompatActivity implements NavigationV
     private ArrayList<HabitEvent> habitEvents = new ArrayList<>();
     private Gson gson = new Gson();
 
+    /**
+     * Called when the activity is first created.
+     *
+     * @param savedInstanceState previous instance of activity
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -110,6 +126,10 @@ public class HabitEventHistory2 extends AppCompatActivity implements NavigationV
         this.registerReceiver(br, filter);
     }
 
+    /**
+     * trigger function for when back button
+     *
+     */
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -120,6 +140,11 @@ public class HabitEventHistory2 extends AppCompatActivity implements NavigationV
         }
     }
 
+    /**
+     * Called when creating options menu
+     *
+     * @param menu menu object to operate on
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -127,6 +152,11 @@ public class HabitEventHistory2 extends AppCompatActivity implements NavigationV
         return true;
     }
 
+    /**
+     * function for handling options menu
+     *
+     * @param item selected menu item
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -142,6 +172,11 @@ public class HabitEventHistory2 extends AppCompatActivity implements NavigationV
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Function for handling navigation menu selections
+     *
+     * @param item selected navigation item
+     */
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -188,6 +223,11 @@ public class HabitEventHistory2 extends AppCompatActivity implements NavigationV
         return true;
     }
 
+    /**
+     * function for handling filter button click.
+     *
+     * @param view view of current activity status
+     */
     public void onFilterClick(View view) {
         EditText htBar = (EditText) findViewById(R.id.heHabitTypeFilter);
         EditText commentBar = (EditText) findViewById(R.id.heCommentFilter);
@@ -200,7 +240,10 @@ public class HabitEventHistory2 extends AppCompatActivity implements NavigationV
         filterFillList(htString, commentString);
     }
 
-
+    /**
+     * Fill listview with Habit Events
+     *
+     */
     public void FillList(){
         ListView EventHistoryList = (ListView) findViewById(R.id.eventList);
 
@@ -243,6 +286,14 @@ public class HabitEventHistory2 extends AppCompatActivity implements NavigationV
 
     // filterFillList coded by Matteo
     // Updates list after filter is clicked
+
+
+    /**
+     * Filters habit list with user defined criteria
+     *
+     * @param hType HabitType to filter by
+     * @param comment comment to filter by
+     */
     public void filterFillList(String hType, String comment) {
         ListView heList = (ListView) findViewById(R.id.eventList); // Get listView
 

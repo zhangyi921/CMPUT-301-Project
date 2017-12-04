@@ -1,3 +1,14 @@
+/*
+ * CreateHabitEventActivity
+ *
+ * Version 1.0
+ *
+ * November 12, 2017
+ *
+ * Copyright (c) 2017 Team NOTcmput301, CMPUT301, University of Alberta - All Rights Reserved
+ * You may use, distribute, or modify this code under terms and conditions of the Code of Student Behavior at University of Alberta.
+ * You can find a copy of the license in the project wiki on github. Otherwise please contact miller4@ualberta.ca.
+ */
 package com.notcmput301.habitbook;
 
 import android.Manifest;
@@ -42,7 +53,14 @@ import java.util.ArrayList;
 import de.hdodenhof.circleimageview.CircleImageView;
 import id.zelory.compressor.Compressor;
 
-
+/**
+ * Activity for creating new HabitEvent
+ *
+ * @author NOTcmput301
+ * @version 1.0
+ * @see HabitEvent
+ * @since 1.0
+ */
 public class CreateHabitEventActivity extends AppCompatActivity {
     private static final int RESULT_LOAD_IMAGE = 6138;
 
@@ -67,6 +85,11 @@ public class CreateHabitEventActivity extends AppCompatActivity {
     private Bitmap image = null;
     private String b64img = null;
 
+    /**
+     * Called when the activity is first created.
+     *
+     * @param savedInstanceState previous instance of activity
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -155,7 +178,11 @@ public class CreateHabitEventActivity extends AppCompatActivity {
 
 
 
-
+    /**
+     * Creates a HabitEvent using provided info
+     *
+     * @param view View of provided input info
+     */
     public void CreateEvent(View view){
 
         String comment = commentE.getText().toString();
@@ -192,6 +219,10 @@ public class CreateHabitEventActivity extends AppCompatActivity {
         finish();
     }
 
+    /**
+     * Sets a default image if no image provided
+     *
+     */
     public void setDefaultimg(){
         Drawable drawable = getResources().getDrawable(getResources()
                 .getIdentifier("photoicon", "drawable", getPackageName()));
@@ -201,6 +232,9 @@ public class CreateHabitEventActivity extends AppCompatActivity {
         imageV.setImageBitmap(image);
     }
 
+    /**
+     * Requests permission from user to access device location
+     */
     public void requestPermision(){
         if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             // Should we show an explanation?
@@ -213,11 +247,19 @@ public class CreateHabitEventActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Adds user-defined image to HabitEvent
+     *
+     * @param view view of current activity
+     */
     public void addImage(View view){
         requestPermision();
     }
 
-
+    /**
+     * Returns to previous activity
+     *
+     */
     public void back(){
         Intent habitTypeDetail = new Intent(CreateHabitEventActivity.this, HabitTypeDetailsActivity.class);
         habitTypeDetail.putExtra("passedUser", gson.toJson(loggedInUser));
@@ -226,11 +268,20 @@ public class CreateHabitEventActivity extends AppCompatActivity {
         startActivity(habitTypeDetail);
     }
 
+    /**
+     * Returns to previous activity
+     *
+     * @param view view of current activity
+     */
     public void back(View view){
         back();
         finish();
     }
 
+    /**
+     * Loads image from device
+     *
+     */
     public void loadImage(){
         Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(gallery, RESULT_LOAD_IMAGE);
@@ -238,12 +289,25 @@ public class CreateHabitEventActivity extends AppCompatActivity {
 
     //compresses image using zef..Not sure if its actually
     //effective
+
+    /**
+     * Obtains bitmap for compressed image
+     *
+     * @param u Uri for representing file
+     */
     public Bitmap getCompressedBitmap(Uri u) throws IOException {
         File f = new File(getRealPathFromURI(this, u));
         return new Compressor(this).compressToBitmap(f);
     }
 
     //get the actual file path of image file
+
+    /**
+     * Gets the file path of image
+     *
+     * @param context context of image request
+     * @param contentUri Uri representing image
+     */
     public String getRealPathFromURI(Context context, Uri contentUri) {
         Cursor cursor = null;
         try {
@@ -260,6 +324,12 @@ public class CreateHabitEventActivity extends AppCompatActivity {
     }
 
     //Verify if it is <65kb
+
+    /**
+     * Verifies that the file is less than the maximum size
+     *
+     * @param base64 string used for checking length
+     */
     public Boolean verifySize(String base64){
         double n = base64.length();
         double length = 4*Math.ceil(n/3);
@@ -272,6 +342,13 @@ public class CreateHabitEventActivity extends AppCompatActivity {
     }
 
     //returns the base64 String and sets the image
+
+    /**
+     * Compresses image to desired size
+     *
+     * @param compressAmnt amount that image needs to be compressed by
+     * @param img bitmap representing image
+     */
     public String bmpCompToBase64(int compressAmnt, Bitmap img){
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         img.compress(Bitmap.CompressFormat.JPEG, compressAmnt, baos);
@@ -281,7 +358,13 @@ public class CreateHabitEventActivity extends AppCompatActivity {
     }
 
 
-
+    /**
+     * Handles request activity results
+     *
+     * @param requestCode code for source of request
+     * @param resultCode code for result of request
+     * @param data intent from request source
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -307,6 +390,13 @@ public class CreateHabitEventActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Returns to previous activity
+     *
+     * @param requestCode code for source of request
+     * @param permissions array of permission requests
+     * @param grantResults array of result of permission requests
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);

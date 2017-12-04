@@ -1,3 +1,14 @@
+/*
+ * LoginActivity
+ *
+ * Version 1.0
+ *
+ * November 12, 2017
+ *
+ * Copyright (c) 2017 Team NOTcmput301, CMPUT301, University of Alberta - All Rights Reserved
+ * You may use, distribute, or modify this code under terms and conditions of the Code of Student Behavior at University of Alberta.
+ * You can find a copy of the license in the project wiki on github. Otherwise please contact miller4@ualberta.ca.
+ */
 package com.notcmput301.habitbook;
 
 import android.content.Intent;
@@ -15,10 +26,23 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
+/**
+ * Activity for logging in to an account
+ *
+ * @author NOTcmput301
+ * @version 1.0
+ * @see User
+ * @since 1.0
+ */
 public class LoginActivity extends AppCompatActivity {
     private Gson gson = new Gson();
     private NetworkHandler nH;
 
+    /**
+     * Called when the activity is first created.
+     *
+     * @param savedInstanceState previous instance of activity
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +50,11 @@ public class LoginActivity extends AppCompatActivity {
         nH = new NetworkHandler(this);
     }
 
+    /**
+     * Logs a user into the app
+     *
+     * @param view view of current activity status
+     */
     public void login(View view){
         if (!nH.isNetworkAvailable()){
             Toast.makeText(this, "Internet Connection needed", Toast.LENGTH_LONG).show();
@@ -66,6 +95,11 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Caller for create account activity
+     *
+     * @param view view of current activity status
+     */
     public void createAccount(View view){
         Intent createAccount = new Intent(LoginActivity.this, CreateAccountActivity.class);
         startActivity(createAccount);

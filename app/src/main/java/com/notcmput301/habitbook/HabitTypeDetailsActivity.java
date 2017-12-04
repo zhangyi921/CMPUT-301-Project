@@ -1,3 +1,14 @@
+/*
+ * HabitTypeDetailsActivity
+ *
+ * Version 1.0
+ *
+ * November 12, 2017
+ *
+ * Copyright (c) 2017 Team NOTcmput301, CMPUT301, University of Alberta - All Rights Reserved
+ * You may use, distribute, or modify this code under terms and conditions of the Code of Student Behavior at University of Alberta.
+ * You can find a copy of the license in the project wiki on github. Otherwise please contact miller4@ualberta.ca.
+ */
 package com.notcmput301.habitbook;
 
 import android.content.BroadcastReceiver;
@@ -23,6 +34,14 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+/**
+ * Activity for viewing details of habit type
+ *
+ * @author NOTcmput301
+ * @version 1.0
+ * @see HabitType
+ * @since 1.0
+ */
 public class HabitTypeDetailsActivity extends AppCompatActivity {
     private HabitType habit;
     private User loggedInUser;
@@ -39,6 +58,11 @@ public class HabitTypeDetailsActivity extends AppCompatActivity {
     private Gson gson = new Gson();
 
 
+    /**
+     * Called when the activity is first created.
+     *
+     * @param savedInstanceState previous instance of activity
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +90,10 @@ public class HabitTypeDetailsActivity extends AppCompatActivity {
         seekBar.setProgress(habit.getProgress());
     }
 
+    /**
+     * Loads Habit Type settings and info
+     *
+     */
     public void loadData(){
         titleE = (EditText) findViewById(R.id.HTD_TitleE);
         reasonE = (EditText) findViewById(R.id.HTD_ReasonE);
@@ -89,6 +117,10 @@ public class HabitTypeDetailsActivity extends AppCompatActivity {
         startDateE.setText(df.format(habit.getStartDate()));
     }
 
+    /**
+     * Function for back button
+     *
+     */
     public void back(){
         Intent habitList = new Intent(HabitTypeDetailsActivity.this, HabitTypeList2.class);
         habitList.putExtra("passedUser", gson.toJson(loggedInUser));
@@ -96,11 +128,20 @@ public class HabitTypeDetailsActivity extends AppCompatActivity {
         startActivity(habitList);
     }
 
+    /**
+     * Function for back button
+     *
+     * @param view view of current activity status
+     */
     public void HTDback(View view){
         back();
     }
 
-
+    /**
+     * Function for updating Habit Type
+     *
+     * @param view view of current activity status
+     */
     public void HTDUpdate(View view){
         String title = titleE.getText().toString().trim().replaceAll("\\s+", " ");
         String reason = reasonE.getText().toString();
@@ -161,6 +202,11 @@ public class HabitTypeDetailsActivity extends AppCompatActivity {
         back();
     }
 
+    /**
+     * Function for deleting Habit Type
+     *
+     * @param view view of current activity status
+     */
     public void HTDDelete(View view){
 
         if(nH.isNetworkAvailable()){
@@ -172,6 +218,11 @@ public class HabitTypeDetailsActivity extends AppCompatActivity {
         back();
     }
 
+    /**
+     * Function for pressing add event button
+     *
+     * @param view view of current activity status
+     */
     public void HTDAddEvent(View view){
         HLS.setList(habitTypes);
         Intent createHabitEvent = new Intent(HabitTypeDetailsActivity.this, CreateHabitEventActivity.class);

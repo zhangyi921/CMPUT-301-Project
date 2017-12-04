@@ -1,3 +1,14 @@
+/*
+ * HabitEventDetailsActivity
+ *
+ * Version 1.0
+ *
+ * November 12, 2017
+ *
+ * Copyright (c) 2017 Team NOTcmput301, CMPUT301, University of Alberta - All Rights Reserved
+ * You may use, distribute, or modify this code under terms and conditions of the Code of Student Behavior at University of Alberta.
+ * You can find a copy of the license in the project wiki on github. Otherwise please contact miller4@ualberta.ca.
+ */
 package com.notcmput301.habitbook;
 
 import android.content.BroadcastReceiver;
@@ -18,7 +29,13 @@ import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-
+/**
+ * Activity for displaying HabitEvent Details
+ *
+ * @author NOTcmput301
+ * @version 1.0
+ * @since 1.0
+ */
 public class HabitEventDetailsActivity extends AppCompatActivity {
 
     private User loggedInUser;
@@ -34,6 +51,11 @@ public class HabitEventDetailsActivity extends AppCompatActivity {
     private CircleImageView imageV;
     private Gson gson = new Gson();
 
+    /**
+     * Called when the activity is first created.
+     *
+     * @param savedInstanceState previous instance of activity
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +86,11 @@ public class HabitEventDetailsActivity extends AppCompatActivity {
         this.registerReceiver(br, filter);
     }
 
+    /**
+     * Updates HabitEvent with provided info
+     *
+     * @param view view of current activity info
+     */
     public void update(View view){
 
         String comment = commentE.getText().toString();
@@ -109,6 +136,11 @@ public class HabitEventDetailsActivity extends AppCompatActivity {
         back();
     }
 
+    /**
+     * Deletes a HabitEvent.
+     *
+     * @param view view of current activity status
+     */
     public void delete(View view){
 
         if (nH.isNetworkAvailable() && habitTypes.size() == 0){
@@ -144,6 +176,10 @@ public class HabitEventDetailsActivity extends AppCompatActivity {
         back();
     }
 
+    /**
+     * return to previous activity
+     *
+     */
     public void back(){
         Intent habitEventHistory = new Intent(HabitEventDetailsActivity.this, HabitEventHistory2.class);
 
@@ -154,6 +190,11 @@ public class HabitEventDetailsActivity extends AppCompatActivity {
         startActivity(habitEventHistory);
     }
 
+    /**
+     * return to previous activity
+     *
+     * @param view view of current activity status
+     */
     public void back(View view){
         back();
     }

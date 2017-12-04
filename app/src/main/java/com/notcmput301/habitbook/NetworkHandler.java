@@ -1,9 +1,14 @@
 /*
- *  * Copyright (c) 2017 Team NOTcmput301, CMPUT301, University of Alberta - All Rights Reserved
- *  * You may use, distribute, or modify this code under terms and conditions of the Code of Student Behavior at University of Alberta.
- *  * You can find a copy of the license in the project wiki on github. Otherwise please contact miller4@ualberta.ca.
+ * NetworkHandler
+ *
+ * Version 1.0
+ *
+ * December 4, 2017
+ *
+ * Copyright (c) 2017 Team NOTcmput301, CMPUT301, University of Alberta - All Rights Reserved
+ * You may use, distribute, or modify this code under terms and conditions of the Code of Student Behavior at University of Alberta.
+ * You can find a copy of the license in the project wiki on github. Otherwise please contact miller4@ualberta.ca.
  */
-
 package com.notcmput301.habitbook;
 
 import android.content.Context;
@@ -41,6 +46,13 @@ import io.searchbox.core.Index;
  * Created by shangchen on 2017-12-01.
  */
 
+/**
+ * Handles network related operations for offlien.online sync
+ *
+ * @author NOTcmput301
+ * @version 1.0
+ * @since 1.0
+ */
 public class NetworkHandler {
 
     private Context context;
@@ -252,7 +264,7 @@ public class NetworkHandler {
     }
 
 
-    /**
+    /*
      *The process of update HabitType is delete the old, and add new
      * 1. call delete old
      * 1. call add new. NOTE Make sure that all habit event title is also updated.
@@ -261,7 +273,7 @@ public class NetworkHandler {
     //------------------------------------------------------------------------------------
 
 
-    /**
+    /*
      * add habit event is a composition of deleting old habit type, and
      * putting new habitType with added event
      *
@@ -271,22 +283,22 @@ public class NetworkHandler {
      */
 
 
-    /**
+    /*
      * Update habit event is a composition of
      * 1. deleting habit type
      * 2. adding new habit type with updated events
      */
 
 
-    /**
+    /*
      * Deleting Habit event is a composition of
      * 1. deleting habit type
      * 2. adding habit type with the most recent version removed.
      */
 
 
-    /**
-     * prefereces.getAll returns a Map which is inheritently unordered.
+    /*
+     * preferences.getAll returns a Map which is inheritently unordered.
      * This is bad news as the order of operations does indeed matter.
      * This function aims to order the hashmap
      */

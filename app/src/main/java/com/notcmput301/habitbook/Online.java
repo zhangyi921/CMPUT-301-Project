@@ -1,7 +1,13 @@
 /*
- *  * Copyright (c) 2017 Team NOTcmput301, CMPUT301, University of Alberta - All Rights Reserved
- *  * You may use, distribute, or modify this code under terms and conditions of the Code of Student Behavior at University of Alberta.
- *  * You can find a copy of the license in the project wiki on github. Otherwise please contact miller4@ualberta.ca.
+ * Online
+ *
+ * Version 1.0
+ *
+ * November 12, 2017
+ *
+ * Copyright (c) 2017 Team NOTcmput301, CMPUT301, University of Alberta - All Rights Reserved
+ * You may use, distribute, or modify this code under terms and conditions of the Code of Student Behavior at University of Alberta.
+ * You can find a copy of the license in the project wiki on github. Otherwise please contact miller4@ualberta.ca.
  */
 
 package com.notcmput301.habitbook;
@@ -37,6 +43,14 @@ import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+/**
+ * Activity handling online interactions
+ *
+ * @author NOTcmput301
+ * @version 1.0
+ * @see HabitType
+ * @since 1.0
+ */
 public class Online extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private User loggedInUser;
@@ -46,6 +60,11 @@ public class Online extends AppCompatActivity
     private ArrayList<HabitEvent> eventlist = new ArrayList<>();
     private Map<Integer, String> monthMap = new HashMap<Integer, String>();
 
+    /**
+     * Called when the activity is first created.
+     *
+     * @param savedInstanceState previous instance of activity
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,6 +128,12 @@ public class Online extends AppCompatActivity
     }
 
     //Checks if user exists
+
+    /**
+     * Sends a Follow request to a User
+     *
+     * @param view view of current activity status
+     */
     public void sendRequest(View view){
         EditText reqText = (EditText) findViewById(R.id.Oln_EText);
         Button sendReq = (Button) findViewById(R.id.Oln_sendRequest);
@@ -187,6 +212,10 @@ public class Online extends AppCompatActivity
         }
     }
 
+    /**
+     * Fill list with follower  Habit Events
+     *
+     */
     public void fillList(){
         //get all followed users
         ElasticSearch.getFollowerPairs followers = new ElasticSearch.getFollowerPairs();
@@ -341,8 +370,10 @@ public class Online extends AppCompatActivity
         }
     }
 
-    //
-
+    /**
+     * function for handling back button presses
+     *
+     */
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -353,6 +384,11 @@ public class Online extends AppCompatActivity
         }
     }
 
+    /**
+     * Called when creating options menu
+     *
+     * @param menu menu object to operate on
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -360,6 +396,11 @@ public class Online extends AppCompatActivity
         return true;
     }
 
+    /**
+     * function for handling options menu
+     *
+     * @param item selected menu item
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -379,6 +420,11 @@ public class Online extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Function for handling navigation menu selections
+     *
+     * @param item selected navigation item
+     */
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {

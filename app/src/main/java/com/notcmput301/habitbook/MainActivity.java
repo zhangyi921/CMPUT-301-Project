@@ -1,3 +1,15 @@
+/*
+ * MainActivity
+ *
+ * Version 1.0
+ *
+ * November 12, 2017
+ *
+ * Copyright (c) 2017 Team NOTcmput301, CMPUT301, University of Alberta - All Rights Reserved
+ * You may use, distribute, or modify this code under terms and conditions of the Code of Student Behavior at University of Alberta.
+ * You can find a copy of the license in the project wiki on github. Otherwise please contact miller4@ualberta.ca.
+ */
+
 package com.notcmput301.habitbook;
 
 import android.content.BroadcastReceiver;
@@ -38,6 +50,14 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Activity for displaying list of Today's Habits
+ *
+ * @author NOTcmput301
+ * @version 1.0
+ * @see HabitType
+ * @since 1.0
+ */
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private User loggedInUser;
@@ -53,6 +73,11 @@ public class MainActivity extends AppCompatActivity
     private Gson gson = new Gson();
     private NetworkHandler nH;
 
+    /**
+     * Called when the activity is first created.
+     *
+     * @param savedInstanceState previous instance of activity
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -105,6 +130,10 @@ public class MainActivity extends AppCompatActivity
         fillList();
     }
 
+    /**
+     * function for handling back button presses
+     *
+     */
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -115,6 +144,11 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    /**
+     * Called when creating options menu
+     *
+     * @param menu menu object to operate on
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -122,6 +156,11 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    /**
+     * function for handling options menu
+     *
+     * @param item selected menu item
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -137,6 +176,11 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Function for handling navigation menu selections
+     *
+     * @param item selected navigation item
+     */
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -182,6 +226,10 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    /**
+     * Fill listview with Habit Types
+     *
+     */
     public void fillList(){
         this.todayHabits = new ArrayList<>();
 
@@ -216,50 +264,6 @@ public class MainActivity extends AppCompatActivity
             }
         }
 
-//        try {
-//            habitTypes = ghtl.get();
-//            if (habitTypes==null){
-//                habitTypes = new ArrayList<>();
-//            }
-//
-//            Calendar calendar = Calendar.getInstance();
-//            int day = calendar.get(Calendar.DAY_OF_WEEK);
-//            Date currentDate = new Date();
-//
-//            for(int i = 0; i<habitTypes.size(); i++){
-//                HabitType habit = habitTypes.get(i);
-//                ArrayList<Boolean> days = habit.getWeekdays();
-//                Date startDate = habit.getStartDate();
-//                if(!days.get(day-1)){
-//                    habitTypes.remove(habit);
-//                    i--;
-//                }
-//                else if(startDate.after(currentDate)){
-//                    habitTypes.remove(habit);
-//                    i--;
-//                }
-//                else {
-//                    ArrayList<HabitEvent> events = habit.getEvents();
-//                    for(int j = 0; j < events.size(); j++) {
-//                        HabitEvent event = events.get(j);
-//                        Date eventDate = event.getDate();
-//                        Calendar cal1 = Calendar.getInstance();
-//                        Calendar cal2 = Calendar.getInstance();
-//                        cal1.setTime(currentDate);
-//                        cal2.setTime(eventDate);
-//                        if (cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) &&
-//                                cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR)) {
-//                            habitTypes.remove(habit);
-//                            i--;
-//                        }
-//                    }
-//                }
-//            }
-//            //loggedInUser.setHabitTypes(habitTypes);       //causes program to crash
-//        }catch(Exception e){
-//            e.printStackTrace();
-//            Toast.makeText(this, "Failed to retrieve items. Check connection", Toast.LENGTH_SHORT).show();
-//        }
         
         MainActivity.HabitTypeAdapter hAdapter = new MainActivity.HabitTypeAdapter();
         habitlist.setAdapter(hAdapter);
@@ -277,15 +281,11 @@ public class MainActivity extends AppCompatActivity
         });
     }
 
-
-    /*public void HTLnewHabitType(View view){
-
-        Intent createHabit = new Intent(HabitTypeList2.this, CreateHabitActivity.class);
-        createHabit.putExtra("passedUser", gson.toJson(loggedInUser));
-        startActivity(createHabit);
-    }*/
-
-
+    /**
+     * Function for hrefreshing Habit Type list
+     *
+     * @param view view of current activity status
+     */
     public void HTLRefresh(View view){
 
         fillList();

@@ -1,7 +1,13 @@
 /*
- *  * Copyright (c) 2017 Team NOTcmput301, CMPUT301, University of Alberta - All Rights Reserved
- *  * You may use, distribute, or modify this code under terms and conditions of the Code of Student Behavior at University of Alberta.
- *  * You can find a copy of the license in the project wiki on github. Otherwise please contact miller4@ualberta.ca.
+ * Username
+ *
+ * Version 1.0
+ *
+ * December 2, 2017
+ *
+ * Copyright (c) 2017 Team NOTcmput301, CMPUT301, University of Alberta - All Rights Reserved
+ * You may use, distribute, or modify this code under terms and conditions of the Code of Student Behavior at University of Alberta.
+ * You can find a copy of the license in the project wiki on github. Otherwise please contact miller4@ualberta.ca.
  */
 
 package com.notcmput301.habitbook;
@@ -10,6 +16,13 @@ package com.notcmput301.habitbook;
  * Created by shangchen on 2017-12-02.
  */
 
+/**
+ * Username singleton for use in offline mode
+ *
+ * @author NOTcmput301
+ * @version 1.0
+ * @since 1.0
+ */
 public class Username {
     private static Username instance;
 
@@ -19,13 +32,29 @@ public class Username {
     // Restrict the constructor from being instantiated
     private Username(){}
 
+    /**
+     * Sets new username for user
+     *
+     * @param name new username for user
+     */
     public void setName(String name){
         this.name=name;
     }
+
+    /**
+     * Gets the username of user
+     *
+     * @return username of user
+     */
     public String getName(){
         return this.name;
     }
 
+    /**
+     * Gets the singleton instance of Username
+     *
+     * @return singleton instance of user
+     */
     public static synchronized Username getInstance(){
         if(instance==null){
             instance=new Username();

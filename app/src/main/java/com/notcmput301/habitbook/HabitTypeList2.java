@@ -1,3 +1,14 @@
+/*
+ * HabitTypeList2
+ *
+ * Version 1.0
+ *
+ * November 12, 2017
+ *
+ * Copyright (c) 2017 Team NOTcmput301, CMPUT301, University of Alberta - All Rights Reserved
+ * You may use, distribute, or modify this code under terms and conditions of the Code of Student Behavior at University of Alberta.
+ * You can find a copy of the license in the project wiki on github. Otherwise please contact miller4@ualberta.ca.
+ */
 package com.notcmput301.habitbook;
 
 import android.content.BroadcastReceiver;
@@ -31,6 +42,14 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
+/**
+ * Activity for displaying list of Habit Types
+ *
+ * @author NOTcmput301
+ * @version 1.0
+ * @see HabitType
+ * @since 1.0
+ */
 public class HabitTypeList2 extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -41,6 +60,11 @@ public class HabitTypeList2 extends AppCompatActivity
     private Gson gson = new Gson();
     private NetworkHandler nH;
 
+    /**
+     * Called when the activity is first created.
+     *
+     * @param savedInstanceState previous instance of activity
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,6 +124,10 @@ public class HabitTypeList2 extends AppCompatActivity
         fillList();
     }
 
+    /**
+     * function for handling back button presses
+     *
+     */
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -110,6 +138,11 @@ public class HabitTypeList2 extends AppCompatActivity
         }
     }
 
+    /**
+     * Called when creating options menu
+     *
+     * @param menu menu object to operate on
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -117,6 +150,11 @@ public class HabitTypeList2 extends AppCompatActivity
         return true;
     }
 
+    /**
+     * function for handling options menu
+     *
+     * @param item selected menu item
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -132,6 +170,11 @@ public class HabitTypeList2 extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Function for handling navigation menu selections
+     *
+     * @param item selected navigation item
+     */
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -178,6 +221,10 @@ public class HabitTypeList2 extends AppCompatActivity
         return true;
     }
 
+    /**
+     * Fill listview with Habit Types
+     *
+     */
     public void fillList(){
         ListView habitlist = (ListView) findViewById(R.id.HabitList);
         if(nH.isNetworkAvailable() && habitTypes.size()==0){
@@ -203,10 +250,12 @@ public class HabitTypeList2 extends AppCompatActivity
         });
     }
 
-
-
     public void HTLRefresh(View view){
-
+        /**
+         * Function for hrefreshing Habit Type list
+         *
+         * @param view view of current activity status
+         */
         fillList();
     }
 
