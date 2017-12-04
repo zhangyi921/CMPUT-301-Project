@@ -102,46 +102,6 @@ public class UserTest {
     }
 
     @Test
-    public void getHabitTypes() throws Exception {
-        User u1 = new User("test1", "carrot42"); //Test object
-        ArrayList<HabitType> expected = new ArrayList<HabitType>();
-        assertEquals("Failed to retrieve habit types", expected, u1.getHabitTypes());
-    }
-
-    @Test
-    public void setHabitTypes() throws Exception {
-        User u1 = new User("test1", "carrot42"); //Test object
-        HabitType h1 = new HabitType(u1, "eating less", "coming close to morbid obesity", new Date(), new ArrayList<String>());                                                             //depends on the success of habit type
-        HabitType h2 = new HabitType(u1, "watch less utube", "failing 301", new Date(), new ArrayList<String>());
-        HabitType h3 = new HabitType(u1, "be less lazy", "failing 301", new Date(), new ArrayList<String>());
-        ArrayList<HabitType> expectedH = new ArrayList<HabitType>();
-        expectedH.add(h1); expectedH.add(h2); expectedH.add(h3);
-        u1.setHabitTypes(expectedH);
-        assertEquals("failed to retrieve correct habit types", expectedH, u1.getHabitTypes());      //depends on the success of get habit types
-    }
-
-    @Test
-    public void addHabitType() throws Exception {
-        User u1 = new User("test1", "carrot42"); //Test object
-        HabitType expectedH = new HabitType(u1, "eating less", "coming close to morbid obesity",
-                                            new Date(), new ArrayList<String>());
-        u1.addHabitType(expectedH);
-        assertEquals("Failed to add Habit", true, u1.getHabitTypes().contains(expectedH));          //depends on success of getHabitTypes
-    }
-
-    @Test
-    public void removeHabitType() throws Exception {
-        User u1 = new User("test1", "carrot42"); //Test object
-        HabitType h1 = new HabitType(u1, "eating less", "coming close to morbid obesity",
-                                    new Date(), new ArrayList<String>());
-        HabitType h2 = new HabitType(u1, "watch less utube", "failing 301", new Date(),
-                                    new ArrayList<String>());
-        u1.addHabitType(h1); u1.addHabitType(h2);
-        u1.removeHabitType(h1);
-        assertEquals("Failed to remove habit", false, u1.getHabitTypes().contains(h1));
-    }
-
-    @Test
     public void addFollower() throws Exception {
         User u1 = new User("test1", "carrot42"); //Test object
         User f1 = new User("follower1", "carrot1"); //Test object
@@ -189,9 +149,5 @@ public class UserTest {
         assertEquals("Failed equal comparison", true, u1.equals(u2));
     }
 
-//    @Test
-//    public void toString() throws Exception {
-//
-//    }
 
 }
