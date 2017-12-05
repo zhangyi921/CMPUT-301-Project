@@ -42,7 +42,7 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2 {
 
         ElasticSearch.verifyLogin vl = new ElasticSearch.verifyLogin();
         vl.execute("test", "testpassword");
-        HabitListStore HLS = new HabitListStore(new ArrayList<HabitType>());
+        HabitTypeSingleton HLS = HabitTypeSingleton.getInstance();
 
         User testUser = vl.get();
         Intent intent = new Intent();

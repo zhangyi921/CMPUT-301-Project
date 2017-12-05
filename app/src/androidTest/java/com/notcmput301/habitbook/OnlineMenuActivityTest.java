@@ -35,7 +35,7 @@ public class OnlineMenuActivityTest extends ActivityInstrumentationTestCase2 {
 
         User testUser = vl.get();
         Intent intent = new Intent();
-        HabitListStore HLS = new HabitListStore(new ArrayList<HabitType>());
+        HabitTypeSingleton HLS = HabitTypeSingleton.getInstance();
         intent.putExtra("passedHList", gson.toJson(HLS));
         intent.putExtra("passedUser", gson.toJson(testUser));
         setActivityIntent(intent);

@@ -98,7 +98,7 @@ public class CreateAccountActivityTest extends ActivityInstrumentationTestCase2{
     public void test_attempCreate() throws Exception{
 
         //this one should go through
-        String Username = "NewUser13";
+        String Username = "NewUser14";
         solo.assertCurrentActivity("Wrong Activity", CreateAccountActivity.class);
         solo.clearEditText((EditText) solo.getView(R.id.createAccount_Username));
         solo.enterText((EditText) solo.getView(R.id.createAccount_Username),Username);

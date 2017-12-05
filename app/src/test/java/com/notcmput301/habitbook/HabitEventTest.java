@@ -115,5 +115,5 @@ public class HabitEventTest {
         event.setDislikes(12);
         assertEquals(12, event.getDislikes());
     }
-    
+
 }

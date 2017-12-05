@@ -1,9 +1,14 @@
 /*
- *  * Copyright (c) 2017 Team NOTcmput301, CMPUT301, University of Alberta - All Rights Reserved
- *  * You may use, distribute, or modify this code under terms and conditions of the Code of Student Behavior at University of Alberta.
- *  * You can find a copy of the license in the project wiki on github. Otherwise please contact miller4@ualberta.ca.
+ * NetworkHandler
+ *
+ * Version 1.0
+ *
+ * November 12, 2017
+ *
+ * Copyright (c) 2017 Team NOTcmput301, CMPUT301, University of Alberta - All Rights Reserved
+ * You may use, distribute, or modify this code under terms and conditions of the Code of Student Behavior at University of Alberta.
+ * You can find a copy of the license in the project wiki on github. Otherwise please contact miller4@ualberta.ca.
  */
-
 package com.notcmput301.habitbook;
 
 import android.content.Context;
@@ -41,6 +46,13 @@ import io.searchbox.core.Index;
  * Created by shangchen on 2017-12-01.
  */
 
+/**
+ * Activity to handle offline/online mode syncing operations
+ *
+ * @author NOTcmput301
+ * @version 1.0
+ * @since 1.0
+ */
 public class NetworkHandler {
 
     private Context context;
@@ -62,7 +74,7 @@ public class NetworkHandler {
 
     /**
      * Checks network availability
-     * @return
+     * @return boolean representing networ availablity
      */
     public boolean isNetworkAvailable() {
         ConnectivityManager cm =
@@ -78,7 +90,7 @@ public class NetworkHandler {
      * of the item
      * @param action
      * @param position
-     * @return
+     * @return key as a string
      */
     public String getString(String action, int position){
         String key = String.format("%s_%d", action, position);
@@ -100,7 +112,7 @@ public class NetworkHandler {
 
     /**
      * Finds the position of last item in sharedPreferences
-     * @return
+     * @return position of last item
      */
     public int getMax(){
         return Integer.parseInt(sharedPref.getString("max_item", "0"));
@@ -134,31 +146,10 @@ public class NetworkHandler {
         }return false;
     }
 
-
-    /**
-     * Writes to file, using the following grammar
-     *
-     * prefix-type:objectText
-     *
-     * Prefix indicate if we are adding or deleting
-     * d = delete
-     * a = add
-     *
-     * Type will either be
-     * can be anything
-     *
-     * Object Text is the gson representation of it
-     *
-     * @param task
-     * @param objectText
-     * @param type
-     */
-
-
     /**
      * Verifies if the habitType if given title exists
      * @param title
-     * @return
+     * @return boolean representing HabitType existing
      */
     public boolean verifyExistance(String title){
         ElasticSearch.habitTypeExists hte = new ElasticSearch.habitTypeExists();
@@ -183,7 +174,7 @@ public class NetworkHandler {
     /**
      * Adds a newHabit Type.
      * @param newHabit
-     * @return
+     * @return id of new habit type
      */
     public String addHabitType(HabitType newHabit){
 
@@ -208,7 +199,7 @@ public class NetworkHandler {
     /**
      * Deletes a habit type
      * @param habit
-     * @return
+     * @return boolean representing status of deletion
      */
     public boolean deleteHabitType(HabitType habit){ //this is ok
         ElasticSearch.deleteHabitType delHT = new ElasticSearch.deleteHabitType();
@@ -232,7 +223,7 @@ public class NetworkHandler {
     /**
      * Gets a list of habit types
      * @param owner
-     * @return
+     * @return list of Habit Types belonging to owner
      */
     public ArrayList<HabitType> getHabitList(String owner){
         ArrayList<HabitType> habitTypes;

@@ -1,3 +1,14 @@
+/*
+ * CreateHabitActivity
+ *
+ * Version 1.0
+ *
+ * November 12, 2017
+ *
+ * Copyright (c) 2017 Team NOTcmput301, CMPUT301, University of Alberta - All Rights Reserved
+ * You may use, distribute, or modify this code under terms and conditions of the Code of Student Behavior at University of Alberta.
+ * You can find a copy of the license in the project wiki on github. Otherwise please contact miller4@ualberta.ca.
+ */
 package com.notcmput301.habitbook;
 
 import android.app.DatePickerDialog;
@@ -32,7 +43,14 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-
+/**
+ * Activity for creating new HabitType
+ *
+ * @author NOTcmput301
+ * @version 1.0
+ * @see HabitType
+ * @since 1.0
+ */
 public class CreateHabitActivity extends AppCompatActivity {
     private User loggedInUser;
     private ArrayList<HabitType> habitTypes;
@@ -46,6 +64,11 @@ public class CreateHabitActivity extends AppCompatActivity {
     private DatePickerDialog.OnDateSetListener dlistener;
     private NetworkHandler nH;
 
+    /**
+     * Called when the activity is first created.
+     *
+     * @param savedInstanceState previous instance of activity
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,6 +107,11 @@ public class CreateHabitActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * Creates Habit Type with provided info
+     *
+     * @param view view of input info
+     */
     public void CHTCreate(View view){
 
         EditText titleE = (EditText) findViewById(R.id.HTD_TitleE);
@@ -137,6 +165,11 @@ public class CreateHabitActivity extends AppCompatActivity {
         back();
     }
 
+    /**
+     * Verifies the title is unused
+     *
+     * @param title title to be verified
+     */
     public boolean verifyTitleOk(String title){
         for(HabitType h: habitTypes){
             if(title.equals(h.getTitle())) return false;
@@ -144,6 +177,10 @@ public class CreateHabitActivity extends AppCompatActivity {
         return true;
     };
 
+    /**
+     * Returns to previous activity
+     *
+     */
     public void back(){
         Intent habitList = new Intent(CreateHabitActivity.this, HabitTypeList2.class);
 
@@ -151,6 +188,11 @@ public class CreateHabitActivity extends AppCompatActivity {
         startActivity(habitList);
     }
 
+    /**
+     * Displays GUI for date selection
+     *
+     * @param view view of activity info
+     */
     public void CHTCalendar(View view){
         Calendar cal = Calendar.getInstance();
         int year = cal.get(Calendar.YEAR);

@@ -1,3 +1,14 @@
+/*
+ * ElasticSearch
+ *
+ * Version 1.0
+ *
+ * November 12, 2017
+ *
+ * Copyright (c) 2017 Team NOTcmput301, CMPUT301, University of Alberta - All Rights Reserved
+ * You may use, distribute, or modify this code under terms and conditions of the Code of Student Behavior at University of Alberta.
+ * You can find a copy of the license in the project wiki on github. Otherwise please contact miller4@ualberta.ca.
+ */
 package com.notcmput301.habitbook;
 
 import android.os.AsyncTask;
@@ -24,6 +35,13 @@ import io.searchbox.core.SearchResult;
  * Created by shang on 11/10/2017.
  */
 
+/**
+ * class for elasticsearch queries
+ *
+ * @author NOTcmput301
+ * @version 1.0
+ * @since 1.0
+ */
 public class ElasticSearch {
     private static JestDroidClient client;
     protected static String db = "t28test11";    //DATABASE
@@ -38,7 +56,7 @@ public class ElasticSearch {
         /**
          * Used to login. returns user upon success
          * @param q
-         * @return
+         * @return null for compatibility with asynchronous tasks
          */
         @Override
         public User doInBackground(String... q){
@@ -425,7 +443,7 @@ public class ElasticSearch {
      * Method retrieves the jestId provided seary query is correct
      * @param jsonQuery
      * @param type
-     * @return
+     * @return jestID from search query
      */
     public static String getJestId(String jsonQuery, String type){
         Search search = new Search.Builder(jsonQuery).addIndex(db).addType(type).build();
@@ -458,7 +476,7 @@ public class ElasticSearch {
      * Method deletes an item with a given jestId and type
      * @param jestId
      * @param type
-     * @return
+     * @return boolean representing status of deletion
      */
     public static boolean deleteItem(String jestId, String type){
         Delete delete = new Delete.Builder(jestId).index(db).type(type).build();
