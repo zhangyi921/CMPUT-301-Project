@@ -5,40 +5,46 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.notcmput301.habitbook.CreateAccountActivity"
-    android:background="@drawable/backgroundcreateaccount">
+    android:background="@drawable/dynamic_background"
+    android:id="@+id/createaccountbackground">
 
-    <TextView
-        android:id="@+id/createAccount_createAccount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="159dp"
+        android:layout_height="184dp"
         android:layout_marginTop="32dp"
-        android:text="@string/createaccount_title"
-        android:textColor="#000000"
-        android:textSize="30sp"
+        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logofinal" />
 
     <EditText
         android:id="@+id/createAccount_Username"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:ems="10"
         android:hint="@string/enter_your_uHint"
+
+        android:layout_height="40sp"
+        android:ems="10"
+        android:background="@drawable/roundedittext"
+        android:inputType="textNoSuggestions"
+
         android:textAlignment="center"
-        android:inputType="textPersonName"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/createAccount_createAccount" />
+        android:layout_marginTop="32dp"
+        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
     <EditText
         android:id="@+id/createAccount_password"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="40sp"
         android:layout_marginTop="32dp"
+
         android:ems="10"
+        android:background="@drawable/roundedittext"
+
         android:hint="@string/createAccount_pw"
         android:textAlignment="center"
         android:inputType="textPassword"
@@ -49,9 +55,12 @@
     <EditText
         android:id="@+id/createAccount_passwordR"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="40sp"
         android:layout_marginTop="32dp"
+
         android:ems="10"
+        android:background="@drawable/roundedittext"
+
         android:hint="@string/createAccount_pwr"
         android:textAlignment="center"
         android:inputType="textPassword"
@@ -62,25 +71,27 @@
 
     <Button
         android:id="@+id/createAccount_confirm"
-        style="@style/Widget.AppCompat.Button.Colored"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="85dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="50dp"
         android:onClick="caCreate"
         android:text="@string/createAccount_create"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/createAccount_passwordR" />
+        app:layout_constraintTop_toBottomOf="@+id/createAccount_passwordR"
+        android:textColor="#FFF"/>
 
     <Button
         android:id="@+id/createAccount_back"
-        style="@style/Widget.AppCompat.Button.Colored"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="84dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="50dp"
         android:onClick="caBack"
         android:text="@string/createAccount_back"
+        android:textColor="#FFF"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/createAccount_passwordR" />
 </android.support.constraint.ConstraintLayout>

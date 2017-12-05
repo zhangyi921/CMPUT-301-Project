@@ -34,5 +34,9 @@ dependencies {
     compile 'com.android.support:design:25.3.1'
     compile 'de.hdodenhof:circleimageview:2.2.0'
     compile 'id.zelory:compressor:2.1.0'
+    compile 'com.google.android.gms:play-services-maps:11.0.4'
+    compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha9'
+    compile 'com.jayway.android.robotium:robotium-solo:5.6.3'
+
     testCompile 'junit:junit:4.12'
 }

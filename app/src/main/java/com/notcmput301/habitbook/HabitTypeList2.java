@@ -1,9 +1,26 @@
+/*
+ * HabitTypeList2
+ *
+ * Version 1.0
+ *
+ * November 12, 2017
+ *
+ * Copyright (c) 2017 Team NOTcmput301, CMPUT301, University of Alberta - All Rights Reserved
+ * You may use, distribute, or modify this code under terms and conditions of the Code of Student Behavior at University of Alberta.
+ * You can find a copy of the license in the project wiki on github. Otherwise please contact miller4@ualberta.ca.
+ */
 package com.notcmput301.habitbook;
 
+import android.content.BroadcastReceiver;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.graphics.drawable.AnimationDrawable;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -22,25 +39,49 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
+/**
+ * Activity for displaying list of Habit Types
+ *
+ * @author NOTcmput301
+ * @version 1.0
+ * @see HabitType
+ * @since 1.0
+ */
 public class HabitTypeList2 extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private User loggedInUser;
+    private HabitTypeSingleton HTS;
     private ArrayList<HabitType> habitTypes;
     private ArrayAdapter<HabitType> Adapter;
     private Gson gson = new Gson();
+    private NetworkHandler nH;
+
+    /**
+     * Called when the activity is first created.
+     *
+     * @param savedInstanceState previous instance of activity
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_habit_type_list2);
 
+
         Intent receiver = getIntent();
+
         String u = receiver.getExtras().getString("passedUser");
-        loggedInUser = gson.fromJson(u, User.class);
-        fillList();
+
+        this.loggedInUser = gson.fromJson(u, User.class);
+        this.HTS = HabitTypeSingleton.getInstance();
+        this.habitTypes = HTS.getHabitTypes();
+
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -48,8 +89,7 @@ public class HabitTypeList2 extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();*/
+                HTS.setHabitTypes(habitTypes);
                 Intent createHabit = new Intent(HabitTypeList2.this, CreateHabitActivity.class);
                 createHabit.putExtra("passedUser", gson.toJson(loggedInUser));
                 startActivity(createHabit);
@@ -62,10 +102,32 @@ public class HabitTypeList2 extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
+        //navigation view
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+
+        navigationView.setItemIconTintList(null); //enables us to put our own icon and not show up as greys
+
+        //change the headerviews name, and image
+        View headerview = navigationView.getHeaderView(0);
+        TextView navName = (TextView) headerview.findViewById(R.id.MNavH_Name);
+        navName.setText(loggedInUser.getUsername());
         navigationView.setNavigationItemSelectedListener(this);
+
+        //get our network handler
+        nH = new NetworkHandler(this);
+
+        //Checks if Network Connection is detected.
+        BroadcastReceiver br = new NetworkStateChangeReceiver();
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        this.registerReceiver(br, filter);
+
+        fillList();
     }
 
+    /**
+     * function for handling back button presses
+     *
+     */
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -76,6 +138,11 @@ public class HabitTypeList2 extends AppCompatActivity
         }
     }
 
+    /**
+     * Called when creating options menu
+     *
+     * @param menu menu object to operate on
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -83,6 +150,11 @@ public class HabitTypeList2 extends AppCompatActivity
         return true;
     }
 
+    /**
+     * function for handling options menu
+     *
+     * @param item selected menu item
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -98,6 +170,11 @@ public class HabitTypeList2 extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Function for handling navigation menu selections
+     *
+     * @param item selected navigation item
+     */
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -107,28 +184,32 @@ public class HabitTypeList2 extends AppCompatActivity
         if (id == R.id.habit_type) {
 
         } else if (id == R.id.today_habit) {
+            HTS.setHabitTypes(habitTypes);
+            Intent todayHabit = new Intent(HabitTypeList2.this, MainActivity.class);
+            todayHabit.putExtra("passedUser", gson.toJson(loggedInUser));
+            startActivity(todayHabit);
 
-            Intent habitType = new Intent(HabitTypeList2.this, MainActivity.class);
-            habitType.putExtra("passedUser", gson.toJson(loggedInUser));
-            finish();
-            startActivity(habitType);
         } else if (id == R.id.habit_event_history) {
 
             Intent habitType = new Intent(HabitTypeList2.this, HabitEventHistory2.class);
+
             habitType.putExtra("passedUser", gson.toJson(loggedInUser));
+
             finish();
             startActivity(habitType);
         } else if (id == R.id.online) {
-
-            Intent online = new Intent(HabitTypeList2.this, Online.class);
-            online.putExtra("passedUser", gson.toJson(loggedInUser));
-            finish();
-            startActivity(online);
-
-        } else if (id == R.id.setting) {
-
+            if(!nH.isNetworkAvailable()){
+                Toast.makeText(this, "Content Not accessible without internet", Toast.LENGTH_LONG).show();
+            }else{
+                HTS.setHabitTypes(habitTypes);
+                Intent online = new Intent(HabitTypeList2.this, Online.class);
+                online.putExtra("passedUser", gson.toJson(loggedInUser));
+                finish();
+                startActivity(online);
+            }
         } else if (id == R.id.logout) {
-            finish();
+            Intent logout = new Intent(HabitTypeList2.this, LoginActivity.class);
+            startActivity(logout);
 
         }
 
@@ -136,22 +217,18 @@ public class HabitTypeList2 extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-    /////////////////////////////////////////////////////////////
-    //copied form original file
-    /////////////////////////////////////////////////////////////
+
+    /**
+     * Fill listview with Habit Types
+     *
+     */
     public void fillList(){
         ListView habitlist = (ListView) findViewById(R.id.HabitList);
-        ElasticSearch.getHabitTypeList ghtl = new ElasticSearch.getHabitTypeList();
-        ghtl.execute(loggedInUser.getUsername());
-        try {
-            habitTypes = ghtl.get();
-            if (habitTypes==null){
-                habitTypes = new ArrayList<>();
-            }
-            //loggedInUser.setHabitTypes(habitTypes);       //causes program to crash
-        }catch(Exception e){
-            e.printStackTrace();
-            Toast.makeText(this, "Failed to retrieve items. Check connection", Toast.LENGTH_SHORT).show();
+        if(nH.isNetworkAvailable() && habitTypes.size()==0){
+            habitTypes = nH.getHabitList(loggedInUser.getUsername());
+            HTS.setHabitTypes(habitTypes);
+        }else if (!nH.isNetworkAvailable()){
+            Toast.makeText(this, "You are Offline", Toast.LENGTH_SHORT).show();
         }
 
         HabitTypeList2.HabitTypeAdapter hAdapter = new HabitTypeList2.HabitTypeAdapter();
@@ -162,23 +239,19 @@ public class HabitTypeList2 extends AppCompatActivity
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent habitdetail = new Intent(HabitTypeList2.this, HabitTypeDetailsActivity.class);
                 habitdetail.putExtra("passedUser", gson.toJson(loggedInUser));
-                habitdetail.putExtra("passedHabitType", gson.toJson(habitTypes.get(position)));
+                habitdetail.putExtra("passedPos", position+"");
                 startActivity(habitdetail);
             }
         });
     }
 
 
-    public void HTLnewHabitType(View view){
-
-        Intent createHabit = new Intent(HabitTypeList2.this, CreateHabitActivity.class);
-        createHabit.putExtra("passedUser", gson.toJson(loggedInUser));
-        startActivity(createHabit);
-    }
-
-
+    /**
+     * Function for hrefreshing Habit Type list
+     *
+     * @param view view of current activity status
+     */
     public void HTLRefresh(View view){
-
         fillList();
     }
 

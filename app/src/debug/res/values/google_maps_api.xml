@@ -1,0 +1,32 @@
+<!--
+  ~  * Copyright (c) 2017 Team NOTcmput301, CMPUT301, University of Alberta - All Rights Reserved
+  ~  * You may use, distribute, or modify this code under terms and conditions of the Code of Student Behavior at University of Alberta.
+  ~  * You can find a copy of the license in the project wiki on github. Otherwise please contact miller4@ualberta.ca.
+  -->
+
+<resources>
+    <!--
+    TODO: Before you run your application, you need a Google Maps API key.
+
+    To get one, follow this link, follow the directions and press "Create" at the end:
+
+    https://console.developers.google.com/flows/enableapi?apiid=maps_android_backend&keyType=CLIENT_SIDE_ANDROID&r=AE:97:1D:8E:75:7C:70:4C:D5:D1:F0:84:7C:F2:3E:24:1E:E1:30:F8%3Bcom.notcmput301.habitbook
+
+    You can also add your credentials to an existing key, using these values:
+
+    Package name:
+    AE:97:1D:8E:75:7C:70:4C:D5:D1:F0:84:7C:F2:3E:24:1E:E1:30:F8
+
+    SHA-1 certificate fingerprint:
+    AE:97:1D:8E:75:7C:70:4C:D5:D1:F0:84:7C:F2:3E:24:1E:E1:30:F8
+
+    Alternatively, follow the directions here:
+    https://developers.google.com/maps/documentation/android/start#get-key
+
+    Once you have your key (it starts with "AIza"), replace the "google_maps_key"
+    string in this file.
+    -->
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">
+        AIzaSyAUJyQvOWOElJmEelzVn-hiHx3tflDE0kU
+    </string>
+</resources>

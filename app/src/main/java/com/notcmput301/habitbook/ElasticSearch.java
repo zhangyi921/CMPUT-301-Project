@@ -1,3 +1,14 @@
+/*
+ * ElasticSearch
+ *
+ * Version 1.0
+ *
+ * November 12, 2017
+ *
+ * Copyright (c) 2017 Team NOTcmput301, CMPUT301, University of Alberta - All Rights Reserved
+ * You may use, distribute, or modify this code under terms and conditions of the Code of Student Behavior at University of Alberta.
+ * You can find a copy of the license in the project wiki on github. Otherwise please contact miller4@ualberta.ca.
+ */
 package com.notcmput301.habitbook;
 
 import android.os.AsyncTask;
@@ -12,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 import io.searchbox.client.JestResult;
+import io.searchbox.core.Bulk;
 import io.searchbox.core.Delete;
 import io.searchbox.core.DeleteByQuery;
 import io.searchbox.core.DocumentResult;
@@ -23,9 +35,18 @@ import io.searchbox.core.SearchResult;
  * Created by shang on 11/10/2017.
  */
 
+/**
+ * class for elasticsearch queries
+ *
+ * @author NOTcmput301
+ * @version 1.0
+ * @since 1.0
+ */
 public class ElasticSearch {
     private static JestDroidClient client;
-    protected static String db = "t28test9";    //DATABASE
+    protected static String db = "t28test11";    //DATABASE
+
+    //-------------------_FOR USERS_-------------------------------
 
     /**
      * Used for verifying login, returns 2 if fault
@@ -35,7 +56,7 @@ public class ElasticSearch {
         /**
          * Used to login. returns user upon success
          * @param q
-         * @return
+         * @return null for compatibility with asynchronous tasks
          */
         @Override
         public User doInBackground(String... q){
@@ -128,6 +149,8 @@ public class ElasticSearch {
         }
     }
 
+    //----------------------------FOR HABIT TYPES------------------------------------
+
     /**
      * Check if habit type NAME is unique
      */
@@ -153,10 +176,10 @@ public class ElasticSearch {
                         return 0;
                     }
                     if (test.getTitle().toLowerCase().trim().replaceAll("\\s+", " ").equals(title.toLowerCase().trim().replaceAll("\\s+", " "))){
-                        return 1;
+                        return 1; //found a match
                     }
                 }else{
-                    return -1;
+                    return -1; //error
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -168,31 +191,117 @@ public class ElasticSearch {
     }
 
     /**
-     * Used to add HabitType to database. Returns false on fail
+     * Gets a habit type
      */
-    public static class addHabitType extends AsyncTask<HabitType, Void, Boolean>{
+    /**
+     * Check if habit type NAME is unique
+     */
+    public static class getHabitType extends  AsyncTask<String, Void, HabitType>{
 
         @Override
-        public Boolean doInBackground(HabitType... ht){
+        public HabitType doInBackground(String... s) {
+            verifySettings();
+            String ownername = s[0];
+            String title = s[1];
+            String jsonQuery = "{ \"query\": {\"bool\": {\"must\": [{\"match\": {\"ownername\": \"" + ownername + "\"}},{\"match\": {\"title\": \"" +title+"\"}}]}}}";
+            Search search = new Search.Builder(jsonQuery).addIndex(db).addType("habittype").build();
+            try {
+                SearchResult result = client.execute(search);
+                if (result.isSucceeded()) {
+                    HabitType test = result.getSourceAsObject(HabitType.class);
+                    return test;
+                }else{
+                    return null;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.e("Failed Q", "Search broke");
+                return null;
+            }
+        }
+    }
+
+    /**
+     * Used to add HabitType to database. Returns false on fail
+     */
+    public static class addHabitType extends AsyncTask<HabitType, Void, String>{
+
+        @Override
+        public String doInBackground(HabitType... ht){
             verifySettings();
             if (ht.length != 1){
                 Log.e("Bad input", "expected 1 Habit type");
-                return false;
+                return null;
             }
             Index htitem = new Index.Builder(ht[0]).index(db).type("habittype").build();
             try{
                 DocumentResult result = client.execute(htitem);
                 if (result.isSucceeded()){
-                    return true;
+                    return result.getId();
                 }
             }catch (Exception e){
                 e.printStackTrace();
                 Log.e("failed add", "Failed to add HabitType");
-                return false;
+                return null;
             }
+            return null;
+        }
+    }
+
+
+
+
+
+    /**
+     * Used to return list of habitTypes
+     */
+    public static class getHabitTypeList extends AsyncTask<String, Void, ArrayList<HabitType>>{
+
+        @Override
+        public ArrayList<HabitType> doInBackground(String... s) {
+            verifySettings();
+            ArrayList<HabitType> resultArr = new ArrayList<>();
+            if (s.length != 1) {
+                Log.e("Bad input", "expected 1 String");
+                return null;
+            }
+            String username = s[0];
+            String jsonQuery = "{ \"size\": 10000, \"query\": {\"match\": {\"ownername\": \"" + username + "\"}}}";
+            Search search = new Search.Builder(jsonQuery).addIndex(db).addType("habittype").build();            //potential issue here where match will amtch other owner name.
+
+            try {
+                SearchResult result = client.execute(search);
+                if (result.isSucceeded()) {
+                    List<HabitType> found = result.getSourceAsObjectList(HabitType.class);
+                    resultArr.addAll(found);
+                    return resultArr;
+                }
+            } catch (Exception e) {
+                Log.e("Failed Q", "Search broke");
+                return null;
+            }
+            return null;
+        }
+    }
+
+    /**
+     * Deletes a habit type
+     */
+    public static class deleteHabitType extends AsyncTask<String, Void, Boolean>{
+
+        @Override
+        public Boolean doInBackground(String... s){
+            String ownername = s[0];
+            String title = s[1];
+            String jsonQuery = "{\"query\": {\"bool\": {\"must\": [{\"match\": {\"ownername\": \"" + ownername + "\"}},{\"match\": {\"title\": \"" +title+"\"}}]}}}";
+            String jestId = getJestId(jsonQuery, "habittype");
+            if (deleteItem(jestId, "habittype")) return true;
             return false;
         }
     }
+
+    //-------------------------FOR FOLLOWERS-------------------------------------------
+
 
     /**
      * adds a follower  NOTE* I think
@@ -296,61 +405,45 @@ public class ElasticSearch {
         }
     }
 
+
+
+    //-------------------------------HELPERS---------------------------------------
     /**
-     * Used to return list of habitTypes
+     * Bulk builder
      */
-    public static class getHabitTypeList extends AsyncTask<String, Void, ArrayList<HabitType>>{
+    public static class bulkBuild extends AsyncTask<Bulk, Void, Boolean>{
 
         @Override
-        public ArrayList<HabitType> doInBackground(String... s) {
+        public Boolean doInBackground(Bulk... b){
             verifySettings();
-            ArrayList<HabitType> resultArr = new ArrayList<>();
-            if (s.length != 1) {
-                Log.e("Bad input", "expected 1 String");
-                return null;
+            try{
+                client.execute(b[0]);
+                return true;
+            }catch (Exception e){
+                e.printStackTrace();
+                Log.e("ES FAIL", "Bulk Fail");
+                return false;
             }
-            String username = s[0];
-            String jsonQuery = "{ \"size\": 10000, \"query\": {\"match\": {\"ownername\": \"" + username + "\"}}}";
-            Search search = new Search.Builder(jsonQuery).addIndex(db).addType("habittype").build();            //potential issue here where match will amtch other owner name.
-
-            try {
-                SearchResult result = client.execute(search);
-                if (result.isSucceeded()) {
-                    List<HabitType> found = result.getSourceAsObjectList(HabitType.class);
-                    resultArr.addAll(found);
-                    return resultArr;
-                }
-            } catch (Exception e) {
-                Log.e("Failed Q", "Search broke");
-                return null;
-            }
-            return null;
         }
     }
-
 
     /**
-     * Deletes a habit type
+     * Method for getting jesId asyncrhonously
      */
-    public static class deleteHabitType extends AsyncTask<String, Void, Boolean>{
 
+    public static class getJestIdAsync extends AsyncTask<String, Void, String>{
         @Override
-        public Boolean doInBackground(String... s){
-            String ownername = s[0];
-            String title = s[1];
-            String jsonQuery = "{\"query\": {\"bool\": {\"must\": [{\"match\": {\"ownername\": \"" + ownername + "\"}},{\"match\": {\"title\": \"" +title+"\"}}]}}}";
-            String jestId = getJestId(jsonQuery, "habittype");
-            if (deleteItem(jestId, "habittype")) return true;
-            return false;
+        public String doInBackground(String... s){
+            verifySettings();
+            return getJestId(s[0], s[1]);
         }
     }
-
 
     /**
      * Method retrieves the jestId provided seary query is correct
      * @param jsonQuery
      * @param type
-     * @return
+     * @return jestID from search query
      */
     public static String getJestId(String jsonQuery, String type){
         Search search = new Search.Builder(jsonQuery).addIndex(db).addType(type).build();
@@ -383,7 +476,7 @@ public class ElasticSearch {
      * Method deletes an item with a given jestId and type
      * @param jestId
      * @param type
-     * @return
+     * @return boolean representing status of deletion
      */
     public static boolean deleteItem(String jestId, String type){
         Delete delete = new Delete.Builder(jestId).index(db).type(type).build();

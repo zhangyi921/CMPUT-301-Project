@@ -1,15 +1,22 @@
 /*
- *  * Copyright (c) 2017 Team NOTcmput301, CMPUT301, University of Alberta - All Rights Reserved
- *  * You may use, distribute, or modify this code under terms and conditions of the Code of Student Behavior at University of Alberta.
- *  * You can find a copy of the license in the project wiki on github. Otherwise please contact miller4@ualberta.ca.
+ * Online
+ *
+ * Version 1.0
+ *
+ * November 12, 2017
+ *
+ * Copyright (c) 2017 Team NOTcmput301, CMPUT301, University of Alberta - All Rights Reserved
+ * You may use, distribute, or modify this code under terms and conditions of the Code of Student Behavior at University of Alberta.
+ * You can find a copy of the license in the project wiki on github. Otherwise please contact miller4@ualberta.ca.
  */
 
 package com.notcmput301.habitbook;
 
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -38,20 +45,36 @@ import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+/**
+ * Activity handling online interactions
+ *
+ * @author NOTcmput301
+ * @version 1.0
+ * @see HabitType
+ * @since 1.0
+ */
 public class Online extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private User loggedInUser;
+    private NetworkHandler nH;
+
     private Gson gson = new Gson();
     private ArrayList<HabitEvent> eventlist = new ArrayList<>();
     private Map<Integer, String> monthMap = new HashMap<Integer, String>();
 
+    /**
+     * Called when the activity is first created.
+     *
+     * @param savedInstanceState previous instance of activity
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_online);
         Intent receiver = getIntent();
         String u = receiver.getExtras().getString("passedUser");
-        this.loggedInUser = gson.fromJson(u, User.class);
+        loggedInUser = gson.fromJson(u, User.class);
+        nH = new NetworkHandler(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -61,14 +84,11 @@ public class Online extends AppCompatActivity
         monthMap.put(6, "Jul"); monthMap.put(7, "Aug"); monthMap.put(8, "Sept");
         monthMap.put(9, "Oct"); monthMap.put(10, "Nov"); monthMap.put(11, "Dec");
 
-
         //follower request status button
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.Oln_viewRequestStatus);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
                 Intent followerRequestActivity = new Intent(Online.this, FollowerRequestsActivity.class);
                 followerRequestActivity.putExtra("passedUser", gson.toJson(loggedInUser));
                 startActivity(followerRequestActivity);
@@ -79,8 +99,9 @@ public class Online extends AppCompatActivity
         fab2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent map = new Intent(Online.this, MapsActivity.class);
+                map.putExtra("events", gson.toJson(eventlist));
+                startActivity(map);
             }
         });
 
@@ -90,12 +111,25 @@ public class Online extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
+        //navigation view
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        //enables us to put our own icon and not show up as greys
+        navigationView.setItemIconTintList(null);
+        //change the headerviews name, and image
+        View headerview = navigationView.getHeaderView(0);
+        TextView navName = (TextView) headerview.findViewById(R.id.MNavH_Name);
+        navName.setText(loggedInUser.getUsername());
         navigationView.setNavigationItemSelectedListener(this);
         fillList();
     }
 
     //Checks if user exists
+
+    /**
+     * Sends a Follow request to a User
+     *
+     * @param view view of current activity status
+     */
     public void sendRequest(View view){
         EditText reqText = (EditText) findViewById(R.id.Oln_EText);
         Button sendReq = (Button) findViewById(R.id.Oln_sendRequest);
@@ -174,6 +208,10 @@ public class Online extends AppCompatActivity
         }
     }
 
+    /**
+     * Fill list with follower  Habit Events
+     *
+     */
     public void fillList(){
         //get all followed users
         ElasticSearch.getFollowerPairs followers = new ElasticSearch.getFollowerPairs();
@@ -193,26 +231,10 @@ public class Online extends AppCompatActivity
         //for each user, cycle through all their habittypes.
         for (Followers f: fArr){
             String requestedUser = f.getRequestedUser();
-            ElasticSearch.getHabitTypeList gHT = new ElasticSearch.getHabitTypeList();
-            gHT.execute(requestedUser);
-            ArrayList<HabitType> habitTypes = new ArrayList<>();
-            try {
-                habitTypes = gHT.get();
-                if (habitTypes==null){
-                    habitTypes = new ArrayList<>();
-                }
-            }catch(Exception e){
-                e.printStackTrace();
-                Toast.makeText(this, "Failed to retrieve items. Check connection", Toast.LENGTH_SHORT).show();
-            }
-            //add all their events of that habit type to eventlist
+            ArrayList<HabitType> habitTypes = nH.getHabitList(requestedUser);
             for (HabitType h: habitTypes){
                 eventlist.addAll(h.getEvents());
             }
-
-//            for (int i = 0; i<eventlist.size(); ++i){
-//                Toast.makeText(this, eventlist.get(i).getHabit(), Toast.LENGTH_SHORT).show();
-//            }
         }
         ListView eventListView = (ListView) findViewById(R.id.Oln_eventListView);
         Online.OnlineListAdapter oAdapter = new Online.OnlineListAdapter();
@@ -237,13 +259,83 @@ public class Online extends AppCompatActivity
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(final int position, View convertView, ViewGroup parent) {
 
             convertView = getLayoutInflater().inflate(R.layout.online_list_layout, null);
             TextView titleE = (TextView) convertView.findViewById(R.id.OLIST_Title);
             TextView nameE = (TextView) convertView.findViewById(R.id.OLIST_Name);
             TextView dateE = (TextView) convertView.findViewById(R.id.OLIST_Date);
-            CircleImageView imageV = (CircleImageView) convertView.findViewById(R.id.OLIST_Img);
+            CircleImageView imageV = (CircleImageView) convertView.findViewById(R.id.eventImg);
+            Button like = (Button) convertView.findViewById(R.id.likeButton);
+            like.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View view){
+
+                    HabitEvent habitEvent = eventlist.get(position);
+                    habitEvent.setLikes(habitEvent.getLikes()+1);
+                    ArrayList<HabitType> habitTypes = new ArrayList<HabitType>();
+                    ElasticSearch.getHabitTypeList ghtl = new ElasticSearch.getHabitTypeList();
+                    ghtl.execute(loggedInUser.getUsername());
+                    try {
+                        habitTypes = ghtl.get();
+                        if (habitTypes==null){
+                            habitTypes = new ArrayList<>();
+                        }
+                    }catch(Exception e){
+                        e.printStackTrace();
+                        Toast.makeText(Online.this, "Failed to retrieve items. Check connection", Toast.LENGTH_SHORT).show();
+                    }
+
+                    for (HabitType h : habitTypes){
+                        //Toast.makeText(Online.this, h.getTitle().toString(), Toast.LENGTH_SHORT).show();
+                        ArrayList<HabitEvent> he = h.getEvents();
+                        for (HabitEvent eve : he){
+                            //Toast.makeText(Online.this, eve.getComment().toString()+"--"+habitEvent.getComment().toString(), Toast.LENGTH_SHORT).show();
+
+
+
+                            if (eve.getComment().equals(habitEvent.getComment())){
+
+                                ElasticSearch.deleteHabitType delHT = new ElasticSearch.deleteHabitType();
+                                delHT.execute(loggedInUser.getUsername(), h.getTitle());
+                                try{
+                                    boolean result = delHT.get();
+                                    if (result){
+                                        //Toast.makeText(this, "deleted item!", Toast.LENGTH_SHORT).show();
+                                        finish();
+                                    }else{
+                                        Toast.makeText(Online.this, "Failed to delete", Toast.LENGTH_SHORT).show();
+                                    }
+                                }catch (Exception e){
+                                    e.printStackTrace();
+                                    Toast.makeText(Online.this, "Failed to delete", Toast.LENGTH_SHORT).show();
+                                }
+                                h.getEvents().remove(eve);
+                                h.getEvents().add(habitEvent);
+                                ElasticSearch.addHabitType aht = new ElasticSearch.addHabitType();
+                                aht.execute(h);
+                                try{
+                                    /*boolean success = aht.get();
+                                    if (!success){
+                                        Toast.makeText(Online.this, "Opps, Something went wrong on our end", Toast.LENGTH_SHORT).show();
+                                    }else{
+
+                                        Toast.makeText(Online.this, "liked!", Toast.LENGTH_SHORT).show();
+
+                                        return;
+                                    }*/
+                                }catch(Exception e){
+                                    Log.e("get failure", "Failed to retrieve");
+                                    e.printStackTrace();
+                                }
+                                break;
+                            }
+                        }
+                    }
+
+
+                }
+            });
             titleE.setText(eventlist.get(position).getHabit());
             nameE.setText(eventlist.get(position).getComment());
             Date start = eventlist.get(position).getDate();
@@ -257,8 +349,11 @@ public class Online extends AppCompatActivity
         }
     }
 
-    //
 
+    /**
+     * function for handling back button presses
+     *
+     */
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -269,6 +364,11 @@ public class Online extends AppCompatActivity
         }
     }
 
+    /**
+     * Called when creating options menu
+     *
+     * @param menu menu object to operate on
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -276,6 +376,11 @@ public class Online extends AppCompatActivity
         return true;
     }
 
+    /**
+     * function for handling options menu
+     *
+     * @param item selected menu item
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -295,6 +400,11 @@ public class Online extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Function for handling navigation menu selections
+     *
+     * @param item selected navigation item
+     */
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -304,8 +414,8 @@ public class Online extends AppCompatActivity
         if (id == R.id.habit_type) {
             Intent habitType = new Intent(Online.this, HabitTypeList2.class);
             habitType.putExtra("passedUser", gson.toJson(loggedInUser));
-            finish();
             startActivity(habitType);
+            finish();
 
         } else if (id == R.id.today_habit) {
 
@@ -313,20 +423,19 @@ public class Online extends AppCompatActivity
             habitType.putExtra("passedUser", gson.toJson(loggedInUser));
             finish();
             startActivity(habitType);
+
         } else if (id == R.id.habit_event_history) {
 
-            Intent online = new Intent(Online.this, HabitEventHistory2.class);
-            online.putExtra("passedUser", gson.toJson(loggedInUser));
+            Intent history = new Intent(Online.this, HabitEventHistory2.class);
+            history.putExtra("passedUser", gson.toJson(loggedInUser));
             finish();
-            startActivity(online);
+            startActivity(history);
         } else if (id == R.id.online) {
 
-
-        } else if (id == R.id.setting) {
-
         } else if (id == R.id.logout) {
+            Intent logout = new Intent(Online.this, LoginActivity.class);
+            startActivity(logout);
             finish();
-
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

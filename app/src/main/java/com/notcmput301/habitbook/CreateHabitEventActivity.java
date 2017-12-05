@@ -1,27 +1,46 @@
+/*
+ * CreateHabitEventActivity
+ *
+ * Version 1.0
+ *
+ * November 12, 2017
+ *
+ * Copyright (c) 2017 Team NOTcmput301, CMPUT301, University of Alberta - All Rights Reserved
+ * You may use, distribute, or modify this code under terms and conditions of the Code of Student Behavior at University of Alberta.
+ * You can find a copy of the license in the project wiki on github. Otherwise please contact miller4@ualberta.ca.
+ */
 package com.notcmput301.habitbook;
 
 import android.Manifest;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.net.ConnectivityManager;
 import android.net.Uri;
-import android.os.AsyncTask;
+import android.os.Build;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -30,37 +49,183 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
+import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import id.zelory.compressor.Compressor;
 
+/**
+ * Activity for creating new HabitEvent
+ *
+ * @author NOTcmput301
+ * @version 1.0
+ * @see HabitEvent
+ * @since 1.0
+ */
 public class CreateHabitEventActivity extends AppCompatActivity {
     private static final int RESULT_LOAD_IMAGE = 6138;
-    private User loggedInUser;
+
     private HabitType habit;
+    private User loggedInUser;
+    private HabitTypeSingleton HTS;
+    private ArrayList<HabitType> habitTypes;
+    private int position;
+    private NetworkHandler nH;
+
+
     private EditText commentE;
+    private Button addPicB;
+    private Button createB;
+    private Button backB;
     private CircleImageView imageV;
     private Gson gson = new Gson();
-    private Bitmap image;
-    private String b64img;
+    private Button location;
+    private LocationManager locationManager;
+    private LocationListener listener;
+    private Location currentlocation = null;
+    private Bitmap image = null;
+    private String b64img = null;
 
+    /**
+     * Called when the activity is first created.
+     *
+     * @param savedInstanceState previous instance of activity
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_habit_event);
+
+
         Intent receiver = getIntent();
         String u = receiver.getExtras().getString("passedUser");
-        String h = receiver.getExtras().getString("passedHabitType");
-        loggedInUser = gson.fromJson(u, User.class);
-        habit = gson.fromJson(h, HabitType.class);
-        commentE = (EditText) findViewById(R.id.CHE_Comment);
-        imageV = (CircleImageView) findViewById(R.id.CHE_Image);
+
+        this. position = Integer.parseInt(receiver.getExtras().getString("passedPos"));
+        this.loggedInUser = gson.fromJson(u, User.class);
+        this.HTS = HabitTypeSingleton.getInstance();
+        this.habitTypes = HTS.getHabitTypes();
+
+        this.habit = habitTypes.get(position);
+        nH = new NetworkHandler(this);
+
+        commentE = (EditText) findViewById(R.id.HED_Comment);
+        addPicB = (Button) findViewById(R.id.CHE_AddPhoto);
+        createB = (Button) findViewById(R.id.CHE_Create);
+        backB = (Button) findViewById(R.id.CHE_Back);
+        location = (Button) findViewById(R.id.location);
+        imageV = (CircleImageView) findViewById(R.id.HED_Image);
         setDefaultimg();
+
+        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+
+
+        listener = new LocationListener() {
+            @Override
+            public void onLocationChanged(Location location) {
+                Double la = location.getLatitude();
+                Double lo = location.getLongitude();
+                String s = la.toString()+"  "+lo.toString();
+                currentlocation = location;
+                Toast.makeText(CreateHabitEventActivity.this, s, Toast.LENGTH_SHORT).show();
+
+            }
+
+            @Override
+            public void onStatusChanged(String s, int i, Bundle bundle) {
+
+            }
+
+            @Override
+            public void onProviderEnabled(String s) {
+
+            }
+
+            @Override
+            public void onProviderDisabled(String s) {
+
+                Intent i = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                startActivity(i);
+            }
+        };
+
+        //Checks if Network Connection is detected.
+        BroadcastReceiver br = new NetworkStateChangeReceiver();
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        this.registerReceiver(br, filter);
+
+        configure_button();
     }
 
+
+    /**
+     * Configures location button for event location
+     *
+     */
+    void configure_button(){
+        // first check for permissions
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.INTERNET}
+                        ,10);
+            }
+            return;
+        }
+        // this code won't execute IF permissions are not allowed, because in the line above there is return statement.
+        location.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //noinspection MissingPermission
+                locationManager.requestLocationUpdates("gps", 500, 0, listener);
+            }
+        });
+    }
+
+    /**
+     * Creates a HabitEvent using provided info
+     *
+     * @param view View of provided input info
+     */
+    public void CreateEvent(View view){
+
+        String comment = commentE.getText().toString();
+        if (comment.length() > 20){
+            Toast.makeText(this, "comment should be less than 20 characters", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        HabitEvent habitEvent = new HabitEvent(habit.getTitle(),comment);
+        if (currentlocation != null && b64img == null)
+        {
+            habitEvent = new HabitEvent(habit.getTitle(), comment, currentlocation.getLatitude(), currentlocation.getLongitude());
+        }
+        else if (b64img != null && currentlocation == null){
+            habitEvent = new HabitEvent(habit.getTitle(), comment, b64img);
+
+        }
+        else if (currentlocation != null && b64img != null){
+            habitEvent = new HabitEvent(habit.getTitle(), comment, b64img,currentlocation.getLatitude(), currentlocation.getLongitude());
+        }
+
+        if (nH.isNetworkAvailable()){
+            nH.deleteHabitType(habit);
+            habit.addHabitEvent(habitEvent);
+            nH.addHabitType(habit);
+        }else{
+            nH.putString("d", gson.toJson(habit));
+            habit.addHabitEvent(habitEvent);
+            nH.putString("au", gson.toJson(habit));
+        }
+        habitTypes.set(position, habit);
+        HTS.setHabitTypes(habitTypes);
+        back();
+        finish();
+    }
+
+    /**
+     * Sets a default image if no image provided
+     *
+     */
     public void setDefaultimg(){
         Drawable drawable = getResources().getDrawable(getResources()
                 .getIdentifier("photoicon", "drawable", getPackageName()));
@@ -70,6 +235,9 @@ public class CreateHabitEventActivity extends AppCompatActivity {
         imageV.setImageBitmap(image);
     }
 
+    /**
+     * Requests permission from user to access device location
+     */
     public void requestPermision(){
         if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             // Should we show an explanation?
@@ -82,17 +250,40 @@ public class CreateHabitEventActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Adds user-defined image to HabitEvent
+     *
+     * @param view view of current activity
+     */
     public void addImage(View view){
         requestPermision();
     }
 
-    public void back(View view){
-        Intent habittypelist = new Intent(CreateHabitEventActivity.this, HabitTypeList2.class);
-        habittypelist.putExtra("passedUser", gson.toJson(loggedInUser));
-        finish();
-        startActivity(habittypelist);
+    /**
+     * Returns to previous activity
+     *
+     */
+    public void back(){
+        Intent habitTypeDetail = new Intent(CreateHabitEventActivity.this, HabitTypeDetailsActivity.class);
+        habitTypeDetail.putExtra("passedUser", gson.toJson(loggedInUser));
+        habitTypeDetail.putExtra("passedPos", Integer.toString(position));
+        startActivity(habitTypeDetail);
     }
 
+    /**
+     * Returns to previous activity
+     *
+     * @param view view of current activity
+     */
+    public void back(View view){
+        back();
+        finish();
+    }
+
+    /**
+     * Loads image from device
+     *
+     */
     public void loadImage(){
         Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(gallery, RESULT_LOAD_IMAGE);
@@ -100,12 +291,26 @@ public class CreateHabitEventActivity extends AppCompatActivity {
 
     //compresses image using zef..Not sure if its actually
     //effective
+
+    /**
+     * Obtains bitmap for compressed image
+     *
+     * @param u Uri for representing file
+     */
     public Bitmap getCompressedBitmap(Uri u) throws IOException {
         File f = new File(getRealPathFromURI(this, u));
         return new Compressor(this).compressToBitmap(f);
     }
 
     //get the actual file path of image file
+
+
+    /**
+     * Obtains actual image file path
+     *
+     * @param context context of image request
+     * @param contentUri Uri representing image
+     */
     public String getRealPathFromURI(Context context, Uri contentUri) {
         Cursor cursor = null;
         try {
@@ -122,6 +327,12 @@ public class CreateHabitEventActivity extends AppCompatActivity {
     }
 
     //Verify if it is <65kb
+
+    /**
+     * Verifies that the file is less than the maximum size
+     *
+     * @param base64 string used for checking length
+     */
     public Boolean verifySize(String base64){
         double n = base64.length();
         double length = 4*Math.ceil(n/3);
@@ -134,6 +345,13 @@ public class CreateHabitEventActivity extends AppCompatActivity {
     }
 
     //returns the base64 String and sets the image
+
+    /**
+     * Compresses image to desired size
+     *
+     * @param compressAmnt amount that image needs to be compressed by
+     * @param img bitmap representing image
+     */
     public String bmpCompToBase64(int compressAmnt, Bitmap img){
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         img.compress(Bitmap.CompressFormat.JPEG, compressAmnt, baos);
@@ -142,46 +360,14 @@ public class CreateHabitEventActivity extends AppCompatActivity {
         return Base64.encodeToString(barr, Base64.DEFAULT);
     }
 
-    public void CreateEvent(View view){
-        String comment = commentE.getText().toString();
-        if (comment.length() > 20){
-            Toast.makeText(this, "Comment should be less than 20 characaters", Toast.LENGTH_LONG).show();
-            return;
-        }
-        ElasticSearch.deleteHabitType delHT = new ElasticSearch.deleteHabitType();
-        delHT.execute(loggedInUser.getUsername(), habit.getTitle());
-        try{
-            boolean result = delHT.get();
-            if (result){
-                finish();
-            }else{
-                Toast.makeText(this, "Failed to delete", Toast.LENGTH_SHORT).show();
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-            Toast.makeText(this, "Failed to delete", Toast.LENGTH_SHORT).show();
-        }
-        HabitEvent habitEvent = new HabitEvent(habit.getTitle(), comment, b64img);
-        habit.addHabitEvent(habitEvent);
-        ElasticSearch.addHabitType aht = new ElasticSearch.addHabitType();
-        aht.execute(habit);
-        try{
-            boolean success = aht.get();
-            if (!success){
-                Toast.makeText(this, "Opps, Something went wrong on our end", Toast.LENGTH_SHORT).show();
-            }else{
 
-                Toast.makeText(this, "habit event added! ", Toast.LENGTH_SHORT).show();
-                finish();
-                return;
-            }
-        }catch(Exception e){
-            Log.e("get failure", "Failed to retrieve");
-            e.printStackTrace();
-        }
-        finish();
-    }
-
+    /**
+     * Handles request activity results
+     *
+     * @param requestCode code for source of request
+     * @param resultCode code for result of request
+     * @param data intent from request source
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -207,6 +393,13 @@ public class CreateHabitEventActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Returns to previous activity
+     *
+     * @param requestCode code for source of request
+     * @param permissions array of permission requests
+     * @param grantResults array of result of permission requests
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -225,4 +418,5 @@ public class CreateHabitEventActivity extends AppCompatActivity {
             return;
         }
     }
+
 }
