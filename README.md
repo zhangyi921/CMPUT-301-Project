@@ -8,12 +8,12 @@ It has a continuous changing color background. User is required to enter a user 
 This the place navigats you to all places of this app
 ![alt text](https://github.com/zhangyi921/CMPUT-301-Project/blob/master/screen%20shots/navagation_drawer.png)
 # Today's habit
-It shows the habits that ser set need to be done today. 
+It shows the habits that user set need to be done today. 
 ![alt text](https://github.com/zhangyi921/CMPUT-301-Project/blob/master/screen%20shots/today_s_habit.png)
 # Add a habit
 ![alt text](https://github.com/zhangyi921/CMPUT-301-Project/blob/master/screen%20shots/add_habit.png)
 # Habit status
-The bar on the top indicates how much you have finished your habit. If you do it as schedule, it should indicate 100%.
+The bar on the top indicates how much you have finished your habit. If you do it as schedule, it should indicate 100%. User also is able to update the detail of habit. 
 ![alt text](https://github.com/zhangyi921/CMPUT-301-Project/blob/master/screen%20shots/habit_status.png)
 # Add an event
 You can add picture, location, comment to a habit event.
