@@ -17,3 +17,11 @@ This the place navigats you to all places of this app
 ![alt text](https://github.com/zhangyi921/CMPUT-301-Project/blob/master/screen%20shots/add_event.png)
 # Event detail
 ![alt text](https://github.com/zhangyi921/CMPUT-301-Project/blob/master/screen%20shots/event_detail.png)
+# Event history
+![](https://github.com/zhangyi921/CMPUT-301-Project/blob/master/screen%20shots/event%20history%20with%20filter.png)
+# Show current events on map
+![](https://github.com/zhangyi921/CMPUT-301-Project/blob/master/screen%20shots/highlight%20events%20on%20map.png)
+# Events from following usrs
+![](https://github.com/zhangyi921/CMPUT-301-Project/blob/master/screen%20shots/events%20form%20following%20users.png)
+# Accept & reject follwoing request
+![](https://github.com/zhangyi921/CMPUT-301-Project/blob/master/screen%20shots/accepting%20following%20request.png)
