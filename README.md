@@ -24,4 +24,4 @@ This the place navigats you to all places of this app
 # Events from following usrs
 ![](https://github.com/zhangyi921/CMPUT-301-Project/blob/master/screen%20shots/events%20form%20following%20users.png)
 # Accept & reject follwoing request
-![](https://github.com/zhangyi921/CMPUT-301-Project/blob/master/screen%20shots/accepting%20following%20request.png)
+![](https://github.com/zhangyi921/CMPUT-301-Project/blob/master/screen%20shots/following%20request.png)
