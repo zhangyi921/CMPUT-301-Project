@@ -8,20 +8,26 @@ It has a continuous changing color background. User is required to enter a user 
 This the place navigats you to all places of this app
 ![alt text](https://github.com/zhangyi921/CMPUT-301-Project/blob/master/screen%20shots/navagation_drawer.png)
 # Today's habit
+It shows the habits that ser set need to be done today. 
 ![alt text](https://github.com/zhangyi921/CMPUT-301-Project/blob/master/screen%20shots/today_s_habit.png)
 # Add a habit
 ![alt text](https://github.com/zhangyi921/CMPUT-301-Project/blob/master/screen%20shots/add_habit.png)
 # Habit status
+The bar on the top indicates how much you have finished your habit. If you do it as schedule, it should indicate 100%.
 ![alt text](https://github.com/zhangyi921/CMPUT-301-Project/blob/master/screen%20shots/habit_status.png)
 # Add an event
+You can add picture, location, comment to a habit event.
 ![alt text](https://github.com/zhangyi921/CMPUT-301-Project/blob/master/screen%20shots/add_event.png)
 # Event detail
 ![alt text](https://github.com/zhangyi921/CMPUT-301-Project/blob/master/screen%20shots/event_detail.png)
 # Event history
+The map button shows all events from current list. If you use filter, then the map shows the left events after filter out other events.
 ![](https://github.com/zhangyi921/CMPUT-301-Project/blob/master/screen%20shots/event%20history%20with%20filter.png)
 # Show current events on map
+You can highlight the event(s) of your current location within 5KM. 
 ![](https://github.com/zhangyi921/CMPUT-301-Project/blob/master/screen%20shots/highlight%20events%20on%20map.png)
 # Events from following usrs
+You also can send the following request from here.
 ![](https://github.com/zhangyi921/CMPUT-301-Project/blob/master/screen%20shots/events%20form%20following%20users.png)
 # Accept & reject follwoing request
 ![](https://github.com/zhangyi921/CMPUT-301-Project/blob/master/screen%20shots/following%20request.png)
