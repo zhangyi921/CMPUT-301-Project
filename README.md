@@ -1,7 +1,7 @@
 # CMPUT 301 project
 Main Features:
 # Login screen
-It has a continuous changing color background. User is required to enter a user name and a password to login. 
+It has a continuously changing color background. User is required to enter a user name and a password to login. 
 ![](https://github.com/zhangyi921/CMPUT-301-Project/blob/master/screen%20shots/login1.png)
 ![](https://github.com/zhangyi921/CMPUT-301-Project/blob/master/screen%20shots/login2.png)
 # Navagation drawer
