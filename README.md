@@ -1,5 +1,5 @@
 # CMPUT 301 project
-Main Features:
+This app aims to help users to develop habits by keeping track of how users do on their habits. User can create habits in this app and add habit events of a habit when he/she has done the habit once. User can attach a picture, comment, location in a habit event. User can follow other users and see other users' habit events. Download and explore more features!
 # Login screen
 It has a continuously changing color background. User is required to enter a user name and a password to login. 
 ![](https://github.com/zhangyi921/CMPUT-301-Project/blob/master/screen%20shots/login1.png)
